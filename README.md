@@ -22,7 +22,21 @@ Results → PM updates Plane, PRs merged on GitHub
 
 ## Status
 
-**Phase 0: Foundation** — initial project structure and requirements.
+**Sprint 1 complete** — Plane Docker stack deployed and verified, REST API client and CLI built, bidirectional OCMC sync implemented.  
+**Sprint 2 in progress** — quality hardening, credential security, fleet framework verification.
+
+See [CHANGELOG.md](CHANGELOG.md) for full history and [docs/retrospectives/sprint1.md](docs/retrospectives/sprint1.md) for Sprint 1 outcomes.
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [docs/architecture.md](docs/architecture.md) | Technical architecture — service graph, ports, data flow, security model |
+| [docs/requirements.md](docs/requirements.md) | Phased feature requirements and acceptance criteria |
+| [CLAUDE.md](CLAUDE.md) | Project conventions — read before touching any file |
+| [CHANGELOG.md](CHANGELOG.md) | All changes by sprint |
+| [docs/retrospectives/sprint1.md](docs/retrospectives/sprint1.md) | Sprint 1 retrospective |
+| [docs/milestones/sprint2.md](docs/milestones/sprint2.md) | Sprint 2 plan |
 
 ## License
 

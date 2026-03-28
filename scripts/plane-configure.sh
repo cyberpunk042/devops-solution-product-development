@@ -138,9 +138,30 @@ PLANE_API_TOKEN=$API_TOKEN
 EOF
 
 log "Config written to $CONFIG_FILE"
+
+# ── Configure Plane instance (god-mode) ─────────────────────────────────────
+
+log "Configuring Plane instance settings..."
+INSTANCE_NAME="${PLANE_INSTANCE_NAME:-OpenClaw Fleet Management}"
+docker exec "$API_CONTAINER" python manage.py shell -c "
+from plane.license.models import Instance, InstanceAdmin
+from plane.db.models import User
+instance = Instance.objects.first()
+instance.instance_name = '${INSTANCE_NAME}'
+instance.domain = '${PLANE_URL}'
+instance.is_setup_done = True
+instance.save(update_fields=['instance_name', 'domain', 'is_setup_done'])
+user = User.objects.get(email='${PLANE_ADMIN_EMAIL}')
+InstanceAdmin.objects.get_or_create(instance=instance, user=user, defaults={'role': 20})
+print('ok')
+" 2>/dev/null && log "Instance setup complete (name: ${INSTANCE_NAME})" || log "Instance setup skipped"
+
 log ""
 log "✅ Plane configured successfully:"
+log "   Instance:   ${INSTANCE_NAME}"
 log "   Workspace:  $WORKSPACE_SLUG ($WORKSPACE_ID)"
 log "   Project:    openclaw-fleet / $PROJECT_IDENTIFIER ($PROJECT_ID)"
 log "   API Token:  ${API_TOKEN:0:24}..."
+log "   Admin:      ${PLANE_ADMIN_EMAIL} (password in plane.env)"
+log "   God-mode:   ${PLANE_URL}/god-mode/"
 log "   Plane URL:  $PLANE_URL"

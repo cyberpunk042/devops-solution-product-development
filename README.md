@@ -33,6 +33,7 @@ See [CHANGELOG.md](CHANGELOG.md) for full history and [docs/retrospectives/sprin
 |----------|-------------|
 | [docs/architecture.md](docs/architecture.md) | Technical architecture — service graph, ports, data flow, security model |
 | [docs/requirements.md](docs/requirements.md) | Phased feature requirements and acceptance criteria |
+| [docs/plane-setup.md](docs/plane-setup.md) | **Complete setup guide** — architecture, multi-fleet, config reference, IaC, onboarding, troubleshooting |
 | [CLAUDE.md](CLAUDE.md) | Project conventions — read before touching any file |
 | [CHANGELOG.md](CHANGELOG.md) | All changes by sprint |
 | [docs/retrospectives/sprint1.md](docs/retrospectives/sprint1.md) | Sprint 1 retrospective |

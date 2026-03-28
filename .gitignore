@@ -1,2 +1,28 @@
-.plane-config
+# Secrets — never commit
+.env
 plane.env
+.plane-config
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db

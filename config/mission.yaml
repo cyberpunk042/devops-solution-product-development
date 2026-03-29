@@ -1,8 +1,8 @@
 workspace:
   slug: fleet
   name: Fleet
-  description: 'OpenClaw Fleet — autonomous AI agent fleet management. Multi-project workspace spanning
-    fleet operations, AI independence, report transformation, and the development platform itself.
+  description: 'OpenClaw Fleet — autonomous AI agent fleet management. Multi-project workspace spanning fleet operations,
+    AI independence, report transformation, and the development platform itself.
 
     '
 estimates:
@@ -79,15 +79,15 @@ projects:
 - identifier: AICP
   name: AI Control Platform
   emoji: 🤖
-  description: 'AI Control Platform — personal AI control workspace orchestrating LocalAI and Claude Code
-    through Think/Edit/Act modes.
+  description: 'AI Control Platform — personal AI control workspace orchestrating LocalAI and Claude Code through Think/Edit/Act
+    modes.
 
-    PRIMARY MISSION: Progressive LocalAI independence. Route work through LocalAI for everything that
-    doesn''t require Claude''s reasoning. Target: 80%+ reduction in Claude token usage.
+    PRIMARY MISSION: Progressive LocalAI independence. Route work through LocalAI for everything that doesn''t require Claude''s
+    reasoning. Target: 80%+ reduction in Claude token usage.
 
-    "Its important that the main first mission for the plane/dspd is to make localAI functional and then
-    make it more and more reliable to offload as much as possible the work from claude till one day maybe
-    even try to actually run independently as much as possible."
+    "Its important that the main first mission for the plane/dspd is to make localAI functional and then make it more and
+    more reliable to offload as much as possible the work from claude till one day maybe even try to actually run independently
+    as much as possible."
 
     '
   github: cyberpunk042/devops-expert-local-ai
@@ -119,51 +119,139 @@ projects:
     color: '#EF4444'
   modules:
   - name: 'Stage 1: Make LocalAI Functional'
-    description: 'Assess current state. Get local inference working. Verify OpenAI-compatible API. Benchmark
-      latency/throughput/quality. Validate 2-cluster network setup with both machines peered.
+    description: 'Assess current state of AICP and LocalAI. Get local inference working on both machines. Verify OpenAI-compatible
+      API with standard client libraries. Benchmark latency, throughput, and quality for all target operations. Validate 2-cluster
+      network setup with cross-machine inference.
 
-      '
+
+      ASSESSMENT DONE (2026-03-29): 9 models loaded, hermes-3b benchmarked at 10s cold / 1.2s warm. Remaining: cluster verification
+      on Machine 2, comprehensive benchmark suite.
+
+
+      User vision: "we will need to validate the project and make sure we can support all that properly too."'
     status: planned
   - name: 'Stage 2: Route Simple Operations to LocalAI'
-    description: 'Build inference router (fleet/core/inference_router.py). Route heartbeats, status checks,
-      reads to LocalAI. Direct MCP tool calls bypass LLM entirely for HTTP operations. Measure what %
-      of fleet operations can run locally.
+    description: 'Build the inference router (fleet/core/inference_router.py) — the critical architecture piece that decides
+      what needs reasoning vs what can be handled locally or as direct HTTP calls.
 
-      '
+
+      Key insight: many MCP tool calls are just HTTP requests to the MC API. They do not need an LLM — fleet_read_context
+      and fleet_agent_status should be direct API calls, zero tokens consumed.
+
+
+      The router works WITH the chain runner (M-SC02). When an operation fires, the chain publishes to all surfaces (OCMC,
+      GitHub, IRC, Plane, ntfy). The router decides which parts of the chain need LLM processing vs direct execution.
+
+
+      User vision: "it should only call claude when needed otherwise do mcp / tool calls and whatever"
+
+
+      User vision: "smart tools, chains that will trigger multiple things for one call or one event and that will keep listening
+      to all side and keep in sync"'
     status: planned
   - name: 'Stage 3: Progressive Offload'
-    description: 'Idle heartbeats → LocalAI (zero Claude tokens). Simple task acceptance → LocalAI (structured
-      plans). Simple reviews (test pass/fail) → LocalAI (pattern matching). Chat responses (factual) →
-      LocalAI. Validate quality side-by-side: LocalAI vs Claude per operation.
+    description: 'Move routine operations to LocalAI one by one, with quality validation for each.
 
-      '
+
+      Target operations:
+
+      - Idle heartbeats → LocalAI (zero Claude tokens, just HEARTBEAT_OK)
+
+      - Simple task acceptance → LocalAI (structured plan output)
+
+      - Simple reviews (test pass/fail) → LocalAI (pattern matching)
+
+      - Chat responses (factual, not creative) → LocalAI
+
+
+      Each offload requires side-by-side quality validation: LocalAI output vs Claude output for the same operation. No regression
+      allowed.
+
+
+      Chain events (from event_chain.py) that are simple notifications can also route to LocalAI for formatting instead of
+      Claude.
+
+
+      User vision: "especially for things and loops and events that do not require heavy works and especially for very well
+      defined and structured orders or directives that we can find out how to route perfectly to the right model and tools
+      everytime"
+
+
+      Pace: "ready to put into work safely the agent into moving toward the target at a reasonable pace with proper guidance
+      and flow"'
     status: planned
   - name: 'Stage 4: Reliability and Failover'
-    description: 'LocalAI fails → fall back to Claude (graceful degradation). Claude rate-limited → queue
-      for LocalAI where possible. Cluster peering: Machine 1 LocalAI serves Machine 2 fleet. Load balancing
-      between clusters. Health monitoring for both backends.
+    description: 'Build graceful degradation between LocalAI and Claude. Agents should never know which backend they are talking
+      to — the control plane handles routing transparently.
 
-      '
+
+      If LocalAI fails → automatic Claude fallback
+
+      If Claude is rate-limited → queue work for LocalAI where possible
+
+      Cluster peering: Machine 1 LocalAI can serve Machine 2 fleet
+
+      Load balancing between clusters
+
+      Health monitoring dashboard for both inference backends
+
+
+      User vision: "having our full 2 cluster LocalAI peered in the network with one Plane and eventually 2 or even 3 fleets"'
     status: planned
   - name: 'Stage 5: Near-Independent Operation'
-    description: 'Fleet runs primarily on LocalAI for routine operations. Claude called only for complex
-      code, architecture, security, planning. 80%+ reduction in Claude token usage. Fleet operates during
-      Claude outages (degraded but functional). "Having our full 2 cluster LocalAI peered in the network
-      with one Plane and eventually 2 or even 3 fleets."
+    description: 'The long-term target. Fleet runs primarily on LocalAI for routine operations. Claude called only for complex
+      code, architecture, security, strategic planning.
 
-      '
+
+      Targets:
+
+      - 80%+ of fleet operations run on LocalAI (measured over 1 week)
+
+      - Fleet survives Claude outages (degraded but functional)
+
+      - Token cost reduction documented with before/after comparison
+
+      - Continuous optimization process running
+
+      - Multiple fleets, multiple clusters, one Plane
+
+
+      User vision: "make it more and more reliable to offload as much as possible the work from claude till one day maybe
+      even if probably not entirely even try to actually run independently as much as possible"
+
+
+      User vision: "having our full 2 cluster LocalAI peered in the network with one Plane and eventually 2 or even 3 fleets.
+      there will be multiple stage to this including trial of the multiple features and attempt to put in place and such"'
     status: planned
   - name: Core Platform
-    description: 'AICP core: controller, Think/Edit/Act mode enforcement, backend routing (LocalAI vs
-      Claude Code), guardrails (path protection, secret filtering, command allowlist).
+    description: 'AICP core primitives: controller, Think/Edit/Act mode enforcement, backend routing.
 
-      '
+
+      The aicp/ package has 46 modules including controller.py, router.py, modes.py, guardrails/. Assessment needed: what
+      is wired up end-to-end, what is scaffolding.
+
+
+      Guardrails: Think mode blocks writes, Edit mode controls scope, Act mode has command allowlist. Path protection and
+      secret filtering always active.
+
+
+      User vision: "we need to really make this strong."'
     status: planned
   - name: Integrations
-    description: 'Backend integrations: LocalAI (OpenAI-compatible), Claude Code (subprocess), Open WebUI
-      (planned).
+    description: 'Backend integrations connecting AICP to inference providers.
 
-      '
+
+      LocalAI: localhost:8090, OpenAI-compatible API, 9 models loaded.
+
+      Claude Code: subprocess invocation, opus for complex, sonnet for standard.
+
+
+      Key challenge: single-active GPU backend (8GB VRAM). Strategy: keep hermes-3b warm for heartbeats, swap to hermes/codellama
+      for heavy work, phi-2 as CPU fallback.
+
+
+      Model warmup strategy must account for the chain system — when a chain fires, the router needs to know which model is
+      currently warm to avoid unnecessary swaps.'
     status: planned
   cover_image: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200
   logo_props:
@@ -174,8 +262,8 @@ projects:
 - identifier: OF
   name: OpenClaw Fleet
   emoji: 🦞
-  description: 'Fleet operations, MCP tools, orchestrator, agents. 10 autonomous AI agents managed through
-    OpenClaw gateway and Mission Control. Standards, skills, review chains, IRC channels, budget monitoring.
+  description: 'Fleet operations, MCP tools, orchestrator, agents. 10 autonomous AI agents managed through OpenClaw gateway
+    and Mission Control. Standards, skills, review chains, IRC channels, budget monitoring.
 
     '
   github: cyberpunk042/openclaw-fleet
@@ -207,18 +295,52 @@ projects:
     color: '#EF4444'
   modules:
   - name: Core
-    description: Orchestrator, daemons, effort profiles, budget monitoring, task scoring
+    description: 'Orchestrator (the brain — 30s cycle, 6 steps), daemons (sync/monitor/auth/orchestrator), effort profiles
+      (full/conservative/minimal/paused), budget monitoring (real Claude OAuth quota), task scoring (priority-based dispatch
+      ordering).
+
+
+      The orchestrator is the fleet control plane — no LLM, pure Python logic. It dispatches tasks, evaluates parents, wakes
+      drivers, checks health.
+
+
+      Missing: chain runner (M-SC02) to execute event chains from MCP tools.'
   - name: MCP
-    description: MCP tools (13), context bundling, smart chains, tool enforcement
+    description: '13 MCP tools that agents call during sessions. The primary interface between agents and the fleet.
+
+
+      Current: fleet_read_context, fleet_task_accept, fleet_task_progress, fleet_commit, fleet_task_complete, fleet_alert,
+      fleet_pause, fleet_escalate, fleet_notify_human, fleet_chat, fleet_task_create, fleet_approve, fleet_agent_status.
+
+
+      Missing: Plane MCP tools (M-SC04) — fleet_plane_list_sprint, fleet_plane_sync, etc. PM agent currently cannot interact
+      with Plane from inside a session.
+
+
+      Tools currently do individual API calls. Target: emit event chains (M-SC03) so one tool call publishes to all surfaces.'
   - name: Agents
-    description: Agent roles, heartbeats, lifecycle, behavioral security, souls
+    description: 'Agent roles (primary + secondary), heartbeats (per-agent intervals 30-90m), lifecycle (ACTIVE→IDLE→SLEEPING→OFFLINE),
+      behavioral security, SOUL.md identities.
+
+
+      Each agent has a primary role and secondary responsibilities when idle. fleet-ops drives OCMC, PM drives Plane. Others
+      contribute to backlog when free.
+
+
+      Agent identities are fleet-namespaced for multi-fleet: {prefix}-{role}.'
   - name: Infrastructure
     description: Gateway, IRC (10 channels), ntfy (3 topics), setup scripts, Docker
   - name: Autonomy
-    description: 'Event chains, routing engine, self-healing, stuck detection, config auto-push, agent
-      command center (PRE→PROGRESS→POST)
+    description: 'Event chains (model built, runner missing M-SC02), routing engine (capability matching), self-healing (gateway
+      restart in monitor daemon), stuck detection, config auto-push, agent command center (PRE→PROGRESS→POST lifecycle — not
+      built).
 
-      '
+
+      29 NOT STARTED milestones in fleet-autonomy-milestones.md. Long-term work.
+
+
+      The chain system is the critical missing piece — chain builders exist for task_complete, alert, sprint_complete but
+      nothing executes them. MCP tools bypass chains entirely.'
   - name: Tests
     description: Unit tests, integration tests, verification scripts
   cover_image: https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200
@@ -230,8 +352,8 @@ projects:
 - identifier: DSPD
   name: DevOps Solution Product Development
   emoji: 📋
-  description: 'DevOps Solution Product Development — project management surface for the fleet built on
-    self-hosted Plane. The PM agent bridges Plane (sprints, epics, analytics) ↔ OCMC (agent dispatch).
+  description: 'DevOps Solution Product Development — project management surface for the fleet built on self-hosted Plane.
+    The PM agent bridges Plane (sprints, epics, analytics) ↔ OCMC (agent dispatch).
 
     '
   github: cyberpunk042/devops-solution-product-development
@@ -263,18 +385,36 @@ projects:
     color: '#EF4444'
   modules:
   - name: Setup
-    description: 'Docker, IaC, deployment scripts, mission seed, project layout, nginx, env templates
+    description: 'Docker (12 services), IaC (setup.sh install), mission seed (plane-seed-mission.sh reads config/mission.yaml),
+      project layout, nginx proxy, env templates.
 
-      '
+
+      setup.sh handles: secrets generation, service startup, admin user creation, workspace/project configuration, mission
+      seeding, API validation, startup verification, fleet credential export.
+
+
+      Plane is OPTIONAL. When present, the IaC configures it fully. When absent, fleet works on OCMC alone.'
   - name: Integration
-    description: 'Fleet CLI (fleet plan create/list/sync/status), plane_client.py, PM bridge
+    description: 'Fleet CLI (fleet plan create/list/sync/status), plane_client.py (typed async REST client), PM agent as the
+      bridge between Plane and OCMC.
 
-      '
+
+      The PM is the sole writer to Plane. Plane MCP tools (M-SC04) will give PM native access from heartbeat sessions. Plane
+      skill (M-SC05) will teach PM sprint management.
+
+
+      Other agents interact with Plane only through task comments directed at PM.'
   - name: Sync
-    description: 'Plane ↔ OCMC bidirectional sync. Plane items → OCMC tasks for agents. OCMC done → Plane
-      state updated.
+    description: 'Bidirectional Plane ↔ OCMC sync. Human creates in Plane → PM evaluates → OCMC task created → agent works
+      → completes → chain syncs back to Plane.
 
-      '
+
+      Sync is fleet-tagged in multi-fleet: each fleet syncs its own tasks.
+
+      Plane↔OCMC sync will be integrated into orchestrator cycle (M-SC07).
+
+
+      Graceful degradation: if Plane is down, chains mark PLANE events as failed, fleet continues on OCMC.'
   - name: Customization
     description: 'Webhooks (HMAC verified), Plane MCP server for PM, analytics, velocity tracking, burn-down
 
@@ -288,8 +428,8 @@ projects:
 - identifier: NNRT
   name: Narrative-to-Neutral Report Transformer
   emoji: 📄
-  description: 'Narrative-to-Neutral Report Transformer. Converts biased narrative reports into neutral,
-    structured format. Python NLP pipeline with multiple processing passes.
+  description: 'Narrative-to-Neutral Report Transformer. Converts biased narrative reports into neutral, structured format.
+    Python NLP pipeline with multiple processing passes.
 
     '
   github: cyberpunk042/Narrative-to-Neutral-Report-Transformer

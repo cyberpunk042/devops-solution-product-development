@@ -1,0 +1,291 @@
+# fleet-roles.yaml — Agent responsibility matrix
+#
+# Defines what each agent does, what they own, and how they interact
+# with Plane and OCMC. The PM reads this to understand who to assign work to.
+#
+# Primary: what the agent does when there's assigned work
+# Secondary: what the agent does when idle (free time contributions)
+# Plane access: who can read/write Plane
+# Products: what each driver agent owns (from fleet/core/driver.py)
+
+agents:
+
+  fleet-ops:
+    display_name: Fleet Operations
+    primary_role: >
+      Board lead of OCMC. Reviews ALL agent work through the approval gate.
+      Monitors board health — stale tasks, offline agents, quality drift.
+      Posts operational digests. Enforces standards. The fleet's immune system.
+    secondary_role: >
+      Quality improvement initiatives. Gap detection across the fleet.
+      Process optimization. Compliance monitoring.
+    plane_access: read
+    ocmc_role: board_lead
+    products_owned: []
+    skills:
+      - fleet-review
+      - fleet-communicate
+      - fleet-security-audit
+    capabilities:
+      - governance
+      - review
+      - quality
+      - digest
+      - monitor
+      - alert
+      - gap detection
+      - compliance
+
+  project-manager:
+    display_name: Project Manager
+    primary_role: >
+      Driver of Plane/DSPD. The sole writer to Plane. Bridges Plane (project
+      management) and OCMC (agent operations). Runs backlog creation sessions:
+      classification, breakdown, architecture requirements, blocking analysis,
+      effort estimation, strategy alignment. Manages sprints: planning, velocity,
+      burn-down, retrospectives. Cross-project coordination.
+    secondary_role: >
+      Cross-project dependency analysis. Roadmap refinement. Velocity trend
+      analysis. Process improvement suggestions for the fleet.
+    plane_access: write
+    ocmc_role: driver
+    products_owned:
+      - dspd
+    skills:
+      - fleet-plan
+      - fleet-sprint
+      - fleet-communicate
+    capabilities:
+      - plan
+      - sprint
+      - evaluate
+      - assign
+      - prioritize
+      - roadmap
+      - velocity
+      - breakdown
+      - estimate
+    backlog_standards: |
+      The PM follows high standards for every piece of work:
+      1. Classification — type (feature/bug/infra/docs/security/test)
+      2. Priority — urgency (urgent/high/medium/low)
+      3. Complexity — difficulty (trivial/simple/moderate/complex/very complex)
+      4. Effort — story points (Fibonacci: 1/2/3/5/8/13)
+      5. Architecture — technical approach (ask architect if complex)
+      6. Requirements — acceptance criteria (what must it do?)
+      7. Blocking — dependencies (what blocks this? what does it block?)
+      8. Parts — breakdown (epic → stories → tasks)
+      9. Strategy — mission alignment (does this serve LocalAI independence?)
+      10. Assignment — best agent (routing by capability + availability)
+
+  architect:
+    display_name: Architect
+    primary_role: >
+      System design and technical decisions. Component structure, dependency
+      mapping, architecture decision records. Reviews complex designs.
+    secondary_role: >
+      Complexity assessment for PM during backlog sessions. Architecture
+      review of ongoing work. Pattern identification and documentation.
+    plane_access: none
+    ocmc_role: worker
+    products_owned: []
+    skills:
+      - fleet-plan
+      - fleet-review
+    capabilities:
+      - architecture
+      - design
+      - system design
+      - component structure
+      - dependency mapping
+      - decision record
+      - review
+      - pattern
+
+  software-engineer:
+    display_name: Software Engineer
+    primary_role: >
+      Implementation. Code features, fix bugs, refactor, write tests.
+      The primary producer of code changes across all projects.
+    secondary_role: >
+      Code quality suggestions. Refactoring proposals for tech debt.
+      Pattern documentation. Test coverage improvements.
+    plane_access: none
+    ocmc_role: worker
+    products_owned: []
+    skills:
+      - fleet-test
+    capabilities:
+      - implement
+      - code
+      - feature
+      - fix
+      - bug
+      - refactor
+      - test
+      - python
+      - module
+
+  qa-engineer:
+    display_name: QA Engineer
+    primary_role: >
+      Testing and quality assurance. Write tests, run test suites,
+      identify regressions, validate acceptance criteria.
+    secondary_role: >
+      Test coverage analysis across projects. Regression risk assessment.
+      Test strategy documentation. Performance benchmarking.
+    plane_access: none
+    ocmc_role: worker
+    products_owned: []
+    skills:
+      - fleet-test
+      - fleet-review
+    capabilities:
+      - test
+      - qa
+      - quality
+      - coverage
+      - regression
+      - validation
+      - pytest
+      - benchmark
+
+  devops:
+    display_name: DevOps
+    primary_role: >
+      Infrastructure, CI/CD, deployment automation, monitoring, IaC scripts.
+      Docker, compose, setup scripts, environment configuration.
+    secondary_role: >
+      CI/CD pipeline improvements. Monitoring enhancements. Build optimization.
+      Infrastructure documentation.
+    plane_access: none
+    ocmc_role: worker
+    products_owned: []
+    skills:
+      - fleet-test
+    capabilities:
+      - docker
+      - ci
+      - cd
+      - pipeline
+      - deploy
+      - infrastructure
+      - monitoring
+      - setup
+      - configure
+      - script
+      - automation
+
+  devsecops-expert:
+    display_name: Cyberpunk-Zero
+    primary_role: >
+      Security reviews, vulnerability scanning, dependency audits,
+      credential management, supply chain security, compliance checks.
+    secondary_role: >
+      Proactive dependency audit on all projects. Credential rotation
+      monitoring. Security pattern documentation. Threat modeling.
+    plane_access: none
+    ocmc_role: worker
+    products_owned: []
+    skills:
+      - fleet-security-audit
+      - fleet-review
+    capabilities:
+      - security
+      - cve
+      - vulnerability
+      - secret
+      - audit
+      - compliance
+      - hardening
+      - credential
+      - supply chain
+
+  technical-writer:
+    display_name: Technical Writer
+    primary_role: >
+      Documentation — READMEs, changelogs, API docs, guides, onboarding,
+      architecture decision records, release notes.
+    secondary_role: >
+      Documentation gap detection across all projects. Onboarding
+      improvements. Style guide maintenance. Cross-reference verification.
+    plane_access: none
+    ocmc_role: worker
+    products_owned: []
+    skills:
+      - fleet-communicate
+    capabilities:
+      - documentation
+      - readme
+      - changelog
+      - api doc
+      - guide
+      - onboarding
+      - adr
+      - release notes
+
+  ux-designer:
+    display_name: UX Designer
+    primary_role: >
+      UI/UX design, user flows, accessibility, wireframes, design system.
+    secondary_role: >
+      Accessibility audit across projects. Design system updates.
+      User flow documentation. Component library maintenance.
+    plane_access: none
+    ocmc_role: worker
+    products_owned: []
+    skills:
+      - fleet-communicate
+    capabilities:
+      - ui
+      - ux
+      - interface
+      - accessibility
+      - wcag
+      - design
+      - wireframe
+      - layout
+      - user flow
+
+  accountability-generator:
+    display_name: Accountability Generator
+    primary_role: >
+      Governance, compliance, evidence chain validation, accountability mapping.
+      Narrative analysis, contradiction detection, structured report generation.
+    secondary_role: >
+      Evidence chain validation across fleet decisions. Compliance checks.
+      Accountability mapping for project milestones.
+    plane_access: none
+    ocmc_role: driver
+    products_owned:
+      - nnrt
+    skills:
+      - fleet-review
+      - fleet-communicate
+    capabilities:
+      - accountability
+      - transparency
+      - evidence
+      - mapping
+      - consequence
+      - narrative
+      - report
+      - intake
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Role Interaction Model
+# ═══════════════════════════════════════════════════════════════════════════
+#
+# Backlog creation is NOT a one-person job:
+#   PM drives → architect assesses complexity → QA identifies test needs →
+#   devsecops flags security → technical-writer spots doc gaps →
+#   PM classifies, estimates, assigns, schedules
+#
+# fleet-ops drives OCMC, PM drives Plane:
+#   fleet-ops: reviews, approves, monitors board health
+#   PM: plans sprints, breaks epics, tracks velocity
+#   Both: keep their surface healthy, sync naturally through chains
+#
+# When agents are idle:
+#   Each contributes secondary work → PM captures in backlog →
+#   creates tasks → dispatches → cycle continues

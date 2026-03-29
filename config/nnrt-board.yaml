@@ -1,0 +1,73 @@
+# nnrt-board.yaml — Initial board state for NNRT project in Plane
+#
+# NNRT — Narrative-to-Neutral Report Transformer
+# The project already exists as a Python repo. Board structure only.
+
+project: NNRT
+
+pages:
+  - title: "NNRT Architecture"
+    content: |
+      # NNRT — Narrative-to-Neutral Report Transformer
+
+      Converts biased narrative reports into neutral, structured format.
+      Python NLP pipeline with multiple processing passes.
+
+      ## Pipeline
+
+      ```
+      Document → Intake → Structuring → Mapping → Pressure Detection → Output
+      ```
+
+      ## Passes
+
+      1. **Intake** — document ingestion, format detection, preprocessing
+      2. **Structuring** — section detection, hierarchy extraction
+      3. **Mapping** — narrative → neutral transformation rules
+      4. **Pressure** — bias indicators, sentiment neutralization
+      5. **Persistence** — storage, export formats, API
+
+      ## Repository
+
+      GitHub: cyberpunk042/Narrative-to-Neutral-Report-Transformer
+
+  - title: "NNRT Current State"
+    content: |
+      # NNRT Current State — To Be Assessed
+
+      The NNRT Python project already exists. The PM needs to:
+      1. Assess what functionality exists
+      2. Run existing tests
+      3. Identify gaps per the pipeline spec
+      4. Create a sprint plan for completing the passes
+
+epic_details:
+  "Intake":
+    priority: high
+    notes: Document ingestion. May partially exist.
+  "Structuring":
+    priority: high
+    notes: Report parsing. Core of the pipeline.
+  "Mapping":
+    priority: high
+    notes: The transformation engine. Heart of NNRT.
+  "Pressure":
+    priority: medium
+    notes: Bias detection. Advanced NLP.
+  "Persistence":
+    priority: medium
+    notes: Storage and API. Needed for integration.
+
+cycles:
+  - name: "NNRT Sprint 1: Assessment"
+    duration_days: 14
+    description: |
+      Assess current NNRT codebase state. Document what exists, what works,
+      what's missing. Create sprint plan for pipeline completion.
+    goals:
+      - Repository assessed and documented
+      - Existing tests running
+      - Gap analysis complete
+      - Sprint 2 plan written
+    epics:
+      - "Intake"

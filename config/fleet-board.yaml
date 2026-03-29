@@ -1,0 +1,115 @@
+# fleet-board.yaml — Initial board state for OF (openclaw-fleet) project in Plane
+#
+# Structure only — PM creates the actual tasks.
+
+project: OF
+
+pages:
+  - title: "Fleet Architecture"
+    content: |
+      # OpenClaw Fleet Architecture
+
+      10 autonomous AI agents managed through OpenClaw gateway + Mission Control.
+
+      ## Surfaces
+
+      | Surface | Purpose | Users |
+      |---------|---------|-------|
+      | OCMC | Agent operations, dispatch, approvals | Agents, fleet-ops |
+      | Plane | Project management, sprints, analytics | Human, PM |
+      | IRC | Real-time alerts and interaction | Human, all agents |
+      | GitHub | Code review, PRs, CI | Human, all agents |
+
+      ## Agent Roster
+
+      | Agent | Primary Role | Heartbeat |
+      |-------|-------------|-----------|
+      | fleet-ops | Board lead, reviews, operations | 30m |
+      | project-manager | Sprint planning, task assignment | 35m |
+      | architect | System design, technical decisions | 60m |
+      | software-engineer | Implementation | 65m |
+      | devops | Infrastructure, CI/CD, IaC | 75m |
+      | qa-engineer | Testing, quality assurance | 70m |
+      | devsecops-expert | Security reviews, vulnerability scanning | 55m |
+      | technical-writer | Documentation, specs | 80m |
+      | ux-designer | UI/UX design, user flows | 85m |
+      | accountability-generator | Governance, compliance | 90m |
+
+      ## Orchestrator
+
+      Runs every 30 seconds. Steps:
+      1. Security scan
+      2. Ensure review approvals
+      3. Wake fleet-ops for pending reviews
+      4. Dispatch unblocked inbox tasks
+      5. Evaluate parent task completion
+      6. Health check
+
+  - title: "Fleet Operational Status"
+    content: |
+      # Fleet Operational Status
+
+      Updated by fleet-ops agent and orchestrator.
+
+      ## Current State
+
+      To be populated when fleet is operational.
+
+      ## Known Issues
+
+      - Things built but never verified running (see STATUS-TRACKER.md)
+      - Event-driven wake not implemented (MM1)
+      - Agent event filtering not implemented (MM8)
+
+epic_details:
+  "Core":
+    priority: high
+    notes: |
+      Orchestrator, daemons, effort profiles, budget monitoring, task scoring.
+      Most code exists but needs live verification.
+
+  "MCP":
+    priority: high
+    notes: |
+      13 MCP tools built. None verified with real running agents.
+      Critical: fleet_chat, fleet_task_create, fleet_approve, fleet_agent_status.
+
+  "Agents":
+    priority: medium
+    notes: |
+      All 10 heartbeats rewritten. Agent roles defined. Behavioral security in place.
+      Needs: live verification, event filtering, command center lifecycle.
+
+  "Infrastructure":
+    priority: medium
+    notes: |
+      Gateway, IRC (10 channels), ntfy (3 topics), setup scripts.
+      Communication verification passed (8/8 checks).
+
+  "Autonomy":
+    priority: low
+    notes: |
+      29 NOT STARTED milestones in fleet-autonomy-milestones.md.
+      Event chains, routing engine, self-healing, command center.
+      Long-term work — not for first sprint.
+
+  "Tests":
+    priority: high
+    notes: |
+      254 tests exist. Need live verification against running fleet.
+
+cycles:
+  - name: "Fleet Operational Validation"
+    duration_days: 14
+    description: |
+      Verify the fleet is actually operational end-to-end.
+      All tools verified live. Review chain tested. Daemons stable.
+    goals:
+      - Daemons running stable for 24h
+      - Orchestrator cycling without errors
+      - At least one agent completes a real task
+      - Review chain works (task → review → approve → done)
+      - fleet_chat verified live
+    epics:
+      - "Core"
+      - "MCP"

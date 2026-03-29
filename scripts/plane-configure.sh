@@ -14,7 +14,7 @@ set -euo pipefail
 PLANE_URL="${PLANE_URL:-http://localhost:8080}"
 PLANE_ADMIN_EMAIL="${PLANE_ADMIN_EMAIL:-admin@fleet.local}"
 PLANE_ADMIN_PASSWORD="${PLANE_ADMIN_PASSWORD:-FleetAdmin2026!}"
-COMPOSE_PROJECT="${COMPOSE_PROJECT:-devops-7e40de40}"
+COMPOSE_PROJECT="${COMPOSE_PROJECT:-dspd-plane}"
 API_CONTAINER="${API_CONTAINER:-${COMPOSE_PROJECT}-api-1}"
 CONFIG_FILE="${CONFIG_FILE:-.plane-config}"
 
@@ -52,6 +52,15 @@ docker exec "$API_CONTAINER" python manage.py createsuperuser \
     --noinput 2>/dev/null \
     && log "Superuser created" \
     || log "Superuser already exists"
+
+# Set admin password (createsuperuser --noinput doesn't set one)
+docker exec "$API_CONTAINER" python manage.py shell -c "
+from plane.db.models import User
+u = User.objects.get(email='${PLANE_ADMIN_EMAIL}')
+u.set_password('${PLANE_ADMIN_PASSWORD}')
+u.save(update_fields=['password'])
+print('ok')
+" 2>/dev/null && log "Admin password set" || log "WARN: Could not set admin password"
 
 docker exec "$API_CONTAINER" python manage.py create_instance_admin "$PLANE_ADMIN_EMAIL" 2>/dev/null \
     && log "Instance admin set" \

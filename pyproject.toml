@@ -31,8 +31,12 @@ dependencies = [
     "rich>=13.7.0",
     # Environment / config
     "python-dotenv>=1.0.0",
+    # YAML config parsing
+    "pyyaml>=6.0",
     # Structured logging
     "structlog>=24.1.0",
+    # Webhook receiver (ASGI)
+    "uvicorn>=0.30.0",
 ]
 
 [project.optional-dependencies]
@@ -74,4 +78,4 @@ markers = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["fleet"]
+packages = ["dspd", "fleet"]

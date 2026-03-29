@@ -91,7 +91,7 @@ check "Create issue" "-" "$ISSUE_ID"
 
 if [ -n "$ISSUE_ID" ] && [ "$ISSUE_ID" != "None" ]; then
     # Assign default state via DB (needed for issue_objects manager to include it)
-    STATE_ID=$(docker exec "${COMPOSE_PROJECT:-devops-7e40de40}-api-1" python manage.py shell -c \
+    STATE_ID=$(docker exec "${COMPOSE_PROJECT:-dspd-plane}-api-1" python manage.py shell -c \
         "from plane.db.models import State; s=State.objects.filter(project_id='$PROJECT_ID',default=True).first(); print(s.id if s else '')" 2>/dev/null || echo "")
     if [ -n "$STATE_ID" ]; then
         curl -sS -X PATCH -H "X-Api-Key: $TOKEN" -H "Content-Type: application/json" \

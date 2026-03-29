@@ -85,6 +85,9 @@ cmd_install() {
         LIVE_SECRET=$(python3 -c "import secrets; print(secrets.token_urlsafe(32))")
         sed -i "s/changeme-replace-with-50-char-random-string/${SECRET_KEY}/" "$ENV_FILE"
         sed -i "s/changeme-live-secret/${LIVE_SECRET}/" "$ENV_FILE"
+        ADMIN_PASS=$(python3 -c "import secrets; print(secrets.token_urlsafe(16))")
+        sed -i "s/changeme-set-a-strong-password/${ADMIN_PASS}/" "$ENV_FILE"
+        log "Admin password: $ADMIN_PASS (saved in plane.env)"
         # Set port
         sed -i "s/LISTEN_HTTP_PORT=8080/LISTEN_HTTP_PORT=${PLANE_PORT}/" "$ENV_FILE"
         sed -i "s|WEB_URL=http://localhost:8080|WEB_URL=${PLANE_URL}|" "$ENV_FILE"
@@ -96,9 +99,56 @@ cmd_install() {
 
     cmd_start
 
-    log "Configuring workspace and project..."
+    # Source plane.env so configure scripts get PLANE_ADMIN_EMAIL/PASSWORD
+    # shellcheck disable=SC1090
+    set -a; source "$ENV_FILE"; set +a
+
+    log "Configuring workspace and API token..."
     COMPOSE_PROJECT="$COMPOSE_PROJECT" API_CONTAINER="${COMPOSE_PROJECT}-api-1" \
         "${SCRIPT_DIR}/scripts/plane-configure.sh"
+
+    log "Seeding mission structure (projects, states, modules, labels, estimates)..."
+    COMPOSE_PROJECT="$COMPOSE_PROJECT" API_CONTAINER="${COMPOSE_PROJECT}-api-1" \
+        "${SCRIPT_DIR}/scripts/plane-seed-mission.sh"
+
+    log "Running API validation..."
+    COMPOSE_PROJECT="$COMPOSE_PROJECT" "${SCRIPT_DIR}/scripts/plane-validate-api.sh" "$CONFIG_FILE" || {
+        log "WARN: API validation had failures — check output above"
+    }
+
+    log "Running startup verification..."
+    "${SCRIPT_DIR}/scripts/plane-startup-verify.sh" || {
+        log "WARN: Startup verification had failures — check output above"
+    }
+
+    log "Configuring webhook receiver..."
+    COMPOSE_PROJECT="$COMPOSE_PROJECT" API_CONTAINER="${COMPOSE_PROJECT}-api-1" \
+        "${SCRIPT_DIR}/scripts/plane-setup-webhooks.sh" || {
+        log "WARN: Webhook setup failed (may need Plane Enterprise or manual config)"
+    }
+
+    # Export Plane credentials to fleet .env if openclaw-fleet exists
+    FLEET_DIR="${FLEET_DIR:-$(cd "$SCRIPT_DIR/.." && pwd)/openclaw-fleet}"
+    if [ -f "$CONFIG_FILE" ] && [ -f "$FLEET_DIR/.env" ]; then
+        source "$CONFIG_FILE"
+        # Map DSPD var names to fleet var names
+        # Fleet uses PLANE_API_KEY + PLANE_WORKSPACE; DSPD config has PLANE_API_TOKEN + PLANE_WORKSPACE_SLUG
+        _update_fleet_env() {
+            local var="$1" val="$2"
+            if [ -n "$val" ]; then
+                if grep -q "^${var}=" "$FLEET_DIR/.env" 2>/dev/null; then
+                    sed -i "s|^${var}=.*|${var}=${val}|" "$FLEET_DIR/.env"
+                else
+                    echo "${var}=${val}" >> "$FLEET_DIR/.env"
+                fi
+            fi
+        }
+        _update_fleet_env "PLANE_URL" "${PLANE_URL:-}"
+        _update_fleet_env "PLANE_API_KEY" "${PLANE_API_TOKEN:-}"
+        _update_fleet_env "PLANE_WORKSPACE" "${PLANE_WORKSPACE_SLUG:-}"
+        _update_fleet_env "PLANE_PROJECT_ID" "${PLANE_PROJECT_ID:-}"
+        log "Plane credentials exported to $FLEET_DIR/.env"
+    fi
 
     bold "Plane installed successfully"
     log "  Web UI:  ${PLANE_URL}"

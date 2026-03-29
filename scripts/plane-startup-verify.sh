@@ -8,7 +8,7 @@
 
 set -euo pipefail
 
-COMPOSE_PROJECT="${COMPOSE_PROJECT:-devops-7e40de40}"
+COMPOSE_PROJECT="${COMPOSE_PROJECT:-dspd-plane}"
 COMPOSE_FILE="${COMPOSE_FILE:-docker-compose.plane.yaml}"
 ENV_FILE="${ENV_FILE:-plane.env}"
 PLANE_URL="${PLANE_URL:-http://localhost:8080}"

@@ -18,7 +18,7 @@ fleet_name: "Fleet Alpha"
 service_account:
   email: fleet-service@fleet.local
   display_name: "Fleet Service"
-  is_bot: true
+  is_bot: false  # Plane hides is_bot=True from project member picker
   workspace_role: 20  # member — needs write access for sync
 
 # Agent bot accounts

@@ -47,14 +47,14 @@ def create_bot_user(email, display_name, workspace_role, project_roles):
             'first_name': display_name.split('[')[0].strip(),
             'last_name': f'[{prefix}]',
             'display_name': display_name,
-            'is_bot': True,
+            'is_bot': False  # Plane hides is_bot=True from member picker,
             'is_active': True,
             'is_password_autoset': True,
         }
     )
     if not created:
         user.display_name = display_name
-        user.is_bot = True
+        user.is_bot = False  # Plane filters out is_bot=True in project members
         user.save(update_fields=['display_name', 'is_bot'])
 
     # Workspace membership

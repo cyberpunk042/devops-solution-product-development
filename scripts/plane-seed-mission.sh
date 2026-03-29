@@ -71,6 +71,7 @@ label_objects = {}
 for proj_cfg in config.get('projects', []):
     identifier = proj_cfg['identifier']
     name = proj_cfg['name']
+    emoji = proj_cfg.get('emoji', '')
     desc = proj_cfg.get('description', '')
     github = proj_cfg.get('github', '')
     network = proj_cfg.get('network', 2)
@@ -88,16 +89,19 @@ for proj_cfg in config.get('projects', []):
             'cycle_view': views.get('cycles', True),
             'issue_views_view': views.get('issue_views', True),
             'page_view': views.get('pages', True),
+            'emoji': emoji,
         }
     )
     if not created:
+        proj.name = name
         proj.description = desc.strip()
+        if emoji: proj.emoji = emoji
         proj.module_view = views.get('modules', True)
         proj.cycle_view = views.get('cycles', True)
         proj.issue_views_view = views.get('issue_views', True)
         proj.page_view = views.get('pages', True)
         proj.save(update_fields=[
-            'description', 'module_view', 'cycle_view',
+            'name', 'description', 'emoji', 'module_view', 'cycle_view',
             'issue_views_view', 'page_view',
         ])
 

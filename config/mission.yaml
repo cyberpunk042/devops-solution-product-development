@@ -118,7 +118,8 @@ projects:
   # The PRIMARY mission project. LocalAI independence lives here.
   # ─────────────────────────────────────────────────────────────────────────
   - identifier: AICP
-    name: aicp
+    name: AI Control Platform
+    emoji: "🤖"
     description: >
       AI Control Platform — personal AI control workspace orchestrating
       LocalAI and Claude Code through Think/Edit/Act modes.
@@ -224,7 +225,8 @@ projects:
   # Fleet operations, agents, orchestrator, MCP tools
   # ─────────────────────────────────────────────────────────────────────────
   - identifier: OF
-    name: openclaw-fleet
+    name: OpenClaw Fleet
+    emoji: "🦞"
     description: >
       Fleet operations, MCP tools, orchestrator, agents.
       10 autonomous AI agents managed through OpenClaw gateway
@@ -281,7 +283,8 @@ projects:
   # Plane itself, CLI, sync, webhooks, MCP
   # ─────────────────────────────────────────────────────────────────────────
   - identifier: DSPD
-    name: dspd
+    name: DevOps Solution Product Development
+    emoji: "📋"
     description: >
       DevOps Solution Product Development — project management surface
       for the fleet built on self-hosted Plane. The PM agent bridges
@@ -339,7 +342,8 @@ projects:
   # NNRT — Narrative-to-Neutral Report Transformer
   # ─────────────────────────────────────────────────────────────────────────
   - identifier: NNRT
-    name: nnrt
+    name: Narrative-to-Neutral Report Transformer
+    emoji: "📄"
     description: >
       Narrative-to-Neutral Report Transformer. Converts biased
       narrative reports into neutral, structured format.

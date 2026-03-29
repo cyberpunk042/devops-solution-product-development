@@ -226,7 +226,7 @@ log "API restarted (HTTP $HTTP)"
 # ── Workspace quick links (home page) ────────────────────────────────────
 
 log "Configuring workspace quick links..."
-cat "$SCRIPT_DIR/../config/mission.yaml" | docker exec -i "$API_CONTAINER" python manage.py shell -c "
+cat "$(dirname "$0")/../config/mission.yaml" | docker exec -i "$API_CONTAINER" python manage.py shell -c "
 import sys, yaml
 from plane.db.models import User, Workspace, WorkspaceUserLink
 

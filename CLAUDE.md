@@ -5,29 +5,43 @@
 This project integrates self-hosted [Plane](https://github.com/makeplane/plane) with the OpenClaw Fleet.
 Your work here connects two live surfaces — Plane (project management) and OCMC (agent operations).
 
+Part of the fleet ecosystem:
+
+| Project | Repo | Purpose |
+|---------|------|---------|
+| **AICP** | `devops-expert-local-ai` | AI Control Platform, LocalAI independence |
+| **Fleet** | `openclaw-fleet` | 10 autonomous AI agents via OpenClaw + MC |
+| **DSPD** | `devops-solution-product-development` | **This repo** — Plane deployment + integration |
+| **NNRT** | `Narrative-to-Neutral-Report-Transformer` | Report transformation NLP pipeline |
+
 ---
 
 ## Project Layout
 
 ```
 devops-solution-product-development/
-├── docs/
-│   ├── architecture.md      # Technical architecture — READ FIRST
-│   └── requirements.md      # Feature requirements per phase
+├── config/
+│   ├── mission.yaml           # THE mission — workspace, projects, modules, labels, estimates
+│   ├── aicp-board.yaml        # AICP: LocalAI 5 stages, pages, acceptance criteria
+│   ├── fleet-board.yaml       # Fleet: modules, operational status
+│   ├── dspd-board.yaml        # DSPD: phases, architecture
+│   └── nnrt-board.yaml        # NNRT: pipeline modules, assessment
+├── dspd/
+│   ├── config.py              # Settings from env — no hardcoded values
+│   └── webhooks.py            # HMAC-SHA256 handler + ASGI receiver
 ├── fleet/
-│   ├── infra/
-│   │   └── plane_client.py  # Plane REST API client (async, typed)
-│   └── cli/
-│       └── plane.py         # CLI commands: fleet plan create/list/sync
-├── docker/
-│   ├── docker-compose.plane.yml   # Plane self-hosted stack
-│   ├── nginx.plane.conf           # Nginx reverse proxy
-│   └── .env.plane.example         # Environment template
-├── scripts/
-│   └── setup-plane.sh             # First-run setup
+│   ├── infra/plane_client.py  # Plane REST API client (async, typed)
+│   ├── cli/plane.py           # CLI: fleet plan create/list/sync/status
+│   └── core/plane_sync.py     # Bidirectional Plane ↔ OCMC sync
+├── docker-compose.plane.yaml  # Plane stack (12 services)
+├── plane.env.example          # Environment template
+├── setup.sh                   # IaC: install/start/stop/validate/upgrade/uninstall
+├── scripts/                   # 8 IaC scripts (configure, seed, labels, webhooks, validate, verify)
+├── docker/nginx.plane.conf    # Reverse proxy config
 ├── tests/
-│   ├── unit/                      # Fast, no network
-│   └── integration/               # Requires live Plane instance
+│   ├── unit/                  # 18 tests passing
+│   └── integration/           # Live Plane API CRUD
+├── docs/                      # Architecture, requirements, sprints, retros
 ├── pyproject.toml
 ├── CLAUDE.md   ← you are here
 └── README.md

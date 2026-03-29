@@ -161,18 +161,28 @@ for proj_cfg in config.get('projects', []):
     # ── Modules (epics) ──
     modules_cfg = proj_cfg.get('modules', [])
     for mod_cfg in modules_cfg:
+        mod_defaults = {
+            'workspace': ws,
+            'description': mod_cfg.get('description', '').strip(),
+            'created_by': user,
+            'updated_by': user,
+        }
+        if mod_cfg.get('status'):
+            mod_defaults['status'] = mod_cfg['status']
         mod, m_created = Module.objects.get_or_create(
             name=mod_cfg['name'], project=proj,
-            defaults={
-                'workspace': ws,
-                'description': mod_cfg.get('description', '').strip(),
-                'created_by': user,
-                'updated_by': user,
-            }
+            defaults=mod_defaults,
         )
-        if not m_created and mod_cfg.get('description'):
-            mod.description = mod_cfg['description'].strip()
-            mod.save(update_fields=['description'])
+        if not m_created:
+            changed = []
+            if mod_cfg.get('description'):
+                mod.description = mod_cfg['description'].strip()
+                changed.append('description')
+            if mod_cfg.get('status') and mod.status != mod_cfg['status']:
+                mod.status = mod_cfg['status']
+                changed.append('status')
+            if changed:
+                mod.save(update_fields=changed)
 
     mod_count = Module.objects.filter(project=proj).count()
     mod_names = list(Module.objects.filter(project=proj).values_list('name', flat=True))
@@ -324,3 +334,9 @@ done
 
 log ""
 log "Mission seeded successfully"
+# Restart API to flush cache so UI reflects all changes immediately
+log "Restarting API to flush cache..."
+docker restart "$API_CONTAINER" >/dev/null 2>&1
+sleep 10
+HTTP=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 10 "$PLANE_URL/" 2>/dev/null || echo "000")
+log "API restarted (HTTP $HTTP)"

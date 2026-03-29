@@ -55,7 +55,7 @@ wait_for_http() {
 }
 
 wait_for_migrations() {
-    local timeout=180 i=0
+    local timeout=600 i=0
     log "Waiting for database migrations..."
     while [ $i -lt $timeout ]; do
         STATUS=$(docker inspect "${COMPOSE_PROJECT}-migrator-1" --format '{{.State.Status}}' 2>/dev/null || echo "not_found")

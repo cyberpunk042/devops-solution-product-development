@@ -175,8 +175,8 @@ services:
     environment:
       <<: *proxy-env
     ports:
-      - "${LISTEN_HTTP_PORT:-8080}:80"
-      - "${LISTEN_HTTPS_PORT:-8443}:443"
+      - "${LISTEN_HTTP_PORT:-8080}:8080"
+      - "${LISTEN_HTTPS_PORT:-8443}:8443"
     volumes:
       - proxy_config:/config
       - proxy_data:/data

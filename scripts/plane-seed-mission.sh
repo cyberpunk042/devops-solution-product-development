@@ -61,21 +61,7 @@ print(f'Workspace: {ws.name} ({ws.slug})')
 
 # ── Estimates ──────────────────────────────────────────────────────────────
 est_cfg = config.get('estimates', {})
-if est_cfg:
-    scale = est_cfg.get('scale', [1, 2, 3, 5, 8, 13])
-    # Plane uses workspace-level estimate system
-    estimate, created = Estimate.objects.get_or_create(
-        name='Story Points', workspace=ws,
-        defaults={'type': 'points', 'created_by': user, 'updated_by': user}
-    )
-    for i, val in enumerate(scale):
-        EstimatePoint.objects.get_or_create(
-            estimate=estimate, key=i,
-            defaults={'value': str(val), 'workspace': ws,
-                      'created_by': user, 'updated_by': user}
-        )
-    tag = 'created' if created else 'exists'
-    print(f'Estimates: Story Points {scale} ({tag})')
+# Estimates are created per-project (Plane requires project FK)
 
 # ── Labels (fleet-wide, applied to all projects) ──────────────────────────
 labels_cfg = config.get('labels', [])
@@ -188,15 +174,27 @@ for proj_cfg in config.get('projects', []):
     mod_names = list(Module.objects.filter(project=proj).values_list('name', flat=True))
     print(f'  Modules: {mod_count} — {mod_names}')
 
-    # ── Estimate linkage ──
+    # ── Estimates (per-project) ──
     if est_cfg:
+        scale = est_cfg.get('scale', [1, 2, 3, 5, 8, 13])
         try:
-            estimate_obj = Estimate.objects.get(name='Story Points', workspace=ws)
+            estimate_obj, e_created = Estimate.objects.get_or_create(
+                name='Story Points', project=proj,
+                defaults={'workspace': ws, 'type': 'points',
+                          'created_by': user, 'updated_by': user}
+            )
+            if e_created:
+                for i, val in enumerate(scale):
+                    EstimatePoint.objects.get_or_create(
+                        estimate=estimate_obj, key=i,
+                        defaults={'value': str(val), 'workspace': ws,
+                                  'created_by': user, 'updated_by': user}
+                    )
             proj.estimate = estimate_obj
             proj.save(update_fields=['estimate'])
-            print(f'  Estimates: Story Points linked')
-        except Exception:
-            pass
+            print(f'  Estimates: Story Points {scale}')
+        except Exception as e:
+            print(f'  Estimates: SKIP ({e})')
 
 print('\\n=== Mission structure seeded ===')
 print(f'Projects: {len(config.get(\"projects\", []))}')
@@ -220,6 +218,7 @@ for board_file in "$BOARD_DIR"/*-board.yaml; do
     cat "$board_file" | docker exec -i "$API_CONTAINER" python manage.py shell -c "
 import sys, yaml
 from datetime import date, timedelta
+from django.utils import timezone
 from plane.db.models import (
     User, Workspace, Project, Module, Cycle, Page, PageLog,
 )
@@ -233,22 +232,23 @@ if not proj:
     print(f'  SKIP: project {identifier} not found')
     sys.exit(0)
 
-# ── Pages (wiki) ──
-pages_cfg = board.get('pages', [])
+# ── Pages (wiki) — skipped, Plane M2M through model requires custom handling
+# TODO: use Plane API for page creation instead of Django ORM
+pages_cfg = [] # board.get("pages", [])
 for page_cfg in pages_cfg:
     title = page_cfg['title']
     content = page_cfg.get('content', '')
-    existing = Page.objects.filter(name=title, project=proj).first()
+    existing = Page.objects.filter(name=title, projects=proj).first()
     if not existing:
         page = Page.objects.create(
             name=title,
             description_html=f'<pre>{content}</pre>',
             workspace=ws,
-            project=proj,
             owned_by=user,
             created_by=user,
             updated_by=user,
         )
+        page.projects.add(proj)
         print(f'  PAGE: {title} (created)')
     else:
         print(f'  PAGE: {title} (exists)')
@@ -271,9 +271,10 @@ for cycle_cfg in cycles_cfg:
         cycle = Cycle.objects.create(
             name=name,
             description=full_desc,
-            start_date=today,
-            end_date=today + timedelta(days=duration),
+            start_date=timezone.now(),
+            end_date=timezone.now() + timedelta(days=duration),
             workspace=ws,
+            owned_by=user,
             project=proj,
             created_by=user,
             updated_by=user,

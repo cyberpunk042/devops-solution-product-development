@@ -1,6 +1,7 @@
-# fleet-board.yaml — Initial board state for OF (openclaw-fleet) project in Plane
+# fleet-board.yaml — OpenClaw Fleet project board content
 #
-# Structure only — PM creates the actual tasks.
+# fleet-ops drives OCMC. PM drives Plane. Both surfaces healthy.
+# This board tracks fleet infrastructure, MCP tools, agents, autonomy.
 
 project: OF
 
@@ -13,103 +14,170 @@ pages:
 
       ## Surfaces
 
-      | Surface | Purpose | Users |
-      |---------|---------|-------|
-      | OCMC | Agent operations, dispatch, approvals | Agents, fleet-ops |
-      | Plane | Project management, sprints, analytics | Human, PM |
-      | IRC | Real-time alerts and interaction | Human, all agents |
-      | GitHub | Code review, PRs, CI | Human, all agents |
+      | Surface | Purpose | Driver |
+      |---------|---------|--------|
+      | OCMC | Agent operations, dispatch, approvals | fleet-ops (board lead) |
+      | Plane | Project management, sprints, analytics | project-manager |
+      | IRC | Real-time alerts and interaction | all agents |
+      | GitHub | Code review, PRs, CI | all agents |
+      | ntfy | Human notifications | all agents |
 
       ## Agent Roster
 
-      | Agent | Primary Role | Heartbeat |
-      |-------|-------------|-----------|
-      | fleet-ops | Board lead, reviews, operations | 30m |
-      | project-manager | Sprint planning, task assignment | 35m |
-      | architect | System design, technical decisions | 60m |
-      | software-engineer | Implementation | 65m |
-      | devops | Infrastructure, CI/CD, IaC | 75m |
-      | qa-engineer | Testing, quality assurance | 70m |
-      | devsecops-expert | Security reviews, vulnerability scanning | 55m |
-      | technical-writer | Documentation, specs | 80m |
-      | ux-designer | UI/UX design, user flows | 85m |
-      | accountability-generator | Governance, compliance | 90m |
+      | Agent | Primary Role | Secondary (when idle) | Heartbeat |
+      |-------|-------------|----------------------|-----------|
+      | fleet-ops | Board lead, reviews, operations | Quality improvement, gap detection | 30m |
+      | project-manager | Sprint planning, Plane bridge | Cross-project dependency analysis | 35m |
+      | devsecops-expert | Security reviews, scanning | Dependency audit, credential rotation | 55m |
+      | architect | System design, decisions | Complexity assessment for PM | 60m |
+      | software-engineer | Implementation | Code quality, refactoring proposals | 65m |
+      | qa-engineer | Testing, QA | Coverage analysis, regression risk | 70m |
+      | devops | Infrastructure, CI/CD | Pipeline improvements, monitoring | 75m |
+      | technical-writer | Documentation | Doc gap detection, onboarding | 80m |
+      | ux-designer | UI/UX design | Accessibility audit, design system | 85m |
+      | accountability-generator | Governance, NNRT | Evidence chain validation | 90m |
 
-      ## Orchestrator
+      ## Orchestrator (The Brain)
 
-      Runs every 30 seconds. Steps:
+      Runs every 30 seconds. 6 steps:
       1. Security scan
-      2. Ensure review approvals
+      2. Ensure review approvals exist
       3. Wake fleet-ops for pending reviews
-      4. Dispatch unblocked inbox tasks
+      4. Dispatch unblocked inbox tasks (max 2/cycle)
       5. Evaluate parent task completion
-      6. Health check
+      6. Health check (stuck tasks, offline agents)
+
+      Safety: budget monitor (OAuth API), effort profiles (conservative default),
+      error reporter, outage detector, max 2 dispatches per cycle.
+
+      ## Chain Architecture
+
+      One fleet operation produces a CHAIN of events across surfaces:
+
+      ```
+      fleet_task_complete()
+        → INTERNAL: MC task→review, approval, board memory
+        → PUBLIC: branch push, PR creation
+        → CHANNEL: IRC #fleet + #reviews
+        → NOTIFY: ntfy notification
+        → PLANE: issue updated (when Plane present)
+        → META: metrics, sync tracking
+      ```
+
+      Chain builders exist (event_chain.py). Chain RUNNER not built yet (M-SC02).
+      MCP tools currently do individual API calls instead of emitting chains.
 
   - title: "Fleet Operational Status"
     content: |
       # Fleet Operational Status
 
-      Updated by fleet-ops agent and orchestrator.
+      Updated by fleet-ops and orchestrator.
 
-      ## Current State
+      ## Services
 
-      To be populated when fleet is operational.
+      | Service | URL | Status |
+      |---------|-----|--------|
+      | MC API | localhost:8000 | Running |
+      | MC UI | localhost:3000 | Running |
+      | Gateway | ws://localhost:18789 | Running (4GB heap) |
+      | IRC | localhost:6667 | Running (10 channels) |
+      | The Lounge | localhost:9000 | Running |
+      | LocalAI | localhost:8090 | Running (9 models) |
+      | Plane | localhost:8080 | Running (4 projects) |
 
-      ## Known Issues
+      ## Known Gaps
 
+      - Chain runner not built (M-SC02) — MCP tools bypass chains
+      - No Plane MCP tools (M-SC04) — PM can't access Plane from sessions
+      - 29 autonomy milestones NOT STARTED
+      - Event-driven wake not built (MM1)
+      - Agent event filtering not built (MM8)
       - Things built but never verified running (see STATUS-TRACKER.md)
-      - Event-driven wake not implemented (MM1)
-      - Agent event filtering not implemented (MM8)
 
 epic_details:
   "Core":
     priority: high
+    acceptance_criteria:
+      - Orchestrator cycles every 30s without errors for 24h
+      - Budget monitor reads real Claude quota before dispatch
+      - Effort profiles switch correctly (fleet pause/resume)
+      - Task scoring dispatches by priority order
     notes: |
-      Orchestrator, daemons, effort profiles, budget monitoring, task scoring.
-      Most code exists but needs live verification.
+      The orchestrator is working but the chain runner is the critical gap.
+      MCP tools do 5 separate API calls where one chain emission would suffice.
+      M-SC02 (chain runner) and M-SC03 (wire MCP tools) are the next steps.
 
   "MCP":
     priority: high
+    acceptance_criteria:
+      - All 13 existing tools verified with real running agents
+      - Plane MCP tools added (M-SC04) — PM can read/write Plane
+      - Tools emit event chains instead of individual API calls (M-SC03)
     notes: |
-      13 MCP tools built. None verified with real running agents.
-      Critical: fleet_chat, fleet_task_create, fleet_approve, fleet_agent_status.
+      13 tools built, none verified live. The immediate need is Plane MCP
+      tools so the PM can drive sprints. Then wire all tools to emit chains.
 
   "Agents":
     priority: medium
+    acceptance_criteria:
+      - All 10 heartbeats fire and agents respond correctly
+      - fleet-ops reviews at least one task through full approval flow
+      - PM breaks down at least one epic into tasks via fleet_task_create
     notes: |
-      All 10 heartbeats rewritten. Agent roles defined. Behavioral security in place.
-      Needs: live verification, event filtering, command center lifecycle.
+      All 10 agents online. Heartbeats configured (30-90m staggered).
+      Need live verification — no agent has actually executed a real task yet.
+
+      Agent roles defined in config/fleet-roles.yaml:
+      - fleet-ops drives OCMC (reviews, quality, monitoring)
+      - PM drives Plane (sprints, backlog, velocity)
+      - Others have secondary responsibilities when idle
 
   "Infrastructure":
     priority: medium
+    acceptance_criteria:
+      - setup.sh runs clean from zero on a fresh machine
+      - Gateway survives 24h without OOM crash
+      - IRC channels active with agent messages
+      - Communication verification passes 8/8
     notes: |
-      Gateway, IRC (10 channels), ntfy (3 topics), setup scripts.
-      Communication verification passed (8/8 checks).
+      Setup works end-to-end. Gateway has 4GB heap fix + self-healing restart
+      in monitor daemon. Communication verified (8/8 checks passed).
 
   "Autonomy":
     priority: low
+    acceptance_criteria:
+      - Event chain runner built and tested (M-SC02)
+      - At least one MCP tool emits chains (M-SC03)
+      - Stuck agent detection working
     notes: |
-      29 NOT STARTED milestones in fleet-autonomy-milestones.md.
-      Event chains, routing engine, self-healing, command center.
-      Long-term work — not for first sprint.
+      29 NOT STARTED milestones. Long-term work. The chain runner is the
+      foundation — everything else in autonomy builds on it.
+
+      Event chain model exists with builders for task_complete, alert,
+      sprint_complete. Smart chains (DispatchContext) pre-compute context.
+      But nothing RUNS the chains yet.
 
   "Tests":
     priority: high
+    acceptance_criteria:
+      - 341 fleet tests passing (currently all green)
+      - At least one integration test against live fleet
     notes: |
-      254 tests exist. Need live verification against running fleet.
+      341 unit tests passing. pytest-asyncio installed. No live integration
+      tests yet — all tests use mocks.
 
 cycles:
   - name: "Fleet Operational Validation"
     duration_days: 14
     description: |
-      Verify the fleet is actually operational end-to-end.
-      All tools verified live. Review chain tested. Daemons stable.
+      Validate fleet is operational end-to-end. All tools verified live.
+      At least one agent completes a real task through the full review chain.
     goals:
-      - Daemons running stable for 24h
+      - Daemons stable for 24h
       - Orchestrator cycling without errors
-      - At least one agent completes a real task
-      - Review chain works (task → review → approve → done)
-      - fleet_chat verified live
+      - At least one real task dispatched and completed
+      - Review chain verified (task → review → approve → done)
+      - fleet_chat verified between agents
     epics:
       - "Core"
       - "MCP"

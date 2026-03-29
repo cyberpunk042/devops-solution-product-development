@@ -1,7 +1,8 @@
-# nnrt-board.yaml — Initial board state for NNRT project in Plane
+# nnrt-board.yaml — NNRT project board content
 #
-# NNRT — Narrative-to-Neutral Report Transformer
-# The project already exists as a Python repo. Board structure only.
+# Narrative-to-Neutral Report Transformer
+# Owned by accountability-generator agent (driver)
+# The project already exists as a Python repo — assessment first.
 
 project: NNRT
 
@@ -19,55 +20,118 @@ pages:
       Document → Intake → Structuring → Mapping → Pressure Detection → Output
       ```
 
-      ## Passes
+      ### Intake
+      Document ingestion. Format detection (PDF, DOCX, plain text).
+      Preprocessing: encoding normalization, section splitting, metadata extraction.
 
-      1. **Intake** — document ingestion, format detection, preprocessing
-      2. **Structuring** — section detection, hierarchy extraction
-      3. **Mapping** — narrative → neutral transformation rules
-      4. **Pressure** — bias indicators, sentiment neutralization
-      5. **Persistence** — storage, export formats, API
+      ### Structuring
+      Report structure detection. Section hierarchy extraction.
+      Identify: claims, evidence, sources, dates, actors, actions.
+      Build document graph with relationships.
+
+      ### Mapping
+      The transformation engine. Narrative statements mapped to neutral equivalents.
+      Rules-based + NLP-assisted transformation.
+      Preserve factual content, remove editorial framing.
+
+      ### Pressure Detection
+      Identify bias indicators: loaded language, emotional appeals, selective framing,
+      missing context, false equivalencies.
+      Sentiment neutralization: rewrite biased passages to neutral tone.
+      Flag confidence levels for each detection.
+
+      ### Persistence
+      Storage: processed reports, intermediate results, audit trail.
+      Export: JSON structured output, PDF neutral report, comparison view.
+      API: REST endpoints for integration.
 
       ## Repository
 
       GitHub: cyberpunk042/Narrative-to-Neutral-Report-Transformer
+      Owner agent: accountability-generator
 
   - title: "NNRT Current State"
     content: |
       # NNRT Current State — To Be Assessed
 
-      The NNRT Python project already exists. The PM needs to:
-      1. Assess what functionality exists
-      2. Run existing tests
-      3. Identify gaps per the pipeline spec
-      4. Create a sprint plan for completing the passes
+      The NNRT Python project already exists. Assessment needed:
+
+      1. What modules exist and what state are they in?
+      2. Which passes are implemented vs scaffolding?
+      3. Do existing tests pass?
+      4. What NLP models/libraries are used?
+      5. What's the input/output format?
+      6. Is there a working end-to-end pipeline?
+      7. What dependencies need updating?
+
+      The accountability-generator agent owns this project.
+      The PM will create assessment tasks after reviewing the repo.
 
 epic_details:
   "Intake":
     priority: high
-    notes: Document ingestion. May partially exist.
+    acceptance_criteria:
+      - Document ingestion works for at least PDF and plain text
+      - Encoding normalization handles UTF-8 and common formats
+      - Section splitting produces structured output
+      - Metadata extraction captures dates, authors, sources
+    notes: |
+      Entry point of the pipeline. Must be robust against malformed input.
+      Assessment task first — check what exists in the repo.
+
   "Structuring":
     priority: high
-    notes: Report parsing. Core of the pipeline.
+    acceptance_criteria:
+      - Section hierarchy detected from document structure
+      - Claims, evidence, and sources identified
+      - Document graph built with entity relationships
+    notes: |
+      Core NLP work. May need spaCy or similar for entity extraction.
+      The accountability-generator has expertise in narrative analysis.
+
   "Mapping":
     priority: high
-    notes: The transformation engine. Heart of NNRT.
+    acceptance_criteria:
+      - At least 10 narrative-to-neutral transformation rules defined
+      - Rule engine applies transformations preserving factual content
+      - Before/after comparison available for validation
+    notes: |
+      Heart of the NNRT. The transformation rules define what "neutral" means.
+      Needs careful design — the architect should review the rule structure.
+
   "Pressure":
     priority: medium
-    notes: Bias detection. Advanced NLP.
+    acceptance_criteria:
+      - Loaded language detection with confidence scores
+      - Emotional appeal identification
+      - Selective framing detection
+      - Neutral rewrite suggestions for flagged passages
+    notes: |
+      Advanced NLP. May benefit from LLM assistance (LocalAI for pattern
+      matching, Claude for complex cases). Connects to AICP Stage 3 offload.
+
   "Persistence":
     priority: medium
-    notes: Storage and API. Needed for integration.
+    acceptance_criteria:
+      - Processed reports stored with full audit trail
+      - JSON export of structured analysis
+      - PDF generation of neutral report
+      - REST API for external integration
+    notes: |
+      Output layer. Needed for integration with other systems.
+      API design should follow fleet conventions (typed, async).
 
 cycles:
   - name: "NNRT Sprint 1: Assessment"
     duration_days: 14
     description: |
       Assess current NNRT codebase state. Document what exists, what works,
-      what's missing. Create sprint plan for pipeline completion.
+      what's missing. Run existing tests. Create sprint plan for pipeline
+      completion. The accountability-generator agent drives this.
     goals:
-      - Repository assessed and documented
-      - Existing tests running
-      - Gap analysis complete
-      - Sprint 2 plan written
+      - Repository cloned and assessed
+      - Existing tests running (pass or documented failures)
+      - Gap analysis document written
+      - Sprint 2 plan created with task breakdown
     epics:
       - "Intake"

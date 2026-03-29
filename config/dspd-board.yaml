@@ -12,53 +12,77 @@ pages:
     \    │\n│  Primary users: human, all agents                            │\n└──────────────────────────────────────────────────────────────┘\n\
     ```\n\n## Key Rules\n\n1. PM agent is the sole writer to Plane\n2. OCMC and Plane are NOT the same thing\n3. Separate\
     \ Docker Compose — Plane isolated from OCMC\n4. No shared PostgreSQL\n5. Webhook HMAC verification is mandatory\n"
-  content_html: '<h1>DSPD — Three Surfaces Architecture</h1>
+  content_html: '
 
-    <p>┌──────────────────────────────────────────────────────────────┐</p>
+    <h1>DSPD — Three Surfaces Architecture</h1>
 
-    <p>│  PLANE (DSPD)                    Project Management Surface  │</p>
 
-    <p>│  sprints · cycles · modules · epics · analytics · wiki       │</p>
+    <h2>How the Surfaces Connect</h2>
 
-    <p>│  Primary users: human, PM agent                              │</p>
+    <table>
 
-    <p>└─────────────────────────────┬────────────────────────────────┘</p>
+    <thead><tr><th>Surface</th><th>Purpose</th><th>Primary Users</th></tr></thead>
 
-    <p>│  PM agent bridges</p>
+    <tbody>
 
-    <p>┌─────────────────────────────▼────────────────────────────────┐</p>
+    <tr><td><strong>Plane (DSPD)</strong></td><td>Project management — sprints, epics, analytics, wiki</td><td>Human, PM agent</td></tr>
 
-    <p>│  OCMC (Mission Control)     Agent Operations Surface         │</p>
+    <tr><td><strong>OCMC (Mission Control)</strong></td><td>Agent operations — dispatch, heartbeat, approvals</td><td>Fleet
+    agents</td></tr>
 
-    <p>│  task dispatch · heartbeat · board memory · approvals        │</p>
+    <tr><td><strong>GitHub</strong></td><td>Code surface — PRs, CI, code review, releases</td><td>Human, all agents</td></tr>
 
-    <p>│  Primary users: fleet agents                                 │</p>
+    </tbody>
 
-    <p>└─────────────────────────────┬────────────────────────────────┘</p>
+    </table>
 
-    <p>│  all agents</p>
 
-    <p>┌─────────────────────────────▼────────────────────────────────┐</p>
+    <h2>The PM Bridge</h2>
 
-    <p>│  GitHub                     Code Surface                     │</p>
+    <p>The project-manager agent is the <strong>sole bridge</strong> between Plane and OCMC:</p>
 
-    <p>│  PRs · CI · code review · releases                           │</p>
+    <ol>
 
-    <p>│  Primary users: human, all agents                            │</p>
+    <li>Human creates work items in Plane (sprints, stories, epics)</li>
 
-    <p>└──────────────────────────────────────────────────────────────┘</p>
+    <li>PM reads Plane → creates corresponding OCMC tasks for agents</li>
+
+    <li>Agent completes OCMC task → PM updates Plane item with results</li>
+
+    <li>Human sees progress in Plane (burn-down, velocity, analytics)</li>
+
+    </ol>
+
 
     <h2>Key Rules</h2>
 
-    <p>1. PM agent is the sole writer to Plane</p>
+    <ol>
 
-    <p>2. OCMC and Plane are NOT the same thing</p>
+    <li><strong>PM is the sole writer to Plane</strong> — no other agent writes directly</li>
 
-    <p>3. Separate Docker Compose — Plane isolated from OCMC</p>
+    <li><strong>OCMC and Plane are NOT the same thing</strong> — different purposes</li>
 
-    <p>4. No shared PostgreSQL</p>
+    <li><strong>Separate Docker Compose</strong> — Plane isolated from OCMC</li>
 
-    <p>5. Webhook HMAC verification is mandatory</p>'
+    <li><strong>No shared PostgreSQL</strong> — operational coupling risk too high</li>
+
+    <li><strong>Webhook HMAC verification mandatory</strong> — never process unverified events</li>
+
+    </ol>
+
+
+    <h2>Links</h2>
+
+    <ul>
+
+    <li><a href="https://github.com/cyberpunk042/devops-solution-product-development">GitHub: DSPD</a></li>
+
+    <li><a href="https://github.com/cyberpunk042/devops-solution-product-development/blob/main/docs/architecture.md">Architecture
+    Document</a></li>
+
+    </ul>
+
+    '
 - title: DSPD Phase Status
   content: '# DSPD Phases
 
@@ -90,29 +114,55 @@ pages:
     Multi-project, analytics, velocity, cross-project dependencies.
 
     '
-  content_html: '<h1>DSPD Phases</h1>
+  content_html: '
 
-    <h2>Phase 0: Foundation ✅</h2>
+    <h1>DSPD Phases</h1>
 
-    <p>Architecture, requirements, CLAUDE.md, pyproject.toml.</p>
 
-    <h2>Phase 1: Self-Host Plane — IN PROGRESS</h2>
+    <table>
 
-    <p>Docker compose, setup.sh IaC, workspace, projects, API.</p>
+    <thead><tr><th>Phase</th><th>Status</th><th>Description</th></tr></thead>
 
-    <h2>Phase 2: Fleet CLI</h2>
+    <tbody>
 
-    <p>plane_client.py, plane.py CLI, plane_sync.py.</p>
+    <tr><td><strong>Phase 0: Foundation</strong></td><td>✅ Complete</td><td>Architecture, requirements, CLAUDE.md, pyproject.toml</td></tr>
 
-    <p>Code exists — copied from openclaw-fleet. Needs end-to-end testing.</p>
+    <tr><td><strong>Phase 1: Self-Host Plane</strong></td><td>✅ Deployed</td><td>Docker, setup.sh IaC, workspace, 4 projects,
+    mission seeded</td></tr>
 
-    <h2>Phase 3: MCP Integration</h2>
+    <tr><td><strong>Phase 2: Fleet CLI</strong></td><td>🔶 Code Done</td><td>plane_client.py, plane.py CLI, plane_sync.py —
+    needs live test</td></tr>
 
-    <p>Webhook handler (dspd/webhooks.py), Plane MCP for PM, event routing.</p>
+    <tr><td><strong>Phase 3: MCP Integration</strong></td><td>🔶 Code Done</td><td>Webhook handler, HMAC verification — needs
+    Plane MCP tools</td></tr>
 
-    <h2>Phase 4: Full DSPD</h2>
+    <tr><td><strong>Phase 4: Full DSPD</strong></td><td>❌ Not Started</td><td>Multi-project analytics, velocity, cross-project
+    dependencies</td></tr>
 
-    <p>Multi-project, analytics, velocity, cross-project dependencies.</p>'
+    </tbody>
+
+    </table>
+
+
+    <h2>Milestone Documents</h2>
+
+    <ul>
+
+    <li><strong>M-PF01-09:</strong> Full Plane configuration (agent accounts, issue types, views)</li>
+
+    <li><strong>M-SC01-08:</strong> Skills and chains (chain runner, Plane MCP tools, PM skill)</li>
+
+    <li><strong>M-PM01-10:</strong> Platform maturity (rich content, personalization, state sync)</li>
+
+    <li><strong>M-SW01-10:</strong> Sync worker (real-time cross-platform bridge)</li>
+
+    <li><strong>M-P01-10:</strong> IaC evolution (pages API, GitHub, webhooks, backup)</li>
+
+    </ul>
+
+    <p><strong>Total: 47 milestones</strong> for complete Plane integration.</p>
+
+    '
 epic_details:
   Setup:
     priority: urgent

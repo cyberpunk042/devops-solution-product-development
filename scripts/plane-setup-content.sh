@@ -356,3 +356,72 @@ print('\\nDone')
 " 2>&1
 
 log "Done"
+# ── Starter Issues (from board config) ──────────────────────────────────
+
+log "Creating starter issues from board configs..."
+
+for board_file in "$PROJECT_DIR"/config/*-board.yaml; do
+    [ -f "$board_file" ] || continue
+    
+    cat "$board_file" | docker exec -i "$API_CONTAINER" python manage.py shell -c "
+import sys, yaml
+from plane.db.models import (
+    User, Workspace, Project, Issue, State, Label,
+    IssueAssignee, IssueLabel, IssueLink,
+)
+from plane.db.models.issue_type import IssueType
+
+ws = Workspace.objects.get(slug='fleet')
+admin = User.objects.get(email='${PLANE_ADMIN_EMAIL}')
+board = yaml.safe_load(sys.stdin.read())
+proj = Project.objects.filter(identifier=board['project'], workspace=ws).first()
+if not proj:
+    sys.exit(0)
+
+for issue_cfg in board.get('starter_issues', []):
+    title = issue_cfg['title']
+    if Issue.objects.filter(project=proj, name=title).exists():
+        continue
+    
+    state = State.objects.filter(project=proj, group='backlog').first()
+    issue_type = IssueType.objects.filter(name=issue_cfg.get('type', 'Task'), workspace=ws).first()
+    
+    kwargs = {
+        'name': title,
+        'description_html': f'<p>{issue_cfg.get(\"description\", \"\")}</p>',
+        'project': proj,
+        'workspace': ws,
+        'state': state,
+        'priority': issue_cfg.get('priority', 'medium'),
+        'created_by': admin,
+        'updated_by': admin,
+    }
+    if issue_type:
+        kwargs['type'] = issue_type
+    
+    issue = Issue.objects.create(**kwargs)
+    
+    assignee_email = issue_cfg.get('assignee', '')
+    if assignee_email:
+        assignee = User.objects.filter(email=assignee_email).first()
+        if assignee:
+            IssueAssignee.objects.create(
+                issue=issue, assignee=assignee,
+                project=proj, workspace=ws,
+                created_by=admin, updated_by=admin,
+            )
+    
+    for label_name in issue_cfg.get('labels', []):
+        label = Label.objects.filter(project=proj, name=label_name).first()
+        if label:
+            IssueLabel.objects.create(
+                issue=issue, label=label,
+                project=proj, workspace=ws,
+                created_by=admin, updated_by=admin,
+            )
+    
+    print(f'  {board[\"project\"]}: {title[:50]}')
+" 2>/dev/null
+done
+
+log "Starter issues created"

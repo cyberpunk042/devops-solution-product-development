@@ -251,3 +251,11 @@ cycles:
   - Sprint 2 plan created with task breakdown
   epics:
   - Intake
+starter_issues:
+- title: Clone and assess NNRT codebase
+  type: Spike
+  priority: high
+  assignee: accountability-generator@fleet.local
+  labels:
+  - docs
+  description: 'Assess current state: modules, tests, pipeline passes, NLP libraries. Post findings as Plane Page.'

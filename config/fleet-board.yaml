@@ -248,3 +248,26 @@ cycles:
   epics:
   - Core
   - MCP
+starter_issues:
+- title: Verify fleet_chat tool works between real agents
+  type: Task
+  priority: high
+  assignee: fleet-ops@fleet.local
+  labels:
+  - mcp
+  description: 'fleet_chat built but never tested live. Agent posts to #fleet, verify in IRC.'
+- title: Execute one real task through the full review chain
+  type: Task
+  priority: urgent
+  assignee: fleet-ops@fleet.local
+  labels:
+  - infra
+  description: 'No agent has completed a real task. Test full chain: dispatch → work → PR → review → done.'
+- title: Build chain runner (M-SC02)
+  type: Story
+  priority: high
+  assignee: software-engineer@fleet.local
+  labels:
+  - mcp
+  - infra
+  description: Event chain builders exist but nothing executes them. Build fleet/core/chain_runner.py.

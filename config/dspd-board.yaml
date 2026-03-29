@@ -127,17 +127,42 @@ pages:
 
     <tr><td><strong>Phase 0: Foundation</strong></td><td>✅ Complete</td><td>Architecture, requirements, CLAUDE.md, pyproject.toml</td></tr>
 
-    <tr><td><strong>Phase 1: Self-Host Plane</strong></td><td>✅ Deployed</td><td>Docker, setup.sh IaC, workspace, 4 projects,
-    mission seeded</td></tr>
+    <tr><td><strong>Phase 1: Self-Host Plane</strong></td><td>✅ Deployed</td><td>12 containers, 4 projects, mission seeded,
+    13 issues, 12 members</td></tr>
 
-    <tr><td><strong>Phase 2: Fleet CLI</strong></td><td>🔶 Code Done</td><td>plane_client.py, plane.py CLI, plane_sync.py —
-    needs live test</td></tr>
+    <tr><td><strong>Phase 2: Fleet CLI</strong></td><td>✅ Built</td><td>7 Plane MCP tools, plane_client.py, plane_sync.py,
+    fleet-plane skill</td></tr>
 
-    <tr><td><strong>Phase 3: MCP Integration</strong></td><td>🔶 Code Done</td><td>Webhook handler, HMAC verification — needs
-    Plane MCP tools</td></tr>
+    <tr><td><strong>Phase 3: MCP + Events</strong></td><td>✅ Built</td><td>Webhook handler, Plane watcher (120s), event emission
+    from all tools</td></tr>
 
-    <tr><td><strong>Phase 4: Full DSPD</strong></td><td>❌ Not Started</td><td>Multi-project analytics, velocity, cross-project
-    dependencies</td></tr>
+    <tr><td><strong>Phase 4: Full DSPD</strong></td><td>🔶 In Progress</td><td>Multi-project analytics, sync worker, platform
+    maturity</td></tr>
+
+    </tbody>
+
+    </table>
+
+
+    <h2>Event Bus Integration</h2>
+
+    <table>
+
+    <thead><tr><th>Component</th><th>Status</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>CloudEvents event store</td><td>✅ Built — persistent JSONL, seen/unseen tracking</td></tr>
+
+    <tr><td>Event routing engine</td><td>✅ Built — 5-level routing, tag subscriptions</td></tr>
+
+    <tr><td>Chain runner</td><td>✅ Built — 6 surface handlers with PLANE surface</td></tr>
+
+    <tr><td>Plane MCP tools (7)</td><td>✅ Built — status, sprint, sync, create, comment, update, modules</td></tr>
+
+    <tr><td>Plane watcher daemon</td><td>✅ Built — 120s poll, detects new issues/updates/cycles</td></tr>
+
+    <tr><td>Event feed in heartbeat</td><td>✅ Built — agents get unseen events on context load</td></tr>
 
     </tbody>
 
@@ -148,19 +173,21 @@ pages:
 
     <ul>
 
-    <li><strong>M-PF01-09:</strong> Full Plane configuration (agent accounts, issue types, views)</li>
+    <li><strong>M-PF01-09:</strong> Full Plane configuration — mostly done (9 items)</li>
 
-    <li><strong>M-SC01-08:</strong> Skills and chains (chain runner, Plane MCP tools, PM skill)</li>
+    <li><strong>M-SC01-08:</strong> Skills and chains — 6 of 8 done</li>
 
-    <li><strong>M-PM01-10:</strong> Platform maturity (rich content, personalization, state sync)</li>
+    <li><strong>M-PM01-10:</strong> Platform maturity — 4 of 10 done</li>
 
-    <li><strong>M-SW01-10:</strong> Sync worker (real-time cross-platform bridge)</li>
+    <li><strong>M-SW01-10:</strong> Sync worker — planned, not started</li>
 
-    <li><strong>M-P01-10:</strong> IaC evolution (pages API, GitHub, webhooks, backup)</li>
+    <li><strong>M-EB01-20:</strong> Event bus — 8 of 20 done</li>
+
+    <li><strong>M-P01-10:</strong> IaC evolution — partially done</li>
 
     </ul>
 
-    <p><strong>Total: 47 milestones</strong> for complete Plane integration.</p>
+    <p><strong>Total: 67 milestones</strong> — ~30 done, ~37 remaining</p>
 
     '
 epic_details:

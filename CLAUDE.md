@@ -148,11 +148,11 @@ When working on DSPD tasks:
 
 Check `docs/requirements.md` §5 before implementing. Do not build Phase 2 features while Phase 1 is incomplete. The phases are:
 
-- **Phase 0:** Foundation docs + project structure ← you are here
-- **Phase 1:** Self-host Plane (Docker Compose, working instance)
-- **Phase 2:** Fleet CLI (`fleet plan create/list/sync`)
-- **Phase 3:** MCP + webhooks (PM agent native Plane access)
-- **Phase 4:** Multi-project + analytics
+- **Phase 0:** Foundation docs + project structure ✅ DONE
+- **Phase 1:** Self-host Plane (Docker Compose, working instance) ← IaC BUILT, needs deploy
+- **Phase 2:** Fleet CLI (`fleet plan create/list/sync`) ✅ CODE DONE (needs live test)
+- **Phase 3:** MCP + webhooks (PM agent native Plane access) ✅ CODE DONE (needs live test)
+- **Phase 4:** Multi-project + analytics — NOT STARTED
 
 ---
 

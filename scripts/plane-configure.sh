@@ -111,8 +111,8 @@ token, _ = APIToken.objects.get_or_create(
 result = {
     'workspace_slug': ws.slug,
     'workspace_id': str(ws.id),
-    'project_id': str(proj.id),
-    'project_identifier': proj.identifier,
+    'project_id': str(proj.id) if proj else '',
+    'project_identifier': proj.identifier if proj else '',
     'api_token': token.token,
 }
 print(json.dumps(result))
@@ -120,8 +120,8 @@ print(json.dumps(result))
 
 WORKSPACE_SLUG=$(echo "$OUTPUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['workspace_slug'])")
 WORKSPACE_ID=$(echo "$OUTPUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['workspace_id'])")
-PROJECT_ID=$(echo "$OUTPUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['project_id'])")
-PROJECT_IDENTIFIER=$(echo "$OUTPUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['project_identifier'])")
+PROJECT_ID=$(echo "$OUTPUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('project_id',''))" 2>/dev/null || echo "")
+PROJECT_IDENTIFIER=$(echo "$OUTPUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('project_identifier',''))" 2>/dev/null || echo "")
 API_TOKEN=$(echo "$OUTPUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['api_token'])")
 
 # ── Verify API access ──────────────────────────────────────────────────────────
@@ -133,8 +133,11 @@ MEMBER_COUNT=$(echo "$MEMBERS" | python3 -c "import json,sys; print(len(json.loa
 
 PROJECTS=$(curl -sS -H "X-Api-Key: $API_TOKEN" "$PLANE_URL/api/v1/workspaces/$WORKSPACE_SLUG/projects/" 2>/dev/null)
 PROJECT_COUNT=$(echo "$PROJECTS" | python3 -c "import json,sys; d=json.load(sys.stdin); items=d.get('results',d); print(len(items))" 2>/dev/null || echo "0")
-[ "$PROJECT_COUNT" -gt "0" ] || die "API access verification failed — projects endpoint returned 0 results"
-log "API access verified: $MEMBER_COUNT member(s), $PROJECT_COUNT project(s)"
+if [ "$PROJECT_COUNT" -gt "0" ] 2>/dev/null; then
+    log "API access verified: $MEMBER_COUNT member(s), $PROJECT_COUNT project(s)"
+else
+    log "API access OK: $MEMBER_COUNT member(s), 0 projects (seed will create them)"
+fi
 
 # ── Write config file ──────────────────────────────────────────────────────────
 

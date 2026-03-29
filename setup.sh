@@ -111,6 +111,14 @@ cmd_install() {
     COMPOSE_PROJECT="$COMPOSE_PROJECT" API_CONTAINER="${COMPOSE_PROJECT}-api-1" \
         "${SCRIPT_DIR}/scripts/plane-seed-mission.sh"
 
+    log "Creating agent accounts, issue types, and views..."
+    COMPOSE_PROJECT="$COMPOSE_PROJECT" API_CONTAINER="${COMPOSE_PROJECT}-api-1" \
+        "${SCRIPT_DIR}/scripts/plane-setup-members.sh"
+
+    log "Creating module links, leads, and welcome issues..."
+    COMPOSE_PROJECT="$COMPOSE_PROJECT" API_CONTAINER="${COMPOSE_PROJECT}-api-1" \
+        "${SCRIPT_DIR}/scripts/plane-setup-content.sh"
+
     log "Running API validation..."
     COMPOSE_PROJECT="$COMPOSE_PROJECT" "${SCRIPT_DIR}/scripts/plane-validate-api.sh" "$CONFIG_FILE" || {
         log "WARN: API validation had failures — check output above"

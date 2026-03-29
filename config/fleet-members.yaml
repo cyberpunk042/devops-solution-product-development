@@ -1,0 +1,225 @@
+# fleet-members.yaml — Agent bot accounts for Plane
+#
+# Each agent gets a Plane user (is_bot=True) for assignment and tracking.
+# Display names include fleet prefix for multi-fleet identification.
+#
+# The fleet service account is used by the sync daemon and orchestrator.
+# Agent accounts are used for issue assignment and module lead tracking.
+#
+# Workspace role: 10=guest (read-only), 15=viewer, 20=member, 25=admin
+# Project role: 5=guest, 10=viewer, 15=member, 20=admin
+
+# Fleet identity (from fleet/core/federation.py)
+# On first run, reads from openclaw-fleet config. Falls back to defaults.
+fleet_prefix: "99c1"
+fleet_name: "Fleet Alpha"
+
+# Service account for orchestrator/sync (not an agent)
+service_account:
+  email: fleet-service@fleet.local
+  display_name: "Fleet Service"
+  is_bot: true
+  workspace_role: 20  # member — needs write access for sync
+
+# Agent bot accounts
+agents:
+  - name: fleet-ops
+    email: fleet-ops@fleet.local
+    display_name_template: "Fleet Ops [{prefix}]"
+    workspace_role: 20  # member — board lead needs write
+    project_roles:
+      OF: 20    # admin on fleet project
+      AICP: 15  # member
+      DSPD: 15
+      NNRT: 15
+
+  - name: project-manager
+    email: project-manager@fleet.local
+    display_name_template: "Project Manager [{prefix}]"
+    workspace_role: 20  # member — sole Plane writer
+    project_roles:
+      OF: 20
+      AICP: 20
+      DSPD: 20  # admin on DSPD (PM drives it)
+      NNRT: 20
+
+  - name: architect
+    email: architect@fleet.local
+    display_name_template: "Architect [{prefix}]"
+    workspace_role: 10  # guest — read access
+    project_roles:
+      OF: 15
+      AICP: 15
+      DSPD: 10
+      NNRT: 10
+
+  - name: software-engineer
+    email: software-engineer@fleet.local
+    display_name_template: "Software Engineer [{prefix}]"
+    workspace_role: 10
+    project_roles:
+      OF: 15
+      AICP: 15
+      DSPD: 10
+      NNRT: 10
+
+  - name: qa-engineer
+    email: qa-engineer@fleet.local
+    display_name_template: "QA Engineer [{prefix}]"
+    workspace_role: 10
+    project_roles:
+      OF: 15
+      AICP: 10
+      DSPD: 10
+      NNRT: 10
+
+  - name: devops
+    email: devops@fleet.local
+    display_name_template: "DevOps [{prefix}]"
+    workspace_role: 10
+    project_roles:
+      OF: 15
+      AICP: 15
+      DSPD: 15  # handles infra for DSPD
+      NNRT: 10
+
+  - name: devsecops-expert
+    email: devsecops@fleet.local
+    display_name_template: "Cyberpunk-Zero [{prefix}]"
+    workspace_role: 10
+    project_roles:
+      OF: 15
+      AICP: 10
+      DSPD: 10
+      NNRT: 10
+
+  - name: technical-writer
+    email: technical-writer@fleet.local
+    display_name_template: "Technical Writer [{prefix}]"
+    workspace_role: 10
+    project_roles:
+      OF: 10
+      AICP: 10
+      DSPD: 10
+      NNRT: 10
+
+  - name: ux-designer
+    email: ux-designer@fleet.local
+    display_name_template: "UX Designer [{prefix}]"
+    workspace_role: 10
+    project_roles:
+      OF: 10
+      AICP: 10
+      DSPD: 10
+      NNRT: 10
+
+  - name: accountability-generator
+    email: accountability-generator@fleet.local
+    display_name_template: "Accountability Generator [{prefix}]"
+    workspace_role: 10
+    project_roles:
+      OF: 10
+      AICP: 10
+      DSPD: 10
+      NNRT: 20  # admin on NNRT (AG drives it)
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Issue Types
+# ═══════════════════════════════════════════════════════════════════════════
+
+issue_types:
+  - name: Epic
+    description: Large feature or strategic initiative spanning multiple sprints
+    is_epic: true
+    level: 0
+    logo_props:
+      icon:
+        name: "rocket_launch"
+        color: "#6366F1"
+      in_use: "icon"
+
+  - name: Story
+    description: User-facing deliverable that can be completed in one sprint
+    is_epic: false
+    level: 1
+    logo_props:
+      icon:
+        name: "auto_stories"
+        color: "#3B82F6"
+      in_use: "icon"
+
+  - name: Task
+    description: Atomic unit of work — maps 1:1 to OCMC task when dispatched
+    is_epic: false
+    level: 2
+    is_default: true
+    logo_props:
+      icon:
+        name: "task_alt"
+        color: "#10B981"
+      in_use: "icon"
+
+  - name: Bug
+    description: Defect fix — something that was working and broke
+    is_epic: false
+    level: 2
+    logo_props:
+      icon:
+        name: "bug_report"
+        color: "#EF4444"
+      in_use: "icon"
+
+  - name: Spike
+    description: Research or investigation — produces knowledge, not code
+    is_epic: false
+    level: 2
+    logo_props:
+      icon:
+        name: "science"
+        color: "#F59E0B"
+      in_use: "icon"
+
+  - name: Chore
+    description: Maintenance work — no user-facing impact, keeps things healthy
+    is_epic: false
+    level: 2
+    logo_props:
+      icon:
+        name: "build"
+        color: "#6B7280"
+      in_use: "icon"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Saved Views (per project)
+# ═══════════════════════════════════════════════════════════════════════════
+
+views:
+  - name: "Current Sprint"
+    description: "Issues in the active cycle"
+    filters:
+      cycle: "current"
+
+  - name: "Backlog"
+    description: "Unscheduled items"
+    filters:
+      state_group: "backlog"
+
+  - name: "Blocked"
+    description: "Items that cannot proceed"
+    filters:
+      label: "blocked"
+
+  - name: "In Review"
+    description: "Items waiting for review"
+    filters:
+      state_group: "started"
+      state: "In Review"
+
+  - name: "By Agent"
+    description: "Group issues by assigned agent"
+    group_by: "assignee"
+
+  - name: "High Priority"
+    description: "Urgent and high priority items"
+    filters:
+      priority: "urgent,high"

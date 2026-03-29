@@ -174,54 +174,64 @@ All incoming webhook requests MUST be verified via HMAC-SHA256 before processing
 
 ## 5. MVP vs Future Phases
 
-### Phase 0 — Foundation (Current)
+### Phase 0 — Foundation ✅ COMPLETE
 
 Deliverables:
 - [x] Architecture document (`docs/architecture.md`)
 - [x] Requirements document (`docs/requirements.md`)
 - [x] `pyproject.toml` project config
 - [x] `CLAUDE.md` agent conventions
-- [ ] `docker/docker-compose.plane.yml` skeleton
-- [ ] `.env.plane.example`
+- [x] `docker-compose.plane.yaml` (12 services)
+- [x] `plane.env.example` (all credentials marked ⚠️ CHANGE)
 
-Done when: All documents written, project structure exists.
+Done when: All documents written, project structure exists. ✅
 
-### Phase 1 — Self-Host Plane (M184–M187)
-
-Deliverables:
-- [ ] `docker/docker-compose.plane.yml` — working Plane stack
-- [ ] `docker/nginx.plane.conf` — proxy config
-- [ ] `scripts/setup-plane.sh` — first-run setup script
-- [ ] Plane workspace `openclaw-fleet` created
-- [ ] Plane projects: `fleet`, `nnrt`
-- [ ] API key generated and stored in `.env`
-- [ ] `GET /api/v1/workspaces/openclaw-fleet/projects/` returns projects
-
-Done when: `fleet plan list` returns sprint items from a live Plane instance.
-
-### Phase 2 — Fleet CLI (M188–M191)
+### Phase 1 — Self-Host Plane (M184–M187) — IaC BUILT, needs deploy
 
 Deliverables:
-- [ ] `fleet/infra/plane_client.py` — typed async API client
-- [ ] `fleet/cli/plane.py` — `create / list / sync / status` commands
-- [ ] `fleet plan sync` dispatches Plane items → OCMC tasks
-- [ ] PM agent marks OCMC done → PM updates Plane state
+- [x] `docker-compose.plane.yaml` — working Plane stack (12 services)
+- [x] `docker/nginx.plane.conf` — reverse proxy config
+- [x] `setup.sh` — IaC: install/start/stop/status/validate/upgrade/uninstall
+- [x] `scripts/plane-configure.sh` — superuser, workspace, API token, god-mode
+- [x] `scripts/plane-seed-mission.sh` — reads config/mission.yaml, creates all structure
+- [x] `config/mission.yaml` — 4 projects (OF, NNRT, DSPD, AICP), per-project states, modules, labels, estimates
+- [x] `config/*-board.yaml` — per-project pages, cycles, epic details with acceptance criteria
+- [ ] Plane deployed and running (`./setup.sh install`)
+- [ ] Workspace + 4 projects verified in Plane UI
+- [ ] API validation passes 11/11 (`plane-validate-api.sh`)
+- [ ] Startup verification passes 15/15 (`plane-startup-verify.sh`)
+
+Done when: `fleet plan list-projects` returns 4 projects from a live Plane instance.
+
+### Phase 2 — Fleet CLI (M188–M191) — CODE DONE, needs live test
+
+Deliverables:
+- [x] `fleet/infra/plane_client.py` — typed async API client (projects, states, cycles, issues CRUD)
+- [x] `fleet/cli/plane.py` — `create / list / sync / status / list-cycles / list-states` commands
+- [x] `fleet/core/plane_sync.py` — bidirectional Plane ↔ OCMC sync
+- [x] Unit tests: 18 passing (test_plane_client.py, test_plane_sync.py)
+- [ ] `fleet plan sync` verified end-to-end against live instances
+- [ ] PM agent marks OCMC done → PM updates Plane state (live test)
 
 Done when: End-to-end flow tested: Plane item → OCMC task → agent completes → Plane state updated.
 
-### Phase 3 — MCP Integration (M192–M194)
+### Phase 3 — MCP + Webhooks (M192–M194) — CODE DONE, needs live test
 
 Deliverables:
-- [ ] Plane MCP server configured for PM agent
-- [ ] PM agent uses MCP tools for sprint planning
-- [ ] Webhook handler operational (HMAC verified)
+- [x] `dspd/webhooks.py` — HMAC-SHA256 verification, event handlers, ASGI receiver
+- [x] `scripts/plane-setup-webhooks.sh` — register webhook + HMAC secret in Plane
+- [x] Unit tests: test_webhooks.py (signature, parsing, dispatch)
+- [ ] Plane MCP server researched and configured for PM agent
+- [ ] PM agent uses MCP tools for sprint planning (live)
+- [ ] Webhook handler operational against live Plane events
 
 Done when: PM agent can read sprint, dispatch items, and update Plane from a single heartbeat loop.
 
-### Phase 4 — Full DSPD (M195–M199)
+### Phase 4 — Full DSPD (M195–M199) — NOT STARTED
 
 Deliverables:
-- [ ] Multi-project: `fleet`, `nnrt`, `aicp`, `dspd` all in Plane
+- [x] Multi-project: config/mission.yaml defines OF, NNRT, AICP, DSPD with modules
+- [ ] Plane deployed with all 4 projects live
 - [ ] Cross-project dependency mapping in Timeline view
 - [ ] Velocity + burn-down tracking per project
 - [ ] Analytics dashboard capturing agent productivity

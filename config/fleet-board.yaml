@@ -1,183 +1,250 @@
-# fleet-board.yaml — OpenClaw Fleet project board content
-#
-# fleet-ops drives OCMC. PM drives Plane. Both surfaces healthy.
-# This board tracks fleet infrastructure, MCP tools, agents, autonomy.
-
 project: OF
-
 pages:
-  - title: "Fleet Architecture"
-    content: |
-      # OpenClaw Fleet Architecture
+- title: Fleet Architecture
+  content: "# OpenClaw Fleet Architecture\n\n10 autonomous AI agents managed through OpenClaw gateway + Mission Control.\n\
+    \n## Surfaces\n\n| Surface | Purpose | Driver |\n|---------|---------|--------|\n| OCMC | Agent operations, dispatch,\
+    \ approvals | fleet-ops (board lead) |\n| Plane | Project management, sprints, analytics | project-manager |\n| IRC |\
+    \ Real-time alerts and interaction | all agents |\n| GitHub | Code review, PRs, CI | all agents |\n| ntfy | Human notifications\
+    \ | all agents |\n\n## Agent Roster\n\n| Agent | Primary Role | Secondary (when idle) | Heartbeat |\n|-------|-------------|----------------------|-----------|\n\
+    | fleet-ops | Board lead, reviews, operations | Quality improvement, gap detection | 30m |\n| project-manager | Sprint\
+    \ planning, Plane bridge | Cross-project dependency analysis | 35m |\n| devsecops-expert | Security reviews, scanning\
+    \ | Dependency audit, credential rotation | 55m |\n| architect | System design, decisions | Complexity assessment for\
+    \ PM | 60m |\n| software-engineer | Implementation | Code quality, refactoring proposals | 65m |\n| qa-engineer | Testing,\
+    \ QA | Coverage analysis, regression risk | 70m |\n| devops | Infrastructure, CI/CD | Pipeline improvements, monitoring\
+    \ | 75m |\n| technical-writer | Documentation | Doc gap detection, onboarding | 80m |\n| ux-designer | UI/UX design |\
+    \ Accessibility audit, design system | 85m |\n| accountability-generator | Governance, NNRT | Evidence chain validation\
+    \ | 90m |\n\n## Orchestrator (The Brain)\n\nRuns every 30 seconds. 6 steps:\n1. Security scan\n2. Ensure review approvals\
+    \ exist\n3. Wake fleet-ops for pending reviews\n4. Dispatch unblocked inbox tasks (max 2/cycle)\n5. Evaluate parent task\
+    \ completion\n6. Health check (stuck tasks, offline agents)\n\nSafety: budget monitor (OAuth API), effort profiles (conservative\
+    \ default),\nerror reporter, outage detector, max 2 dispatches per cycle.\n\n## Chain Architecture\n\nOne fleet operation\
+    \ produces a CHAIN of events across surfaces:\n\n```\nfleet_task_complete()\n  → INTERNAL: MC task→review, approval, board\
+    \ memory\n  → PUBLIC: branch push, PR creation\n  → CHANNEL: IRC #fleet + #reviews\n  → NOTIFY: ntfy notification\n  →\
+    \ PLANE: issue updated (when Plane present)\n  → META: metrics, sync tracking\n```\n\nChain builders exist (event_chain.py).\
+    \ Chain RUNNER not built yet (M-SC02).\nMCP tools currently do individual API calls instead of emitting chains.\n"
+  content_html: "\n<h1>OpenClaw Fleet Architecture</h1>\n<p>10 autonomous AI agents managed through OpenClaw gateway + Mission\
+    \ Control.</p>\n\n<h2>Surfaces</h2>\n<table>\n<thead><tr><th>Surface</th><th>Purpose</th><th>Driver</th></tr></thead>\n\
+    <tbody>\n<tr><td><strong>OCMC</strong></td><td>Agent operations, dispatch, approvals</td><td>fleet-ops (board lead)</td></tr>\n\
+    <tr><td><strong>Plane</strong></td><td>Project management, sprints, analytics</td><td>project-manager</td></tr>\n<tr><td><strong>IRC</strong></td><td>Real-time\
+    \ alerts and interaction</td><td>all agents</td></tr>\n<tr><td><strong>GitHub</strong></td><td>Code review, PRs, CI</td><td>all\
+    \ agents</td></tr>\n<tr><td><strong>ntfy</strong></td><td>Human notifications</td><td>all agents</td></tr>\n</tbody>\n\
+    </table>\n\n<h2>Agent Roster</h2>\n<table>\n<thead><tr><th>Agent</th><th>Primary Role</th><th>Secondary (idle)</th><th>Heartbeat</th></tr></thead>\n\
+    <tbody>\n<tr><td><strong>fleet-ops</strong></td><td>Board lead, reviews</td><td>Quality, gap detection</td><td>30m</td></tr>\n\
+    <tr><td><strong>project-manager</strong></td><td>Sprint planning, Plane</td><td>Dependency analysis</td><td>35m</td></tr>\n\
+    <tr><td><strong>devsecops-expert</strong></td><td>Security reviews</td><td>Dependency audit</td><td>55m</td></tr>\n<tr><td><strong>architect</strong></td><td>System\
+    \ design</td><td>Complexity assessment</td><td>60m</td></tr>\n<tr><td><strong>software-engineer</strong></td><td>Implementation</td><td>Code\
+    \ quality</td><td>65m</td></tr>\n<tr><td><strong>qa-engineer</strong></td><td>Testing, QA</td><td>Coverage analysis</td><td>70m</td></tr>\n\
+    <tr><td><strong>devops</strong></td><td>Infrastructure</td><td>Pipeline improvements</td><td>75m</td></tr>\n<tr><td><strong>technical-writer</strong></td><td>Documentation</td><td>Doc\
+    \ gap detection</td><td>80m</td></tr>\n<tr><td><strong>ux-designer</strong></td><td>UI/UX design</td><td>Accessibility\
+    \ audit</td><td>85m</td></tr>\n<tr><td><strong>accountability-gen</strong></td><td>Governance, NNRT</td><td>Evidence validation</td><td>90m</td></tr>\n\
+    </tbody>\n</table>\n\n<h2>Orchestrator (The Brain)</h2>\n<p>Runs every 30 seconds. 6 steps:</p>\n<ol>\n<li>Security scan</li>\n\
+    <li>Ensure review approvals exist</li>\n<li>Wake fleet-ops for pending reviews</li>\n<li>Dispatch unblocked inbox tasks\
+    \ (max 2/cycle)</li>\n<li>Evaluate parent task completion</li>\n<li>Health check (stuck tasks, offline agents)</li>\n\
+    </ol>\n<p><strong>Safety:</strong> budget monitor (OAuth API), effort profiles (conservative default), error reporter,\
+    \ outage detector.</p>\n\n<h2>Chain Architecture</h2>\n<p>One fleet operation produces a <strong>CHAIN</strong> of events\
+    \ across surfaces:</p>\n<pre><code>fleet_task_complete()\n  → INTERNAL: MC task→review, approval, board memory\n  → PUBLIC:\
+    \ branch push, PR creation\n  → CHANNEL: IRC #fleet + #reviews\n  → NOTIFY: ntfy notification\n  → PLANE: issue updated\
+    \ (when Plane present)\n  → META: metrics, sync tracking</code></pre>\n<p>Chain builders exist (<code>event_chain.py</code>).\
+    \ Chain <strong>RUNNER not built yet</strong> (M-SC02).</p>\n\n<h2>Links</h2>\n<ul>\n<li><a href=\"https://github.com/cyberpunk042/openclaw-fleet\"\
+    >GitHub: openclaw-fleet</a></li>\n<li><a href=\"https://github.com/cyberpunk042/openclaw-fleet/blob/main/docs/milestones/STATUS-TRACKER.md\"\
+    >STATUS-TRACKER</a></li>\n</ul>\n"
+- title: Fleet Operational Status
+  content: '# Fleet Operational Status
 
-      10 autonomous AI agents managed through OpenClaw gateway + Mission Control.
 
-      ## Surfaces
+    Updated by fleet-ops and orchestrator.
 
-      | Surface | Purpose | Driver |
-      |---------|---------|--------|
-      | OCMC | Agent operations, dispatch, approvals | fleet-ops (board lead) |
-      | Plane | Project management, sprints, analytics | project-manager |
-      | IRC | Real-time alerts and interaction | all agents |
-      | GitHub | Code review, PRs, CI | all agents |
-      | ntfy | Human notifications | all agents |
 
-      ## Agent Roster
+    ## Services
 
-      | Agent | Primary Role | Secondary (when idle) | Heartbeat |
-      |-------|-------------|----------------------|-----------|
-      | fleet-ops | Board lead, reviews, operations | Quality improvement, gap detection | 30m |
-      | project-manager | Sprint planning, Plane bridge | Cross-project dependency analysis | 35m |
-      | devsecops-expert | Security reviews, scanning | Dependency audit, credential rotation | 55m |
-      | architect | System design, decisions | Complexity assessment for PM | 60m |
-      | software-engineer | Implementation | Code quality, refactoring proposals | 65m |
-      | qa-engineer | Testing, QA | Coverage analysis, regression risk | 70m |
-      | devops | Infrastructure, CI/CD | Pipeline improvements, monitoring | 75m |
-      | technical-writer | Documentation | Doc gap detection, onboarding | 80m |
-      | ux-designer | UI/UX design | Accessibility audit, design system | 85m |
-      | accountability-generator | Governance, NNRT | Evidence chain validation | 90m |
 
-      ## Orchestrator (The Brain)
+    | Service | URL | Status |
 
-      Runs every 30 seconds. 6 steps:
-      1. Security scan
-      2. Ensure review approvals exist
-      3. Wake fleet-ops for pending reviews
-      4. Dispatch unblocked inbox tasks (max 2/cycle)
-      5. Evaluate parent task completion
-      6. Health check (stuck tasks, offline agents)
+    |---------|-----|--------|
 
-      Safety: budget monitor (OAuth API), effort profiles (conservative default),
-      error reporter, outage detector, max 2 dispatches per cycle.
+    | MC API | localhost:8000 | Running |
 
-      ## Chain Architecture
+    | MC UI | localhost:3000 | Running |
 
-      One fleet operation produces a CHAIN of events across surfaces:
+    | Gateway | ws://localhost:18789 | Running (4GB heap) |
 
-      ```
-      fleet_task_complete()
-        → INTERNAL: MC task→review, approval, board memory
-        → PUBLIC: branch push, PR creation
-        → CHANNEL: IRC #fleet + #reviews
-        → NOTIFY: ntfy notification
-        → PLANE: issue updated (when Plane present)
-        → META: metrics, sync tracking
-      ```
+    | IRC | localhost:6667 | Running (10 channels) |
 
-      Chain builders exist (event_chain.py). Chain RUNNER not built yet (M-SC02).
-      MCP tools currently do individual API calls instead of emitting chains.
+    | The Lounge | localhost:9000 | Running |
 
-  - title: "Fleet Operational Status"
-    content: |
-      # Fleet Operational Status
+    | LocalAI | localhost:8090 | Running (9 models) |
 
-      Updated by fleet-ops and orchestrator.
+    | Plane | localhost:8080 | Running (4 projects) |
 
-      ## Services
 
-      | Service | URL | Status |
-      |---------|-----|--------|
-      | MC API | localhost:8000 | Running |
-      | MC UI | localhost:3000 | Running |
-      | Gateway | ws://localhost:18789 | Running (4GB heap) |
-      | IRC | localhost:6667 | Running (10 channels) |
-      | The Lounge | localhost:9000 | Running |
-      | LocalAI | localhost:8090 | Running (9 models) |
-      | Plane | localhost:8080 | Running (4 projects) |
+    ## Known Gaps
 
-      ## Known Gaps
 
-      - Chain runner not built (M-SC02) — MCP tools bypass chains
-      - No Plane MCP tools (M-SC04) — PM can't access Plane from sessions
-      - 29 autonomy milestones NOT STARTED
-      - Event-driven wake not built (MM1)
-      - Agent event filtering not built (MM8)
-      - Things built but never verified running (see STATUS-TRACKER.md)
+    - Chain runner not built (M-SC02) — MCP tools bypass chains
 
+    - No Plane MCP tools (M-SC04) — PM can''t access Plane from sessions
+
+    - 29 autonomy milestones NOT STARTED
+
+    - Event-driven wake not built (MM1)
+
+    - Agent event filtering not built (MM8)
+
+    - Things built but never verified running (see STATUS-TRACKER.md)
+
+    '
+  content_html: '
+
+    <h1>Fleet Operational Status</h1>
+
+    <p>Updated by fleet-ops and orchestrator.</p>
+
+
+    <h2>Services</h2>
+
+    <table>
+
+    <thead><tr><th>Service</th><th>URL</th><th>Status</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>MC API</td><td><code>localhost:8000</code></td><td>✅ Running</td></tr>
+
+    <tr><td>MC UI</td><td><code>localhost:3000</code></td><td>✅ Running</td></tr>
+
+    <tr><td>Gateway</td><td><code>ws://localhost:18789</code></td><td>✅ Running (4GB heap)</td></tr>
+
+    <tr><td>IRC</td><td><code>localhost:6667</code></td><td>✅ Running (10 channels)</td></tr>
+
+    <tr><td>The Lounge</td><td><code>localhost:9000</code></td><td>✅ Running</td></tr>
+
+    <tr><td>LocalAI</td><td><code>localhost:8090</code></td><td>✅ Running (9 models)</td></tr>
+
+    <tr><td>Plane</td><td><code>localhost:8080</code></td><td>✅ Running (4 projects)</td></tr>
+
+    </tbody>
+
+    </table>
+
+
+    <h2>Known Gaps</h2>
+
+    <ul>
+
+    <li>❌ Chain runner not built (M-SC02) — MCP tools bypass chains</li>
+
+    <li>❌ No Plane MCP tools (M-SC04) — PM can''t access Plane from sessions</li>
+
+    <li>❌ 29 autonomy milestones NOT STARTED</li>
+
+    <li>❌ Event-driven wake not built (MM1)</li>
+
+    <li>❌ Agent event filtering not built (MM8)</li>
+
+    <li>❌ Things built but never verified running</li>
+
+    </ul>
+
+    '
 epic_details:
-  "Core":
+  Core:
     priority: high
     acceptance_criteria:
-      - Orchestrator cycles every 30s without errors for 24h
-      - Budget monitor reads real Claude quota before dispatch
-      - Effort profiles switch correctly (fleet pause/resume)
-      - Task scoring dispatches by priority order
-    notes: |
-      The orchestrator is working but the chain runner is the critical gap.
+    - Orchestrator cycles every 30s without errors for 24h
+    - Budget monitor reads real Claude quota before dispatch
+    - Effort profiles switch correctly (fleet pause/resume)
+    - Task scoring dispatches by priority order
+    notes: 'The orchestrator is working but the chain runner is the critical gap.
+
       MCP tools do 5 separate API calls where one chain emission would suffice.
+
       M-SC02 (chain runner) and M-SC03 (wire MCP tools) are the next steps.
 
-  "MCP":
+      '
+  MCP:
     priority: high
     acceptance_criteria:
-      - All 13 existing tools verified with real running agents
-      - Plane MCP tools added (M-SC04) — PM can read/write Plane
-      - Tools emit event chains instead of individual API calls (M-SC03)
-    notes: |
-      13 tools built, none verified live. The immediate need is Plane MCP
+    - All 13 existing tools verified with real running agents
+    - Plane MCP tools added (M-SC04) — PM can read/write Plane
+    - Tools emit event chains instead of individual API calls (M-SC03)
+    notes: '13 tools built, none verified live. The immediate need is Plane MCP
+
       tools so the PM can drive sprints. Then wire all tools to emit chains.
 
-  "Agents":
+      '
+  Agents:
     priority: medium
     acceptance_criteria:
-      - All 10 heartbeats fire and agents respond correctly
-      - fleet-ops reviews at least one task through full approval flow
-      - PM breaks down at least one epic into tasks via fleet_task_create
-    notes: |
-      All 10 agents online. Heartbeats configured (30-90m staggered).
+    - All 10 heartbeats fire and agents respond correctly
+    - fleet-ops reviews at least one task through full approval flow
+    - PM breaks down at least one epic into tasks via fleet_task_create
+    notes: 'All 10 agents online. Heartbeats configured (30-90m staggered).
+
       Need live verification — no agent has actually executed a real task yet.
 
+
       Agent roles defined in config/fleet-roles.yaml:
+
       - fleet-ops drives OCMC (reviews, quality, monitoring)
+
       - PM drives Plane (sprints, backlog, velocity)
+
       - Others have secondary responsibilities when idle
 
-  "Infrastructure":
+      '
+  Infrastructure:
     priority: medium
     acceptance_criteria:
-      - setup.sh runs clean from zero on a fresh machine
-      - Gateway survives 24h without OOM crash
-      - IRC channels active with agent messages
-      - Communication verification passes 8/8
-    notes: |
-      Setup works end-to-end. Gateway has 4GB heap fix + self-healing restart
+    - setup.sh runs clean from zero on a fresh machine
+    - Gateway survives 24h without OOM crash
+    - IRC channels active with agent messages
+    - Communication verification passes 8/8
+    notes: 'Setup works end-to-end. Gateway has 4GB heap fix + self-healing restart
+
       in monitor daemon. Communication verified (8/8 checks passed).
 
-  "Autonomy":
+      '
+  Autonomy:
     priority: low
     acceptance_criteria:
-      - Event chain runner built and tested (M-SC02)
-      - At least one MCP tool emits chains (M-SC03)
-      - Stuck agent detection working
-    notes: |
-      29 NOT STARTED milestones. Long-term work. The chain runner is the
+    - Event chain runner built and tested (M-SC02)
+    - At least one MCP tool emits chains (M-SC03)
+    - Stuck agent detection working
+    notes: '29 NOT STARTED milestones. Long-term work. The chain runner is the
+
       foundation — everything else in autonomy builds on it.
 
+
       Event chain model exists with builders for task_complete, alert,
+
       sprint_complete. Smart chains (DispatchContext) pre-compute context.
+
       But nothing RUNS the chains yet.
 
-  "Tests":
+      '
+  Tests:
     priority: high
     acceptance_criteria:
-      - 341 fleet tests passing (currently all green)
-      - At least one integration test against live fleet
-    notes: |
-      341 unit tests passing. pytest-asyncio installed. No live integration
+    - 341 fleet tests passing (currently all green)
+    - At least one integration test against live fleet
+    notes: '341 unit tests passing. pytest-asyncio installed. No live integration
+
       tests yet — all tests use mocks.
 
+      '
 cycles:
-  - name: "Fleet Operational Validation"
-    duration_days: 14
-    description: |
-      Validate fleet is operational end-to-end. All tools verified live.
-      At least one agent completes a real task through the full review chain.
-    goals:
-      - Daemons stable for 24h
-      - Orchestrator cycling without errors
-      - At least one real task dispatched and completed
-      - Review chain verified (task → review → approve → done)
-      - fleet_chat verified between agents
-    epics:
-      - "Core"
-      - "MCP"
+- name: Fleet Operational Validation
+  duration_days: 14
+  description: 'Validate fleet is operational end-to-end. All tools verified live.
+
+    At least one agent completes a real task through the full review chain.
+
+    '
+  goals:
+  - Daemons stable for 24h
+  - Orchestrator cycling without errors
+  - At least one real task dispatched and completed
+  - Review chain verified (task → review → approve → done)
+  - fleet_chat verified between agents
+  epics:
+  - Core
+  - MCP

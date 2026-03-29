@@ -1,100 +1,164 @@
-# dspd-board.yaml — Initial board state for DSPD project in Plane
-#
-# DSPD is the project management platform itself — Plane deployment and integration.
-
 project: DSPD
-
 pages:
-  - title: "DSPD Architecture"
-    content: |
-      # DSPD — Three Surfaces Architecture
+- title: DSPD Architecture
+  content: "# DSPD — Three Surfaces Architecture\n\n```\n┌──────────────────────────────────────────────────────────────┐\n\
+    │  PLANE (DSPD)                    Project Management Surface  │\n│  sprints · cycles · modules · epics · analytics ·\
+    \ wiki       │\n│  Primary users: human, PM agent                              │\n└─────────────────────────────┬────────────────────────────────┘\n\
+    \                              │  PM agent bridges\n┌─────────────────────────────▼────────────────────────────────┐\n\
+    │  OCMC (Mission Control)     Agent Operations Surface         │\n│  task dispatch · heartbeat · board memory · approvals\
+    \        │\n│  Primary users: fleet agents                                 │\n└─────────────────────────────┬────────────────────────────────┘\n\
+    \                              │  all agents\n┌─────────────────────────────▼────────────────────────────────┐\n│  GitHub\
+    \                     Code Surface                     │\n│  PRs · CI · code review · releases                       \
+    \    │\n│  Primary users: human, all agents                            │\n└──────────────────────────────────────────────────────────────┘\n\
+    ```\n\n## Key Rules\n\n1. PM agent is the sole writer to Plane\n2. OCMC and Plane are NOT the same thing\n3. Separate\
+    \ Docker Compose — Plane isolated from OCMC\n4. No shared PostgreSQL\n5. Webhook HMAC verification is mandatory\n"
+  content_html: '<h1>DSPD — Three Surfaces Architecture</h1>
 
-      ```
-      ┌──────────────────────────────────────────────────────────────┐
-      │  PLANE (DSPD)                    Project Management Surface  │
-      │  sprints · cycles · modules · epics · analytics · wiki       │
-      │  Primary users: human, PM agent                              │
-      └─────────────────────────────┬────────────────────────────────┘
-                                    │  PM agent bridges
-      ┌─────────────────────────────▼────────────────────────────────┐
-      │  OCMC (Mission Control)     Agent Operations Surface         │
-      │  task dispatch · heartbeat · board memory · approvals        │
-      │  Primary users: fleet agents                                 │
-      └─────────────────────────────┬────────────────────────────────┘
-                                    │  all agents
-      ┌─────────────────────────────▼────────────────────────────────┐
-      │  GitHub                     Code Surface                     │
-      │  PRs · CI · code review · releases                           │
-      │  Primary users: human, all agents                            │
-      └──────────────────────────────────────────────────────────────┘
-      ```
+    <p>┌──────────────────────────────────────────────────────────────┐</p>
 
-      ## Key Rules
+    <p>│  PLANE (DSPD)                    Project Management Surface  │</p>
 
-      1. PM agent is the sole writer to Plane
-      2. OCMC and Plane are NOT the same thing
-      3. Separate Docker Compose — Plane isolated from OCMC
-      4. No shared PostgreSQL
-      5. Webhook HMAC verification is mandatory
+    <p>│  sprints · cycles · modules · epics · analytics · wiki       │</p>
 
-  - title: "DSPD Phase Status"
-    content: |
-      # DSPD Phases
+    <p>│  Primary users: human, PM agent                              │</p>
 
-      ## Phase 0: Foundation ✅
-      Architecture, requirements, CLAUDE.md, pyproject.toml.
+    <p>└─────────────────────────────┬────────────────────────────────┘</p>
 
-      ## Phase 1: Self-Host Plane — IN PROGRESS
-      Docker compose, setup.sh IaC, workspace, projects, API.
+    <p>│  PM agent bridges</p>
 
-      ## Phase 2: Fleet CLI
-      plane_client.py, plane.py CLI, plane_sync.py.
-      Code exists — copied from openclaw-fleet. Needs end-to-end testing.
+    <p>┌─────────────────────────────▼────────────────────────────────┐</p>
 
-      ## Phase 3: MCP Integration
-      Webhook handler (dspd/webhooks.py), Plane MCP for PM, event routing.
+    <p>│  OCMC (Mission Control)     Agent Operations Surface         │</p>
 
-      ## Phase 4: Full DSPD
-      Multi-project, analytics, velocity, cross-project dependencies.
+    <p>│  task dispatch · heartbeat · board memory · approvals        │</p>
 
+    <p>│  Primary users: fleet agents                                 │</p>
+
+    <p>└─────────────────────────────┬────────────────────────────────┘</p>
+
+    <p>│  all agents</p>
+
+    <p>┌─────────────────────────────▼────────────────────────────────┐</p>
+
+    <p>│  GitHub                     Code Surface                     │</p>
+
+    <p>│  PRs · CI · code review · releases                           │</p>
+
+    <p>│  Primary users: human, all agents                            │</p>
+
+    <p>└──────────────────────────────────────────────────────────────┘</p>
+
+    <h2>Key Rules</h2>
+
+    <p>1. PM agent is the sole writer to Plane</p>
+
+    <p>2. OCMC and Plane are NOT the same thing</p>
+
+    <p>3. Separate Docker Compose — Plane isolated from OCMC</p>
+
+    <p>4. No shared PostgreSQL</p>
+
+    <p>5. Webhook HMAC verification is mandatory</p>'
+- title: DSPD Phase Status
+  content: '# DSPD Phases
+
+
+    ## Phase 0: Foundation ✅
+
+    Architecture, requirements, CLAUDE.md, pyproject.toml.
+
+
+    ## Phase 1: Self-Host Plane — IN PROGRESS
+
+    Docker compose, setup.sh IaC, workspace, projects, API.
+
+
+    ## Phase 2: Fleet CLI
+
+    plane_client.py, plane.py CLI, plane_sync.py.
+
+    Code exists — copied from openclaw-fleet. Needs end-to-end testing.
+
+
+    ## Phase 3: MCP Integration
+
+    Webhook handler (dspd/webhooks.py), Plane MCP for PM, event routing.
+
+
+    ## Phase 4: Full DSPD
+
+    Multi-project, analytics, velocity, cross-project dependencies.
+
+    '
+  content_html: '<h1>DSPD Phases</h1>
+
+    <h2>Phase 0: Foundation ✅</h2>
+
+    <p>Architecture, requirements, CLAUDE.md, pyproject.toml.</p>
+
+    <h2>Phase 1: Self-Host Plane — IN PROGRESS</h2>
+
+    <p>Docker compose, setup.sh IaC, workspace, projects, API.</p>
+
+    <h2>Phase 2: Fleet CLI</h2>
+
+    <p>plane_client.py, plane.py CLI, plane_sync.py.</p>
+
+    <p>Code exists — copied from openclaw-fleet. Needs end-to-end testing.</p>
+
+    <h2>Phase 3: MCP Integration</h2>
+
+    <p>Webhook handler (dspd/webhooks.py), Plane MCP for PM, event routing.</p>
+
+    <h2>Phase 4: Full DSPD</h2>
+
+    <p>Multi-project, analytics, velocity, cross-project dependencies.</p>'
 epic_details:
-  "Setup":
+  Setup:
     priority: urgent
-    notes: |
-      Docker, IaC, mission seed. setup.sh install must work end-to-end.
+    notes: 'Docker, IaC, mission seed. setup.sh install must work end-to-end.
+
       config/mission.yaml defines the mission structure.
+
       All scripts must be idempotent.
 
-  "Integration":
+      '
+  Integration:
     priority: high
-    notes: |
-      Fleet CLI: fleet plan create/list/sync/status.
+    notes: 'Fleet CLI: fleet plan create/list/sync/status.
+
       plane_client.py copied from fleet — needs import verification.
+
       PM agent bridge between Plane and OCMC.
 
-  "Sync":
+      '
+  Sync:
     priority: high
-    notes: |
-      Bidirectional: Plane items → OCMC tasks, OCMC done → Plane updated.
+    notes: 'Bidirectional: Plane items → OCMC tasks, OCMC done → Plane updated.
+
       plane_sync.py exists. Needs end-to-end testing with live instances.
 
-  "Customization":
+      '
+  Customization:
     priority: medium
-    notes: |
-      Webhooks with HMAC, Plane MCP server for PM, analytics.
+    notes: 'Webhooks with HMAC, Plane MCP server for PM, analytics.
+
       dspd/webhooks.py built. scripts/plane-setup-webhooks.sh built.
 
+      '
 cycles:
-  - name: "DSPD Sprint 3: Complete IaC"
-    duration_days: 14
-    description: |
-      Complete Plane IaC. Mission seeded. All scripts working.
-      End-to-end: setup.sh install → Plane up → projects configured.
-    goals:
-      - setup.sh install runs clean from zero
-      - All 4 projects with custom states and modules
-      - API validation passes 11/11
-      - Startup verification passes 15/15
-      - Fleet credentials exported
-    epics:
-      - "Setup"
+- name: 'DSPD Sprint 3: Complete IaC'
+  duration_days: 14
+  description: 'Complete Plane IaC. Mission seeded. All scripts working.
+
+    End-to-end: setup.sh install → Plane up → projects configured.
+
+    '
+  goals:
+  - setup.sh install runs clean from zero
+  - All 4 projects with custom states and modules
+  - API validation passes 11/11
+  - Startup verification passes 15/15
+  - Fleet credentials exported
+  epics:
+  - Setup

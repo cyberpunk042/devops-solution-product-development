@@ -224,7 +224,7 @@ import sys, yaml
 from datetime import date, timedelta
 from django.utils import timezone
 from plane.db.models import (
-    User, Workspace, Project, Module, Cycle, Page, PageLog,
+    User, Workspace, Project, Module, Cycle, Page, PageLog, ProjectPage,
 )
 
 board = yaml.safe_load(sys.stdin.read())
@@ -236,23 +236,28 @@ if not proj:
     print(f'  SKIP: project {identifier} not found')
     sys.exit(0)
 
-# ── Pages (wiki) — skipped, Plane M2M through model requires custom handling
-# TODO: use Plane API for page creation instead of Django ORM
-pages_cfg = [] # board.get("pages", [])
+# ── Pages (wiki) — use ProjectPage through model for M2M ──
+pages_cfg = board.get('pages', [])
 for page_cfg in pages_cfg:
     title = page_cfg['title']
-    content = page_cfg.get('content', '')
-    existing = Page.objects.filter(name=title, projects=proj).first()
+    page_content = page_cfg.get('content', '')
+    # Check via through model
+    existing = ProjectPage.objects.filter(
+        project=proj, page__name=title
+    ).exists()
     if not existing:
         page = Page.objects.create(
             name=title,
-            description_html=f'<pre>{content}</pre>',
+            description_html=f'<pre>{page_content}</pre>',
             workspace=ws,
             owned_by=user,
             created_by=user,
             updated_by=user,
         )
-        page.projects.add(proj)
+        ProjectPage.objects.create(
+            page=page, project=proj, workspace=ws,
+            created_by=user, updated_by=user,
+        )
         print(f'  PAGE: {title} (created)')
     else:
         print(f'  PAGE: {title} (exists)')

@@ -356,6 +356,58 @@ print('\\nDone')
 " 2>&1
 
 log "Done"
+
+# ── Pages (from board config) ──────────────────────────────────
+
+log "Creating pages from board configs..."
+
+for board_file in "$PROJECT_DIR"/config/*-board.yaml; do
+    [ -f "$board_file" ] || continue
+
+    cat "$board_file" | docker exec -i "$API_CONTAINER" python manage.py shell -c "
+import sys, yaml
+from plane.db.models import Page, ProjectPage, Project, Workspace, User
+
+ws = Workspace.objects.get(slug='fleet')
+admin = User.objects.get(email='${PLANE_ADMIN_EMAIL}')
+board = yaml.safe_load(sys.stdin.read())
+proj = Project.objects.filter(identifier=board['project'], workspace=ws).first()
+if not proj:
+    sys.exit(0)
+
+for page_cfg in board.get('pages', []):
+    title = page_cfg['title']
+    html = page_cfg.get('content_html', '')
+    if not html:
+        content = page_cfg.get('content', '')
+        html = f'<pre>{content}</pre>' if content else ''
+    if not html:
+        continue
+
+    exists = ProjectPage.objects.filter(project=proj, page__name=title).exists()
+    if exists:
+        pp = ProjectPage.objects.get(project=proj, page__name=title)
+        pp.page.description_html = html
+        pp.page.save(update_fields=['description_html'])
+    else:
+        page = Page.objects.create(
+            name=title,
+            description_html=html,
+            workspace=ws,
+            owned_by=admin,
+            created_by=admin,
+            updated_by=admin,
+        )
+        ProjectPage.objects.create(
+            page=page, project=proj, workspace=ws,
+            created_by=admin, updated_by=admin,
+        )
+        print(f'  {board["project"]}: {title}')
+" 2>/dev/null
+done
+
+log "Pages created"
+
 # ── Starter Issues (from board config) ──────────────────────────────────
 
 log "Creating starter issues from board configs..."

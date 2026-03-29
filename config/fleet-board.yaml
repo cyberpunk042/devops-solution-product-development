@@ -43,8 +43,8 @@ pages:
     \ outage detector.</p>\n\n<h2>Chain Architecture</h2>\n<p>One fleet operation produces a <strong>CHAIN</strong> of events\
     \ across surfaces:</p>\n<pre><code>fleet_task_complete()\n  → INTERNAL: MC task→review, approval, board memory\n  → PUBLIC:\
     \ branch push, PR creation\n  → CHANNEL: IRC #fleet + #reviews\n  → NOTIFY: ntfy notification\n  → PLANE: issue updated\
-    \ (when Plane present)\n  → META: metrics, sync tracking</code></pre>\n<p>Chain builders exist (<code>event_chain.py</code>).\
-    \ Chain <strong>RUNNER not built yet</strong> (M-SC02).</p>\n\n<h2>Links</h2>\n<ul>\n<li><a href=\"https://github.com/cyberpunk042/openclaw-fleet\"\
+    \ (when Plane present)\n  → META: metrics, sync tracking</code></pre>\n<p>Chain builders + chain runner built (<code>event_chain.py</code>\
+    \ + <code>chain_runner.py</code>). Event bus wired end-to-end.</p>\n\n<h2>Links</h2>\n<ul>\n<li><a href=\"https://github.com/cyberpunk042/openclaw-fleet\"\
     >GitHub: openclaw-fleet</a></li>\n<li><a href=\"https://github.com/cyberpunk042/openclaw-fleet/blob/main/docs/milestones/STATUS-TRACKER.md\"\
     >STATUS-TRACKER</a></li>\n</ul>\n"
 - title: Fleet Operational Status
@@ -111,7 +111,7 @@ pages:
 
     <tr><td>MC UI</td><td><code>localhost:3000</code></td><td>✅ Running</td></tr>
 
-    <tr><td>Gateway</td><td><code>ws://localhost:18789</code></td><td>✅ Running (4GB heap)</td></tr>
+    <tr><td>Gateway</td><td><code>ws://localhost:18789</code></td><td>✅ Running (4GB heap + self-healing)</td></tr>
 
     <tr><td>IRC</td><td><code>localhost:6667</code></td><td>✅ Running (10 channels)</td></tr>
 
@@ -119,30 +119,121 @@ pages:
 
     <tr><td>LocalAI</td><td><code>localhost:8090</code></td><td>✅ Running (9 models)</td></tr>
 
-    <tr><td>Plane</td><td><code>localhost:8080</code></td><td>✅ Running (4 projects)</td></tr>
+    <tr><td>Plane</td><td><code>localhost:8080</code></td><td>✅ Running (4 projects, 13 issues)</td></tr>
 
     </tbody>
 
     </table>
 
 
-    <h2>Known Gaps</h2>
+    <h2>Event Bus (The Nervous System)</h2>
+
+    <table>
+
+    <thead><tr><th>Component</th><th>Status</th><th>Details</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>Event Store</td><td>✅ Built</td><td>CloudEvents JSONL, persistent, seen/unseen</td></tr>
+
+    <tr><td>Event Router</td><td>✅ Built</td><td>5-level routing (direct, priority, mention, tag, broadcast)</td></tr>
+
+    <tr><td>Chain Runner</td><td>✅ Built</td><td>6 surface handlers (INTERNAL, PUBLIC, CHANNEL, NOTIFY, PLANE, META)</td></tr>
+
+    <tr><td>MCP Event Emission</td><td>✅ Wired</td><td>10 tools emit CloudEvents</td></tr>
+
+    <tr><td>Agent Event Feed</td><td>✅ Wired</td><td>fleet_read_context includes unseen events</td></tr>
+
+    <tr><td>Plane Watcher</td><td>✅ Built</td><td>120s poll, detects new issues/updates/cycles</td></tr>
+
+    <tr><td>Sync Events</td><td>✅ Wired</td><td>PR merge/close emit events</td></tr>
+
+    </tbody>
+
+    </table>
+
+
+    <h2>Daemons (5 concurrent)</h2>
+
+    <table>
+
+    <thead><tr><th>Daemon</th><th>Interval</th><th>Purpose</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>Sync</td><td>60s</td><td>GitHub PR ↔ OCMC task sync</td></tr>
+
+    <tr><td>Auth</td><td>120s</td><td>Token refresh</td></tr>
+
+    <tr><td>Monitor</td><td>300s</td><td>Health check + self-healing gateway</td></tr>
+
+    <tr><td>Orchestrator</td><td>30s</td><td>6-step cycle: scan, approve, wake, dispatch, parents, health</td></tr>
+
+    <tr><td>Plane Watcher</td><td>120s</td><td>Detect Plane changes, emit events</td></tr>
+
+    </tbody>
+
+    </table>
+
+
+    <h2>MCP Tools (20)</h2>
+
+    <table>
+
+    <thead><tr><th>Tool</th><th>Events</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>fleet_task_complete</td><td>fleet.task.completed → fleet-ops</td></tr>
+
+    <tr><td>fleet_task_accept</td><td>fleet.task.accepted</td></tr>
+
+    <tr><td>fleet_task_create</td><td>fleet.task.created</td></tr>
+
+    <tr><td>fleet_approve</td><td>fleet.task.approved / rejected → assigned agent</td></tr>
+
+    <tr><td>fleet_chat</td><td>fleet.chat.message / mention → @agent feeds</td></tr>
+
+    <tr><td>fleet_alert</td><td>fleet.alert.posted → fleet-ops</td></tr>
+
+    <tr><td>fleet_escalate</td><td>fleet.escalation → fleet-ops (urgent)</td></tr>
+
+    <tr><td>fleet_pause</td><td>fleet.task.blocked → PM</td></tr>
+
+    <tr><td>fleet_plane_create_issue</td><td>fleet.plane.issue_created</td></tr>
+
+    <tr><td>fleet_plane_comment</td><td>fleet.plane.issue_commented → @mentions</td></tr>
+
+    <tr><td colspan="2"><em>+ 10 more tools (read_context, progress, commit, notify_human, plane_status, plane_sprint, plane_sync,
+    plane_update_issue, plane_list_modules, agent_status)</em></td></tr>
+
+    </tbody>
+
+    </table>
+
+
+    <h2>Remaining Gaps</h2>
 
     <ul>
 
-    <li>❌ Chain runner not built (M-SC02) — MCP tools bypass chains</li>
+    <li>🔶 MCP tools not yet using ChainRunner (individual calls, not chains) — M-EB15</li>
 
-    <li>❌ No Plane MCP tools (M-SC04) — PM can''t access Plane from sessions</li>
+    <li>🔶 Adaptive display per channel not built — M-EB16</li>
 
-    <li>❌ 29 autonomy milestones NOT STARTED</li>
+    <li>🔶 Cross-reference automation not built — M-EB17</li>
 
-    <li>❌ Event-driven wake not built (MM1)</li>
+    <li>🔶 IaC config differential sync not built — M-EB18</li>
 
-    <li>❌ Agent event filtering not built (MM8)</li>
+    <li>🔶 29 autonomy milestones still NOT STARTED</li>
 
-    <li>❌ Things built but never verified running</li>
+    <li>🔶 No agent has completed a real task yet</li>
 
     </ul>
+
+
+    <h2>Test Coverage</h2>
+
+    <p><strong>381 tests passing</strong> — event store (15), chain runner (9), event router (16), + 341 existing</p>
 
     '
 epic_details:

@@ -158,6 +158,12 @@ for proj_cfg in config.get('projects', []):
     patch = {'name': name, 'description': desc}
     if emoji:
         patch['emoji'] = emoji
+    cover = proj_cfg.get('cover_image', '')
+    if cover:
+        patch['cover_image'] = cover
+    logo = proj_cfg.get('logo_props', {})
+    if logo:
+        patch['logo_props'] = logo
     views = proj_cfg.get('views', {})
     patch['module_view'] = views.get('modules', True)
     patch['cycle_view'] = views.get('cycles', True)

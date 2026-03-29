@@ -1,394 +1,341 @@
-# mission.yaml — Fleet mission configuration for Plane
-#
-# This file defines the STRUCTURE of the Plane instance:
-#   - Workspace metadata
-#   - Projects with their purpose and settings
-#   - Modules (epics) — the strategic containers for work
-#   - Labels — fleet-wide taxonomy
-#   - Workflow states — per-project lifecycle
-#   - Estimate system — story point scale
-#   - Cycle templates — sprint cadence
-#
-# This does NOT define individual tasks/issues.
-# The project-manager agent breaks epics into tasks.
-# This file is IaC — the seed that aligns Plane toward the desired solution.
-#
-# Usage:
-#   scripts/plane-seed-mission.sh reads this file and configures Plane accordingly.
-#   Idempotent — safe to re-run after changes.
-
 workspace:
   slug: fleet
   name: Fleet
-  description: >
-    OpenClaw Fleet — autonomous AI agent fleet management.
-    Multi-project workspace spanning fleet operations, AI independence,
-    report transformation, and the development platform itself.
+  description: 'OpenClaw Fleet — autonomous AI agent fleet management. Multi-project workspace spanning
+    fleet operations, AI independence, report transformation, and the development platform itself.
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Estimate system (Fibonacci story points, fleet-wide)
-# ═══════════════════════════════════════════════════════════════════════════
-
+    '
 estimates:
   type: points
-  scale: [1, 2, 3, 5, 8, 13]
-
-# ═══════════════════════════════════════════════════════════════════════════
-# Cycle cadence (sprint template)
-# ═══════════════════════════════════════════════════════════════════════════
-
+  scale:
+  - 1
+  - 2
+  - 3
+  - 5
+  - 8
+  - 13
 cycle_defaults:
   duration_days: 14
-  naming: "{project} Sprint {number}"
-
-# ═══════════════════════════════════════════════════════════════════════════
-# Labels — fleet-wide taxonomy applied to ALL projects
-# ═══════════════════════════════════════════════════════════════════════════
-
+  naming: '{project} Sprint {number}'
 labels:
-  # Agent ownership
-  - name: "agent:architect"
-    color: "#F59E0B"
-    description: Owned by or assigned to architect agent
-  - name: "agent:software-engineer"
-    color: "#F59E0B"
-    description: Owned by software-engineer agent
-  - name: "agent:devops"
-    color: "#F59E0B"
-    description: Owned by devops agent
-  - name: "agent:pm"
-    color: "#F59E0B"
-    description: PM meta-task or PM-driven
-  - name: "agent:fleet-ops"
-    color: "#F59E0B"
-    description: Fleet operations agent
-  - name: "agent:qa"
-    color: "#F59E0B"
-    description: QA engineer agent
-  - name: "agent:devsecops"
-    color: "#F59E0B"
-    description: DevSecOps / Cyberpunk-Zero agent
-  - name: "agent:technical-writer"
-    color: "#F59E0B"
-    description: Technical writer agent
-  - name: "agent:ux-designer"
-    color: "#F59E0B"
-    description: UX designer agent
-  - name: "agent:accountability-generator"
-    color: "#F59E0B"
-    description: Accountability generator agent
-
-  # Work classification
-  - name: "spec-required"
-    color: "#A855F7"
-    description: Must have spec document before implementation
-  - name: "blocked"
-    color: "#EF4444"
-    description: Externally blocked — cannot proceed
-  - name: "infra"
-    color: "#6366F1"
-    description: Infrastructure change
-  - name: "docs"
-    color: "#6B7280"
-    description: Documentation only
-  - name: "test"
-    color: "#6B7280"
-    description: Test-only change
-  - name: "security"
-    color: "#EF4444"
-    description: Security-related work or review
-  - name: "iac"
-    color: "#10B981"
-    description: Infrastructure as Code — scripts, config, automation
-  - name: "strategic"
-    color: "#DC2626"
-    description: Strategic long-term mission work
-  - name: "localai"
-    color: "#10B981"
-    description: LocalAI independence related
-
-# ═══════════════════════════════════════════════════════════════════════════
-# PROJECTS
-# ═══════════════════════════════════════════════════════════════════════════
-
+- name: agent:architect
+  color: '#F59E0B'
+  description: Owned by or assigned to architect agent
+- name: agent:software-engineer
+  color: '#F59E0B'
+  description: Owned by software-engineer agent
+- name: agent:devops
+  color: '#F59E0B'
+  description: Owned by devops agent
+- name: agent:pm
+  color: '#F59E0B'
+  description: PM meta-task or PM-driven
+- name: agent:fleet-ops
+  color: '#F59E0B'
+  description: Fleet operations agent
+- name: agent:qa
+  color: '#F59E0B'
+  description: QA engineer agent
+- name: agent:devsecops
+  color: '#F59E0B'
+  description: DevSecOps / Cyberpunk-Zero agent
+- name: agent:technical-writer
+  color: '#F59E0B'
+  description: Technical writer agent
+- name: agent:ux-designer
+  color: '#F59E0B'
+  description: UX designer agent
+- name: agent:accountability-generator
+  color: '#F59E0B'
+  description: Accountability generator agent
+- name: spec-required
+  color: '#A855F7'
+  description: Must have spec document before implementation
+- name: blocked
+  color: '#EF4444'
+  description: Externally blocked — cannot proceed
+- name: infra
+  color: '#6366F1'
+  description: Infrastructure change
+- name: docs
+  color: '#6B7280'
+  description: Documentation only
+- name: test
+  color: '#6B7280'
+  description: Test-only change
+- name: security
+  color: '#EF4444'
+  description: Security-related work or review
+- name: iac
+  color: '#10B981'
+  description: Infrastructure as Code — scripts, config, automation
+- name: strategic
+  color: '#DC2626'
+  description: Strategic long-term mission work
+- name: localai
+  color: '#10B981'
+  description: LocalAI independence related
 projects:
+- identifier: AICP
+  name: AI Control Platform
+  emoji: 🤖
+  description: 'AI Control Platform — personal AI control workspace orchestrating LocalAI and Claude Code
+    through Think/Edit/Act modes.
 
-  # ─────────────────────────────────────────────────────────────────────────
-  # AICP — AI Control Platform
-  # The PRIMARY mission project. LocalAI independence lives here.
-  # ─────────────────────────────────────────────────────────────────────────
-  - identifier: AICP
-    name: AI Control Platform
-    emoji: "🤖"
-    description: >
-      AI Control Platform — personal AI control workspace orchestrating
-      LocalAI and Claude Code through Think/Edit/Act modes.
+    PRIMARY MISSION: Progressive LocalAI independence. Route work through LocalAI for everything that
+    doesn''t require Claude''s reasoning. Target: 80%+ reduction in Claude token usage.
 
-      PRIMARY MISSION: Progressive LocalAI independence.
-      Route work through LocalAI for everything that doesn't require
-      Claude's reasoning. Target: 80%+ reduction in Claude token usage.
+    "Its important that the main first mission for the plane/dspd is to make localAI functional and then
+    make it more and more reliable to offload as much as possible the work from claude till one day maybe
+    even try to actually run independently as much as possible."
 
-      "Its important that the main first mission for the plane/dspd is
-      to make localAI functional and then make it more and more reliable
-      to offload as much as possible the work from claude till one day
-      maybe even try to actually run independently as much as possible."
-    github: cyberpunk042/devops-expert-local-ai
-    network: 2  # public within workspace
+    '
+  github: cyberpunk042/devops-expert-local-ai
+  network: 2
+  views:
+    modules: true
+    cycles: true
+    issue_views: true
+    pages: true
+  states:
+  - name: Backlog
+    group: backlog
+    color: '#9CA3AF'
+  - name: Todo
+    group: unstarted
+    color: '#3B82F6'
+    default: true
+  - name: In Progress
+    group: started
+    color: '#F59E0B'
+  - name: In Review
+    group: started
+    color: '#A855F7'
+  - name: Done
+    group: completed
+    color: '#22C55E'
+  - name: Cancelled
+    group: cancelled
+    color: '#EF4444'
+  modules:
+  - name: 'Stage 1: Make LocalAI Functional'
+    description: 'Assess current state. Get local inference working. Verify OpenAI-compatible API. Benchmark
+      latency/throughput/quality. Validate 2-cluster network setup with both machines peered.
 
-    views:
-      modules: true
-      cycles: true
-      issue_views: true
-      pages: true
+      '
+    status: planned
+  - name: 'Stage 2: Route Simple Operations to LocalAI'
+    description: 'Build inference router (fleet/core/inference_router.py). Route heartbeats, status checks,
+      reads to LocalAI. Direct MCP tool calls bypass LLM entirely for HTTP operations. Measure what %
+      of fleet operations can run locally.
 
-    states:
-      - name: Backlog
-        group: backlog
-        color: "#9CA3AF"
-      - name: Todo
-        group: unstarted
-        color: "#3B82F6"
-        default: true
-      - name: In Progress
-        group: started
-        color: "#F59E0B"
-      - name: In Review
-        group: started
-        color: "#A855F7"
-      - name: Done
-        group: completed
-        color: "#22C55E"
-      - name: Cancelled
-        group: cancelled
-        color: "#EF4444"
+      '
+    status: planned
+  - name: 'Stage 3: Progressive Offload'
+    description: 'Idle heartbeats → LocalAI (zero Claude tokens). Simple task acceptance → LocalAI (structured
+      plans). Simple reviews (test pass/fail) → LocalAI (pattern matching). Chat responses (factual) →
+      LocalAI. Validate quality side-by-side: LocalAI vs Claude per operation.
 
-    modules:
-      # ── The Mission: LocalAI Independence (5 stages) ──
-      - name: "Stage 1: Make LocalAI Functional"
-        description: >
-          Assess current state. Get local inference working. Verify
-          OpenAI-compatible API. Benchmark latency/throughput/quality.
-          Validate 2-cluster network setup with both machines peered.
-        status: planned
+      '
+    status: planned
+  - name: 'Stage 4: Reliability and Failover'
+    description: 'LocalAI fails → fall back to Claude (graceful degradation). Claude rate-limited → queue
+      for LocalAI where possible. Cluster peering: Machine 1 LocalAI serves Machine 2 fleet. Load balancing
+      between clusters. Health monitoring for both backends.
 
-      - name: "Stage 2: Route Simple Operations to LocalAI"
-        description: >
-          Build inference router (fleet/core/inference_router.py).
-          Route heartbeats, status checks, reads to LocalAI.
-          Direct MCP tool calls bypass LLM entirely for HTTP operations.
-          Measure what % of fleet operations can run locally.
-        status: planned
+      '
+    status: planned
+  - name: 'Stage 5: Near-Independent Operation'
+    description: 'Fleet runs primarily on LocalAI for routine operations. Claude called only for complex
+      code, architecture, security, planning. 80%+ reduction in Claude token usage. Fleet operates during
+      Claude outages (degraded but functional). "Having our full 2 cluster LocalAI peered in the network
+      with one Plane and eventually 2 or even 3 fleets."
 
-      - name: "Stage 3: Progressive Offload"
-        description: >
-          Idle heartbeats → LocalAI (zero Claude tokens).
-          Simple task acceptance → LocalAI (structured plans).
-          Simple reviews (test pass/fail) → LocalAI (pattern matching).
-          Chat responses (factual) → LocalAI.
-          Validate quality side-by-side: LocalAI vs Claude per operation.
-        status: planned
+      '
+    status: planned
+  - name: Core Platform
+    description: 'AICP core: controller, Think/Edit/Act mode enforcement, backend routing (LocalAI vs
+      Claude Code), guardrails (path protection, secret filtering, command allowlist).
 
-      - name: "Stage 4: Reliability and Failover"
-        description: >
-          LocalAI fails → fall back to Claude (graceful degradation).
-          Claude rate-limited → queue for LocalAI where possible.
-          Cluster peering: Machine 1 LocalAI serves Machine 2 fleet.
-          Load balancing between clusters. Health monitoring for both backends.
-        status: planned
+      '
+    status: planned
+  - name: Integrations
+    description: 'Backend integrations: LocalAI (OpenAI-compatible), Claude Code (subprocess), Open WebUI
+      (planned).
 
-      - name: "Stage 5: Near-Independent Operation"
-        description: >
-          Fleet runs primarily on LocalAI for routine operations.
-          Claude called only for complex code, architecture, security, planning.
-          80%+ reduction in Claude token usage.
-          Fleet operates during Claude outages (degraded but functional).
-          "Having our full 2 cluster LocalAI peered in the network with
-          one Plane and eventually 2 or even 3 fleets."
-        status: planned
+      '
+    status: planned
+  cover_image: https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200
+  logo_props:
+    icon:
+      name: smart_toy
+      color: '#6366F1'
+    in_use: icon
+- identifier: OF
+  name: OpenClaw Fleet
+  emoji: 🦞
+  description: 'Fleet operations, MCP tools, orchestrator, agents. 10 autonomous AI agents managed through
+    OpenClaw gateway and Mission Control. Standards, skills, review chains, IRC channels, budget monitoring.
 
-      # ── Core Platform ──
-      - name: "Core Platform"
-        description: >
-          AICP core: controller, Think/Edit/Act mode enforcement,
-          backend routing (LocalAI vs Claude Code), guardrails
-          (path protection, secret filtering, command allowlist).
-        status: planned
+    '
+  github: cyberpunk042/openclaw-fleet
+  network: 2
+  views:
+    modules: true
+    cycles: true
+    issue_views: true
+    pages: true
+  states:
+  - name: Backlog
+    group: backlog
+    color: '#9CA3AF'
+  - name: Todo
+    group: unstarted
+    color: '#3B82F6'
+    default: true
+  - name: Dispatched
+    group: started
+    color: '#F59E0B'
+  - name: In Review
+    group: started
+    color: '#A855F7'
+  - name: Done
+    group: completed
+    color: '#22C55E'
+  - name: Cancelled
+    group: cancelled
+    color: '#EF4444'
+  modules:
+  - name: Core
+    description: Orchestrator, daemons, effort profiles, budget monitoring, task scoring
+  - name: MCP
+    description: MCP tools (13), context bundling, smart chains, tool enforcement
+  - name: Agents
+    description: Agent roles, heartbeats, lifecycle, behavioral security, souls
+  - name: Infrastructure
+    description: Gateway, IRC (10 channels), ntfy (3 topics), setup scripts, Docker
+  - name: Autonomy
+    description: 'Event chains, routing engine, self-healing, stuck detection, config auto-push, agent
+      command center (PRE→PROGRESS→POST)
 
-      - name: "Integrations"
-        description: >
-          Backend integrations: LocalAI (OpenAI-compatible),
-          Claude Code (subprocess), Open WebUI (planned).
-        status: planned
+      '
+  - name: Tests
+    description: Unit tests, integration tests, verification scripts
+  cover_image: https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200
+  logo_props:
+    icon:
+      name: hub
+      color: '#EF4444'
+    in_use: icon
+- identifier: DSPD
+  name: DevOps Solution Product Development
+  emoji: 📋
+  description: 'DevOps Solution Product Development — project management surface for the fleet built on
+    self-hosted Plane. The PM agent bridges Plane (sprints, epics, analytics) ↔ OCMC (agent dispatch).
 
-  # ─────────────────────────────────────────────────────────────────────────
-  # OF — openclaw-fleet
-  # Fleet operations, agents, orchestrator, MCP tools
-  # ─────────────────────────────────────────────────────────────────────────
-  - identifier: OF
-    name: OpenClaw Fleet
-    emoji: "🦞"
-    description: >
-      Fleet operations, MCP tools, orchestrator, agents.
-      10 autonomous AI agents managed through OpenClaw gateway
-      and Mission Control. Standards, skills, review chains,
-      IRC channels, budget monitoring.
-    github: cyberpunk042/openclaw-fleet
-    network: 2
+    '
+  github: cyberpunk042/devops-solution-product-development
+  network: 2
+  views:
+    modules: true
+    cycles: true
+    issue_views: true
+    pages: true
+  states:
+  - name: Backlog
+    group: backlog
+    color: '#9CA3AF'
+  - name: Todo
+    group: unstarted
+    color: '#3B82F6'
+    default: true
+  - name: In Progress
+    group: started
+    color: '#F59E0B'
+  - name: In Review
+    group: started
+    color: '#A855F7'
+  - name: Done
+    group: completed
+    color: '#22C55E'
+  - name: Cancelled
+    group: cancelled
+    color: '#EF4444'
+  modules:
+  - name: Setup
+    description: 'Docker, IaC, deployment scripts, mission seed, project layout, nginx, env templates
 
-    views:
-      modules: true
-      cycles: true
-      issue_views: true
-      pages: true
+      '
+  - name: Integration
+    description: 'Fleet CLI (fleet plan create/list/sync/status), plane_client.py, PM bridge
 
-    states:
-      - name: Backlog
-        group: backlog
-        color: "#9CA3AF"
-      - name: Todo
-        group: unstarted
-        color: "#3B82F6"
-        default: true
-      - name: Dispatched
-        group: started
-        color: "#F59E0B"
-      - name: In Review
-        group: started
-        color: "#A855F7"
-      - name: Done
-        group: completed
-        color: "#22C55E"
-      - name: Cancelled
-        group: cancelled
-        color: "#EF4444"
+      '
+  - name: Sync
+    description: 'Plane ↔ OCMC bidirectional sync. Plane items → OCMC tasks for agents. OCMC done → Plane
+      state updated.
 
-    modules:
-      - name: Core
-        description: Orchestrator, daemons, effort profiles, budget monitoring, task scoring
-      - name: MCP
-        description: MCP tools (13), context bundling, smart chains, tool enforcement
-      - name: Agents
-        description: Agent roles, heartbeats, lifecycle, behavioral security, souls
-      - name: Infrastructure
-        description: Gateway, IRC (10 channels), ntfy (3 topics), setup scripts, Docker
-      - name: Autonomy
-        description: >
-          Event chains, routing engine, self-healing, stuck detection,
-          config auto-push, agent command center (PRE→PROGRESS→POST)
-      - name: Tests
-        description: Unit tests, integration tests, verification scripts
+      '
+  - name: Customization
+    description: 'Webhooks (HMAC verified), Plane MCP server for PM, analytics, velocity tracking, burn-down
 
-  # ─────────────────────────────────────────────────────────────────────────
-  # DSPD — DevOps Solution Product Development
-  # Plane itself, CLI, sync, webhooks, MCP
-  # ─────────────────────────────────────────────────────────────────────────
-  - identifier: DSPD
-    name: DevOps Solution Product Development
-    emoji: "📋"
-    description: >
-      DevOps Solution Product Development — project management surface
-      for the fleet built on self-hosted Plane. The PM agent bridges
-      Plane (sprints, epics, analytics) ↔ OCMC (agent dispatch).
-    github: cyberpunk042/devops-solution-product-development
-    network: 2
+      '
+  cover_image: https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200
+  logo_props:
+    icon:
+      name: dashboard_customize
+      color: '#10B981'
+    in_use: icon
+- identifier: NNRT
+  name: Narrative-to-Neutral Report Transformer
+  emoji: 📄
+  description: 'Narrative-to-Neutral Report Transformer. Converts biased narrative reports into neutral,
+    structured format. Python NLP pipeline with multiple processing passes.
 
-    views:
-      modules: true
-      cycles: true
-      issue_views: true
-      pages: true
-
-    states:
-      - name: Backlog
-        group: backlog
-        color: "#9CA3AF"
-      - name: Todo
-        group: unstarted
-        color: "#3B82F6"
-        default: true
-      - name: In Progress
-        group: started
-        color: "#F59E0B"
-      - name: In Review
-        group: started
-        color: "#A855F7"
-      - name: Done
-        group: completed
-        color: "#22C55E"
-      - name: Cancelled
-        group: cancelled
-        color: "#EF4444"
-
-    modules:
-      - name: Setup
-        description: >
-          Docker, IaC, deployment scripts, mission seed,
-          project layout, nginx, env templates
-      - name: Integration
-        description: >
-          Fleet CLI (fleet plan create/list/sync/status),
-          plane_client.py, PM bridge
-      - name: Sync
-        description: >
-          Plane ↔ OCMC bidirectional sync.
-          Plane items → OCMC tasks for agents.
-          OCMC done → Plane state updated.
-      - name: Customization
-        description: >
-          Webhooks (HMAC verified), Plane MCP server for PM,
-          analytics, velocity tracking, burn-down
-
-  # ─────────────────────────────────────────────────────────────────────────
-  # NNRT — Narrative-to-Neutral Report Transformer
-  # ─────────────────────────────────────────────────────────────────────────
-  - identifier: NNRT
-    name: Narrative-to-Neutral Report Transformer
-    emoji: "📄"
-    description: >
-      Narrative-to-Neutral Report Transformer. Converts biased
-      narrative reports into neutral, structured format.
-      Python NLP pipeline with multiple processing passes.
-    github: cyberpunk042/Narrative-to-Neutral-Report-Transformer
-    network: 2
-
-    views:
-      modules: true
-      cycles: true
-      issue_views: true
-      pages: true
-
-    states:
-      - name: Backlog
-        group: backlog
-        color: "#9CA3AF"
-      - name: Spec Required
-        group: unstarted
-        color: "#A855F7"
-      - name: Spec Ready
-        group: unstarted
-        color: "#3B82F6"
-        default: true
-      - name: In Progress
-        group: started
-        color: "#F59E0B"
-      - name: Review
-        group: started
-        color: "#A855F7"
-      - name: Done
-        group: completed
-        color: "#22C55E"
-      - name: Cancelled
-        group: cancelled
-        color: "#EF4444"
-
-    modules:
-      - name: Intake
-        description: Document ingestion, format detection, preprocessing
-      - name: Structuring
-        description: Report structuring, section detection, hierarchy extraction
-      - name: Mapping
-        description: Narrative → neutral mapping engine, transformation rules
-      - name: Pressure
-        description: Bias detection, pressure indicators, sentiment neutralization
-      - name: Persistence
-        description: Storage, export formats, API, database
+    '
+  github: cyberpunk042/Narrative-to-Neutral-Report-Transformer
+  network: 2
+  views:
+    modules: true
+    cycles: true
+    issue_views: true
+    pages: true
+  states:
+  - name: Backlog
+    group: backlog
+    color: '#9CA3AF'
+  - name: Spec Required
+    group: unstarted
+    color: '#A855F7'
+  - name: Spec Ready
+    group: unstarted
+    color: '#3B82F6'
+    default: true
+  - name: In Progress
+    group: started
+    color: '#F59E0B'
+  - name: Review
+    group: started
+    color: '#A855F7'
+  - name: Done
+    group: completed
+    color: '#22C55E'
+  - name: Cancelled
+    group: cancelled
+    color: '#EF4444'
+  modules:
+  - name: Intake
+    description: Document ingestion, format detection, preprocessing
+  - name: Structuring
+    description: Report structuring, section detection, hierarchy extraction
+  - name: Mapping
+    description: Narrative → neutral mapping engine, transformation rules
+  - name: Pressure
+    description: Bias detection, pressure indicators, sentiment neutralization
+  - name: Persistence
+    description: Storage, export formats, API, database
+  cover_image: https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=1200
+  logo_props:
+    icon:
+      name: description
+      color: '#F59E0B'
+    in_use: icon

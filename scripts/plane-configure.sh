@@ -53,14 +53,27 @@ docker exec "$API_CONTAINER" python manage.py createsuperuser \
     && log "Superuser created" \
     || log "Superuser already exists"
 
-# Set admin password (createsuperuser --noinput doesn't set one)
+# Set admin password, profile, and complete onboarding (all in one shell call)
 docker exec "$API_CONTAINER" python manage.py shell -c "
 from plane.db.models import User
 u = User.objects.get(email='${PLANE_ADMIN_EMAIL}')
 u.set_password('${PLANE_ADMIN_PASSWORD}')
-u.save(update_fields=['password'])
+u.first_name = 'Fleet'
+u.last_name = 'Admin'
+# Complete onboarding so Plane doesn't show setup wizard
+if hasattr(u, 'is_onboarded'): u.is_onboarded = True
+if hasattr(u, 'is_tour_completed'): u.is_tour_completed = True
+if hasattr(u, 'onboarding_step'):
+    u.onboarding_step = {
+        'profile_complete': True,
+        'workspace_create': True,
+        'workspace_invite': True,
+        'workspace_join': True,
+    }
+u.save()
 print('ok')
-" 2>/dev/null && log "Admin password set" || log "WARN: Could not set admin password"
+" 2>/dev/null && log "Admin user configured (password + profile + onboarding)" \
+    || log "WARN: Could not configure admin user"
 
 docker exec "$API_CONTAINER" python manage.py create_instance_admin "$PLANE_ADMIN_EMAIL" 2>/dev/null \
     && log "Instance admin set" \
@@ -174,3 +187,29 @@ log "   API Token:  ${API_TOKEN:0:24}..."
 log "   Admin:      ${PLANE_ADMIN_EMAIL} (password in plane.env)"
 log "   God-mode:   ${PLANE_URL}/god-mode/"
 log "   Plane URL:  $PLANE_URL"
+
+# ── Complete god-mode setup wizard (so frontend doesn't show setup page) ──
+
+log "Completing god-mode setup wizard..."
+docker exec "$API_CONTAINER" python manage.py shell -c "
+from plane.license.models import Instance, InstanceConfiguration
+
+instance = Instance.objects.first()
+
+# Ensure auth config (god-mode checks these)
+for key, val in [
+    ('ENABLE_EMAIL_PASSWORD', '1'),
+    ('ENABLE_MAGIC_LINK_LOGIN', '0'),
+    ('ENABLE_SIGNUP', '1'),
+    ('IS_INTERCOM_ENABLED', '0'),
+]:
+    obj, _ = InstanceConfiguration.objects.get_or_create(key=key, defaults={'value': val})
+    if obj.value != val:
+        obj.value = val
+        obj.save(update_fields=['value'])
+
+instance.is_setup_done = True
+instance.is_telemetry_enabled = False
+instance.save(update_fields=['is_setup_done', 'is_telemetry_enabled'])
+print('ok')
+" 2>/dev/null && log "God-mode setup wizard completed" || log "WARN: God-mode setup failed"

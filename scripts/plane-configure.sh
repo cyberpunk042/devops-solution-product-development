@@ -96,19 +96,9 @@ ws, _ = Workspace.objects.get_or_create(
 )
 WorkspaceMember.objects.get_or_create(workspace=ws, member=user, defaults={'role': 20})
 
-# Project
-proj, _ = Project.objects.get_or_create(
-    identifier='OF',
-    workspace=ws,
-    defaults={
-        'name': 'openclaw-fleet',
-        'description': 'OpenClaw fleet project management',
-        'network': 2,
-        'created_by': user,
-        'updated_by': user,
-    }
-)
-ProjectMember.objects.get_or_create(project=proj, member=user, defaults={'role': 20, 'is_active': True})
+# Project — skip ORM creation, seed script creates via REST API
+# Just check if it exists for the API token
+proj = Project.objects.filter(identifier='OF', workspace=ws).first()
 
 # API Token
 token, _ = APIToken.objects.get_or_create(
@@ -172,7 +162,15 @@ instance = Instance.objects.first()
 instance.instance_name = '${INSTANCE_NAME}'
 instance.domain = '${PLANE_URL}'
 instance.is_setup_done = True
-instance.save(update_fields=['instance_name', 'domain', 'is_setup_done'])
+instance.is_signup_screen_visited = True
+instance.is_verified = True
+instance.is_support_required = False
+instance.is_telemetry_enabled = False
+instance.save(update_fields=[
+    'instance_name', 'domain', 'is_setup_done',
+    'is_signup_screen_visited', 'is_verified',
+    'is_support_required', 'is_telemetry_enabled',
+])
 user = User.objects.get(email='${PLANE_ADMIN_EMAIL}')
 InstanceAdmin.objects.get_or_create(instance=instance, user=user, defaults={'role': 20})
 print('ok')

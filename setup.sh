@@ -243,7 +243,13 @@ cmd_help() {
     echo "  status     Show service health"
     echo "  validate   Run API validation (requires .plane-config)"
     echo "  upgrade    Pull latest images and restart"
+    echo "  export     Export current Plane state for rebuild recovery"
     echo "  uninstall  Remove all containers and volumes"
+}
+
+cmd_export() {
+    bold "Exporting Plane State"
+    "${SCRIPT_DIR}/scripts/plane-export-state.sh"
 }
 
 # ── Dispatch ───────────────────────────────────────────────────────────────────
@@ -256,6 +262,7 @@ case "$CMD" in
     status)    cmd_status ;;
     validate)  cmd_validate ;;
     upgrade)   cmd_upgrade ;;
+    export)    cmd_export ;;
     uninstall) cmd_uninstall ;;
     help|--help|-h) cmd_help ;;
     *) die "Unknown command: $CMD — run ./setup.sh help" ;;

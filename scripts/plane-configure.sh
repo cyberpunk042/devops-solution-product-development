@@ -213,3 +213,11 @@ instance.is_telemetry_enabled = False
 instance.save(update_fields=['is_setup_done', 'is_telemetry_enabled'])
 print('ok')
 " 2>/dev/null && log "God-mode setup wizard completed" || log "WARN: God-mode setup failed"
+
+# Restart API to clear instance cache (API caches initial instance data)
+log "Restarting API to apply instance config..."
+docker restart "$API_CONTAINER" >/dev/null 2>&1
+sleep 10
+# Verify
+HTTP=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 10 "$PLANE_URL/" 2>/dev/null || echo "000")
+log "API restarted (HTTP $HTTP)"

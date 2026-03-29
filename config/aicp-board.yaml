@@ -1,332 +1,472 @@
-# aicp-board.yaml — AICP mission content for Plane
-#
-# This is the PRIMARY mission. LocalAI independence is the first and most
-# important work the fleet will do through Plane.
-#
-# The PM agent reads these epics and creates tasks from them.
-# The epic descriptions contain the user's vision (verbatim quotes),
-# the technical direction, and acceptance criteria.
-
 project: AICP
-
-# ═══════════════════════════════════════════════════════════════════════════
-# PAGES — Living documents the PM and agents reference
-# ═══════════════════════════════════════════════════════════════════════════
-
 pages:
-  - title: "AICP Architecture"
-    content: |
-      # AICP — AI Control Platform Architecture
+- title: AICP Architecture
+  content_html: '
 
-      ## Core Concept
+    <h1>AICP — AI Control Platform Architecture</h1>
 
-      AICP orchestrates local and cloud AI backends through a unified controller.
-      The user is always in control — AI backends are tools, not masters.
 
-      ```
-      User → AICP Controller → Router → (LocalAI | Claude Code) → Project/Repo
-                                  │
-                                  ├── Does this need reasoning?
-                                  │   NO → LocalAI (local, free, fast)
-                                  │         ├── 3B model for structured responses
-                                  │         ├── MCP tool calls (direct HTTP, no LLM)
-                                  │         └── Template-based responses
-                                  │   YES → Claude (cloud, paid, powerful)
-                                  │         ├── opus for complex (architecture, security, planning)
-                                  │         └── sonnet for standard (implementation, review)
-      ```
+    <h2>Core Concept</h2>
 
-      ## Three Permission Modes
+    <p>AICP orchestrates local and cloud AI backends through a unified controller. The user is always in control — AI backends
+    are tools, not masters.</p>
 
-      - Think — read, analyze, plan. No edits, no commands.
-      - Edit — modify files in a controlled scope. Produce patches/diffs.
-      - Act — run commands, workflows, tools. Highest power, most controlled.
 
-      ## Routing Table
+    <h2>Router Architecture</h2>
 
-      | Operation | Today (Claude) | Target (LocalAI) |
-      |-----------|---------------|-------------------|
-      | Heartbeat check (no work) | Claude session (~8K tokens) | LocalAI (0 Claude tokens) |
-      | fleet_read_context | Claude tool call | Direct API call (no LLM) |
-      | fleet_agent_status | Claude tool call | Direct API call |
-      | fleet_chat post | Claude session | LocalAI or direct API |
-      | Simple task acceptance | Claude session | LocalAI (structured response) |
-      | Complex implementation | Claude (opus) | Claude (opus) — KEEP |
-      | Architecture design | Claude (opus) | Claude (opus) — KEEP |
-      | Security analysis | Claude (opus) | Claude (opus) — KEEP |
+    <table>
 
-      ## LocalAI Assessment (2026-03-29)
+    <thead><tr><th>Operation</th><th>Today (Claude)</th><th>Target (LocalAI)</th></tr></thead>
 
-      | Model | Cold Start | Warm | Use Case |
-      |-------|------------|------|----------|
-      | hermes-3b (3B) | ~10s | ~1.2s | Fleet heartbeats (TARGET) |
-      | hermes (7B) | ~80s | ~1s | Complex reasoning |
-      | codellama (7B) | ~80s | ~1s | Code tasks |
-      | phi-2 (2.7B) | CPU | CPU | Fallback |
+    <tbody>
 
-  - title: "LocalAI Independence — Strategic Vision"
-    content: |
-      # The Mission — LocalAI Independence
+    <tr><td>Heartbeat (no work)</td><td>Claude ~8K tokens</td><td><strong>LocalAI (0 tokens)</strong></td></tr>
 
-      ## User Vision (Verbatim)
+    <tr><td>fleet_read_context</td><td>Claude tool call</td><td><strong>Direct HTTP (no LLM)</strong></td></tr>
 
-      > "Its important that the main first mission for the plane/dspd is to make
-      > localAI functional and then make it more and more reliable to offload as
-      > much as possible the work from claude till one day maybe even if probably
-      > not entirely even try to actually run independently as much as possible,
-      > especially for things and loops and events that do not require heavy works
-      > and especially for very well defined and structured orders or directives
-      > that we can find out how to route perfectly to the right model and tools
-      > everytime for a mix of multiple advantages so it will be multiple targets
-      > always aligned with the same mission of being more independent and having
-      > our full 2 cluster LocalAI peered in the network with one Plane and
-      > eventually 2 or even 3 fleets."
+    <tr><td>fleet_agent_status</td><td>Claude tool call</td><td><strong>Direct HTTP</strong></td></tr>
 
-      > "We will continue working with the fleet for now till we are really at
-      > this point and ready to put into work safely the agent into moving toward
-      > the target at a reasonable pace with proper guidance and flow and keeping
-      > in the loop and making sure that the requirements are the right one and
-      > the planning the right one and that the project Plane will be used
-      > accordingly and engrained into them."
+    <tr><td>Simple task acceptance</td><td>Claude session</td><td><strong>LocalAI structured</strong></td></tr>
 
-      > "important to remember the plane place and yet how oc agent still work
-      > on ocmc, that's why we need smart tools, chains that will trigger
-      > multiple things for one call or one event and that will keep listening
-      > to all side and keep in sync."
+    <tr><td>Complex implementation</td><td>Claude (opus)</td><td>Claude (opus) — KEEP</td></tr>
 
-      > "we need to really make this strong."
+    <tr><td>Architecture design</td><td>Claude (opus)</td><td>Claude (opus) — KEEP</td></tr>
 
-      ## Infrastructure Target
+    <tr><td>Security analysis</td><td>Claude (opus)</td><td>Claude (opus) — KEEP</td></tr>
 
-      ```
-      Machine 1: Fleet Alpha
-        ├── LocalAI Cluster 1 (GPU: 8GB VRAM)
-        ├── OpenClaw Gateway + MC
-        └── 10 Agents (alpha-prefixed)
+    </tbody>
 
-      Machine 2: Fleet Bravo
-        ├── LocalAI Cluster 2 (GPU: 8GB VRAM)
-        ├── OpenClaw Gateway + MC
-        └── 10 Agents (bravo-prefixed)
+    </table>
 
-      Shared: Plane (one instance), GitHub, ntfy
-      LocalAI Peering: Cluster 1 ↔ Cluster 2 (load balance, failover)
-      ```
 
-      ## 5 Stages
+    <h2>Permission Modes</h2>
 
-      1. Make LocalAI Functional — assess, get inference working, benchmark
-      2. Route Simple Operations — build router, bypass LLM for HTTP calls
-      3. Progressive Offload — heartbeats, simple reviews, chat on LocalAI
-      4. Reliability and Failover — graceful degradation, cluster peering
-      5. Near-Independent Operation — 80%+ Claude reduction, survive outages
+    <ul>
 
-  - title: "AICP — Current State Assessment"
-    content: |
-      # AICP Current State (2026-03-29)
+    <li><strong>Think</strong> — read, analyze, plan. No edits, no commands.</li>
 
-      ## LocalAI: FUNCTIONAL
-      - 9 models loaded (hermes, hermes-3b, codellama, phi-2, llava, whisper, piper-tts, bge-reranker, stablediffusion)
-      - OpenAI-compatible API working on localhost:8090
-      - hermes-3b (3B): 10s cold, 1.2s warm — TARGET for heartbeats
-      - Single-active backend: one GPU model at a time (8GB VRAM)
-      - GPU via WSL2 /dev/dxg, CUDA 12
+    <li><strong>Edit</strong> — modify files in controlled scope. Produce patches/diffs.</li>
 
-      ## AICP Package: EXISTS
-      - 46 Python modules in aicp/
-      - core/ — controller, router, modes, pipeline, session, budget, metrics
-      - backends/ — localai.py, claude_code.py
-      - guardrails/ — checks, paths, response filtering
-      - 67 test files (988 passing on Python 3.8, 135 need 3.11 for MCP)
+    <li><strong>Act</strong> — run commands, workflows, tools. Highest power.</li>
 
-      ## What's Missing
-      - Inference router not built yet (Stage 2)
-      - No integration between AICP controller and fleet orchestrator
-      - Think/Edit/Act modes defined but not enforced end-to-end
-      - No LocalAI → Claude fallback logic
+    </ul>
 
-# ═══════════════════════════════════════════════════════════════════════════
-# EPIC DETAILS — Rich content for each module
-# The PM reads these to understand what to plan and break down
-# ═══════════════════════════════════════════════════════════════════════════
 
+    <h2>LocalAI Assessment (2026-03-29)</h2>
+
+    <table>
+
+    <thead><tr><th>Model</th><th>Cold Start</th><th>Warm</th><th>Use Case</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>hermes-3b (3B)</td><td>~10s</td><td><strong>~1.2s</strong></td><td><strong>Fleet heartbeats TARGET</strong></td></tr>
+
+    <tr><td>hermes (7B)</td><td>~80s</td><td>~1s</td><td>Complex reasoning</td></tr>
+
+    <tr><td>codellama (7B)</td><td>~80s</td><td>~1s</td><td>Code tasks</td></tr>
+
+    <tr><td>phi-2 (2.7B)</td><td>fast</td><td>fast</td><td>CPU fallback</td></tr>
+
+    </tbody>
+
+    </table>
+
+
+    <h2>Links</h2>
+
+    <ul>
+
+    <li><a href="https://github.com/cyberpunk042/devops-expert-local-ai">GitHub: AICP</a></li>
+
+    <li><a href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/docs/milestones/active/strategic-vision-localai-independence.md">Strategic
+    Vision Document</a></li>
+
+    </ul>
+
+    '
+- title: LocalAI Independence — Strategic Vision
+  content_html: '
+
+    <h1>The Mission — LocalAI Independence</h1>
+
+
+    <h2>User Vision</h2>
+
+    <blockquote>
+
+    <p>"Its important that the main first mission for the plane/dspd is to make localAI functional and then make it more and
+    more reliable to offload as much as possible the work from claude till one day maybe even if probably not entirely even
+    try to actually run independently as much as possible, especially for things and loops and events that do not require
+    heavy works and especially for very well defined and structured orders or directives that we can find out how to route
+    perfectly to the right model and tools everytime for a mix of multiple advantages so it will be multiple targets always
+    aligned with the same mission of being more independent and having our full 2 cluster LocalAI peered in the network with
+    one Plane and eventually 2 or even 3 fleets."</p>
+
+    </blockquote>
+
+
+    <blockquote>
+
+    <p>"We will continue working with the fleet for now till we are really at this point and ready to put into work safely
+    the agent into moving toward the target at a reasonable pace with proper guidance and flow and keeping in the loop and
+    making sure that the requirements are the right one and the planning the right one and that the project Plane will be
+    used accordingly and engrained into them."</p>
+
+    </blockquote>
+
+
+    <blockquote>
+
+    <p>"important to remember the plane place and yet how oc agent still work on ocmc, that''s why we need smart tools, chains
+    that will trigger multiple things for one call or one event and that will keep listening to all side and keep in sync."</p>
+
+    </blockquote>
+
+
+    <blockquote>
+
+    <p>"we need to really make this strong."</p>
+
+    </blockquote>
+
+
+    <h2>5 Stages</h2>
+
+    <ol>
+
+    <li><strong>Stage 1: Make LocalAI Functional</strong> — assess, get inference working, benchmark, cluster verification</li>
+
+    <li><strong>Stage 2: Route Simple Operations</strong> — build inference router, bypass LLM for HTTP calls</li>
+
+    <li><strong>Stage 3: Progressive Offload</strong> — heartbeats, simple reviews, chat on LocalAI with quality validation</li>
+
+    <li><strong>Stage 4: Reliability and Failover</strong> — graceful degradation, cluster peering, load balancing</li>
+
+    <li><strong>Stage 5: Near-Independent Operation</strong> — 80%+ Claude reduction, survive outages</li>
+
+    </ol>
+
+
+    <h2>Infrastructure Target</h2>
+
+    <table>
+
+    <thead><tr><th>Component</th><th>Machine 1 (Alpha)</th><th>Machine 2 (Bravo)</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>LocalAI Cluster</td><td>GPU: 8GB VRAM</td><td>GPU: 8GB VRAM</td></tr>
+
+    <tr><td>OpenClaw Gateway</td><td>✓</td><td>✓</td></tr>
+
+    <tr><td>Fleet Agents</td><td>10 (alpha-prefixed)</td><td>10 (bravo-prefixed)</td></tr>
+
+    </tbody>
+
+    </table>
+
+    <p><strong>Shared:</strong> Plane (one instance), GitHub, ntfy</p>
+
+    <p><strong>Peering:</strong> Cluster 1 ↔ Cluster 2 (load balance, failover)</p>
+
+    '
+- title: AICP — Current State Assessment
+  content_html: '
+
+    <h1>AICP Current State (2026-03-29)</h1>
+
+
+    <h2>LocalAI: FUNCTIONAL ✅</h2>
+
+    <ul>
+
+    <li>9 models loaded and responding</li>
+
+    <li>OpenAI-compatible API working on <code>localhost:8090</code></li>
+
+    <li>hermes-3b (3B): <strong>10s cold, 1.2s warm</strong> — target for fleet heartbeats</li>
+
+    <li>Single-active backend: one GPU model at a time (8GB VRAM limit)</li>
+
+    <li>GPU: NVIDIA via WSL2, CUDA 12</li>
+
+    </ul>
+
+
+    <h2>AICP Package: EXISTS ✅</h2>
+
+    <ul>
+
+    <li>46 Python modules in <code>aicp/</code></li>
+
+    <li><code>core/</code> — controller, router, modes, pipeline, session, budget, metrics</li>
+
+    <li><code>backends/</code> — localai.py, claude_code.py</li>
+
+    <li><code>guardrails/</code> — checks, paths, response filtering</li>
+
+    <li>67 test files (988 passing on Python 3.8, 135 need 3.11 for MCP)</li>
+
+    </ul>
+
+
+    <h2>What''s Missing ❌</h2>
+
+    <ul>
+
+    <li>Inference router not built (Stage 2)</li>
+
+    <li>No integration between AICP controller and fleet orchestrator</li>
+
+    <li>Think/Edit/Act modes defined but not enforced end-to-end</li>
+
+    <li>No LocalAI → Claude fallback logic</li>
+
+    <li>Cluster verification pending (Machine 2)</li>
+
+    </ul>
+
+
+    <h2>Links</h2>
+
+    <ul>
+
+    <li><a href="https://github.com/cyberpunk042/devops-expert-local-ai">GitHub Repository</a></li>
+
+    <li><a href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/docs/milestones/active/strategic-vision-localai-independence.md">Strategic
+    Vision</a></li>
+
+    </ul>
+
+    '
 epic_details:
-  "Stage 1: Make LocalAI Functional":
+  'Stage 1: Make LocalAI Functional':
     priority: high
     target_sprint: 1
     acceptance_criteria:
-      - LocalAI API responds to chat completion requests consistently
-      - At least hermes-3b (3B) and hermes (7B) models load and respond correctly
-      - OpenAI-compatible client libraries can connect and get responses
-      - Benchmark documented — latency p50/p95, tokens/sec, quality score for structured responses
-      - 2-cluster network verified — both machines running LocalAI, cross-machine inference works
+    - LocalAI API responds to chat completion requests consistently
+    - At least hermes-3b (3B) and hermes (7B) models load and respond correctly
+    - OpenAI-compatible client libraries can connect and get responses
+    - Benchmark documented — latency p50/p95, tokens/sec, quality score for structured responses
+    - 2-cluster network verified — both machines running LocalAI, cross-machine inference works
     dependencies: []
-    notes: |
-      ASSESSMENT DONE (2026-03-29): LocalAI is functional. 9 models loaded.
+    notes: 'ASSESSMENT DONE (2026-03-29): LocalAI is functional. 9 models loaded.
+
       hermes-3b benchmarked at 10s cold / 1.2s warm. OpenAI API verified.
 
+
       Remaining: 2-cluster network verification (Machine 2 setup).
+
       PM should focus remaining Stage 1 work on the cluster setup and
+
       comprehensive benchmarking across all target operations.
 
+
       > "we will need to validate the project and make sure we can support
+
       > all that properly too. this will be work."
 
-  "Stage 2: Route Simple Operations to LocalAI":
+      '
+  'Stage 2: Route Simple Operations to LocalAI':
     priority: high
     target_sprint: 2
     acceptance_criteria:
-      - fleet/core/inference_router.py exists and routes by operation type
-      - Heartbeat checks route to LocalAI (verified with real agent heartbeat)
-      - fleet_read_context executes as direct API call — zero LLM tokens consumed
-      - fleet_agent_status executes as direct API call — zero LLM tokens consumed
-      - Offload percentage measured and documented (target: 30%+ of operations)
+    - fleet/core/inference_router.py exists and routes by operation type
+    - Heartbeat checks route to LocalAI (verified with real agent heartbeat)
+    - fleet_read_context executes as direct API call — zero LLM tokens consumed
+    - fleet_agent_status executes as direct API call — zero LLM tokens consumed
+    - Offload percentage measured and documented (target: 30%+ of operations)
     dependencies:
-      - "Stage 1: Make LocalAI Functional"
-    notes: |
-      The router is the critical architecture piece. It sits between the fleet
+    - 'Stage 1: Make LocalAI Functional'
+    notes: 'The router is the critical architecture piece. It sits between the fleet
+
       control plane and the AI backends, deciding what needs reasoning vs what
+
       can be handled locally or as direct HTTP calls.
 
+
       Key insight: many MCP tool calls are just HTTP requests to the MC API.
-      They don't need an LLM at all — they can be direct API calls.
+
+      They don''t need an LLM at all — they can be direct API calls.
+
 
       > "it should only call claude when needed otherwise do mcp / tool calls
+
       > and whatever"
 
+
       > "especially for very well defined and structured orders or directives
+
       > that we can find out how to route perfectly to the right model and tools
+
       > everytime for a mix of multiple advantages"
 
+
       Smart chains matter here — one event triggers multiple things:
+
       > "smart tools, chains that will trigger multiple things for one call or
+
       > one event and that will keep listening to all side and keep in sync"
 
-  "Stage 3: Progressive Offload":
+      '
+  'Stage 3: Progressive Offload':
     priority: medium
     target_sprint: 3
     acceptance_criteria:
-      - Idle heartbeats run on LocalAI — zero Claude tokens for no-work heartbeats
-      - Simple task acceptance via LocalAI — structured plan output validated
-      - Simple reviews (test pass/fail) via LocalAI — pattern matching verified
-      - Quality validation report — side-by-side LocalAI vs Claude per operation
-      - No quality regression on offloaded operations (measured, not assumed)
+    - Idle heartbeats run on LocalAI — zero Claude tokens for no-work heartbeats
+    - Simple task acceptance via LocalAI — structured plan output validated
+    - Simple reviews (test pass/fail) via LocalAI — pattern matching verified
+    - Quality validation report — side-by-side LocalAI vs Claude per operation
+    - No quality regression on offloaded operations (measured, not assumed)
     dependencies:
-      - "Stage 2: Route Simple Operations to LocalAI"
-    notes: |
-      Quality validation is the gate. Every operation that moves to LocalAI
+    - 'Stage 2: Route Simple Operations to LocalAI'
+    notes: 'Quality validation is the gate. Every operation that moves to LocalAI
+
       must be validated side-by-side against Claude. The PM should create
+
       quality gate tasks for each operation type being offloaded.
 
+
       This is where the real token savings begin. Each idle heartbeat today
+
       costs ~8K Claude tokens. With 10 agents at 30-90 minute intervals,
-      that's thousands of tokens per hour on "no work" heartbeats.
+
+      that''s thousands of tokens per hour on "no work" heartbeats.
+
 
       > "especially for things and loops and events that do not require heavy
+
       > works"
 
+
       The pace must be reasonable:
+
       > "ready to put into work safely the agent into moving toward the target
+
       > at a reasonable pace with proper guidance and flow"
 
-  "Stage 4: Reliability and Failover":
+      '
+  'Stage 4: Reliability and Failover':
     priority: medium
     target_sprint: 4
     acceptance_criteria:
-      - LocalAI failure triggers automatic Claude fallback (transparent to agents)
-      - Claude rate limit triggers work queue for LocalAI where possible
-      - Cross-machine cluster peering working (Machine 1 ↔ Machine 2)
-      - Load balancing between clusters verified under real traffic
-      - Health monitoring dashboard for both inference backends
+    - LocalAI failure triggers automatic Claude fallback (transparent to agents)
+    - Claude rate limit triggers work queue for LocalAI where possible
+    - Cross-machine cluster peering working (Machine 1 ↔ Machine 2)
+    - Load balancing between clusters verified under real traffic
+    - Health monitoring dashboard for both inference backends
     dependencies:
-      - "Stage 3: Progressive Offload"
-    notes: |
-      Graceful degradation is essential. Agents should never know which backend
-      they're talking to. The control plane handles routing transparently.
+    - 'Stage 3: Progressive Offload'
+    notes: 'Graceful degradation is essential. Agents should never know which backend
+
+      they''re talking to. The control plane handles routing transparently.
+
 
       This stage also sets up the multi-machine infrastructure:
+
       > "having our full 2 cluster LocalAI peered in the network with one
+
       > Plane and eventually 2 or even 3 fleets"
 
-  "Stage 5: Near-Independent Operation":
+      '
+  'Stage 5: Near-Independent Operation':
     priority: low
     target_sprint: 5
     acceptance_criteria:
-      - 80%+ of fleet operations run on LocalAI (measured over 1 week)
-      - Claude used only for complex code, architecture, security, strategic planning
-      - Fleet survives a 1-hour Claude outage with degraded but functional operation
-      - Token cost reduction documented with before/after comparison
-      - Continuous optimization process defined and running
+    - 80%+ of fleet operations run on LocalAI (measured over 1 week)
+    - Claude used only for complex code, architecture, security, strategic planning
+    - Fleet survives a 1-hour Claude outage with degraded but functional operation
+    - Token cost reduction documented with before/after comparison
+    - Continuous optimization process defined and running
     dependencies:
-      - "Stage 4: Reliability and Failover"
-    notes: |
-      This is the long-term target. It may take months to reach. The key metric
+    - 'Stage 4: Reliability and Failover'
+    notes: 'This is the long-term target. It may take months to reach. The key metric
+
       is the percentage of operations running locally and the quality of those
+
       operations compared to Claude.
 
+
       > "make it more and more reliable to offload as much as possible the work
+
       > from claude till one day maybe even if probably not entirely even try to
+
       > actually run independently as much as possible"
 
+
       The vision is multiple fleets, multiple clusters, one Plane:
+
       > "having our full 2 cluster LocalAI peered in the network with one Plane
+
       > and eventually 2 or even 3 fleets. there will be multiple stage to this
+
       > including trial of the multiple features and attempt to put in place"
 
-  "Core Platform":
+      '
+  Core Platform:
     priority: high
     target_sprint: 1
     acceptance_criteria:
-      - Think/Edit/Act mode enforcement working end-to-end
-      - Backend routing (LocalAI vs Claude) functional via config
-      - Guardrails enforced — path protection, secrets filtered, command allowlist
-      - Configuration via YAML, not hardcoded
+    - Think/Edit/Act mode enforcement working end-to-end
+    - Backend routing (LocalAI vs Claude) functional via config
+    - Guardrails enforced — path protection, secrets filtered, command allowlist
+    - Configuration via YAML, not hardcoded
     dependencies: []
-    notes: |
-      The core AICP primitives. The aicp/ package already has 46 modules
+    notes: 'The core AICP primitives. The aicp/ package already has 46 modules
+
       including controller.py, router.py, modes.py, guardrails/.
-      Assessment needed: what works, what's wired up, what's missing.
+
+      Assessment needed: what works, what''s wired up, what''s missing.
+
 
       > "it should only call claude when needed otherwise do mcp / tool calls"
+
       > "we need to really make this strong."
 
-  "Integrations":
+      '
+  Integrations:
     priority: medium
     target_sprint: 2
     acceptance_criteria:
-      - LocalAI integration via OpenAI-compatible API verified end-to-end
-      - Claude Code integration via subprocess verified
-      - Both backends configurable via YAML config
-      - Health check endpoint for each backend
-      - Model warmup strategy documented (keep 3B warm for heartbeats)
+    - LocalAI integration via OpenAI-compatible API verified end-to-end
+    - Claude Code integration via subprocess verified
+    - Both backends configurable via YAML config
+    - Health check endpoint for each backend
+    - Model warmup strategy documented (keep 3B warm for heartbeats)
     dependencies:
-      - "Core Platform"
-    notes: |
-      The backend integrations connect AICP to the actual inference providers.
+    - Core Platform
+    notes: 'The backend integrations connect AICP to the actual inference providers.
+
       LocalAI is at localhost:8090, Claude Code is invoked as subprocess.
+
       The key challenge is model management — single-active backend means
+
       only one GPU model loaded at a time (8GB VRAM limit).
 
+
       Strategy: keep hermes-3b warm for heartbeats, swap to hermes/codellama
+
       for heavy work, phi-2 as CPU fallback.
 
-# ═══════════════════════════════════════════════════════════════════════════
-# INITIAL CYCLE
-# ═══════════════════════════════════════════════════════════════════════════
-
+      '
 cycles:
-  - name: "AICP Sprint 1: Assessment + Foundation"
-    duration_days: 14
-    description: |
-      Assess current state of AICP and LocalAI. Complete Stage 1 remaining work
-      (cluster verification, comprehensive benchmarks). Establish core platform
-      primitives (Think/Edit/Act modes). PM breaks down Stage 1 and Core Platform
-      epics into tasks.
-    goals:
-      - Complete LocalAI cluster verification (both machines)
-      - Full benchmark suite across target operations
-      - Assess AICP existing code — what's wired, what's not
-      - Core platform mode enforcement working
-    epics:
-      - "Stage 1: Make LocalAI Functional"
-      - "Core Platform"
+- name: 'AICP Sprint 1: Assessment + Foundation'
+  duration_days: 14
+  description: 'Assess current state of AICP and LocalAI. Complete Stage 1 remaining work
+
+    (cluster verification, comprehensive benchmarks). Establish core platform
+
+    primitives (Think/Edit/Act modes). PM breaks down Stage 1 and Core Platform
+
+    epics into tasks.
+
+    '
+  goals:
+  - Complete LocalAI cluster verification (both machines)
+  - Full benchmark suite across target operations
+  - Assess AICP existing code — what's wired, what's not
+  - Core platform mode enforcement working
+  epics:
+  - 'Stage 1: Make LocalAI Functional'
+  - Core Platform

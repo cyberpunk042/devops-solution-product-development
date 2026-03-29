@@ -5,6 +5,22 @@ workspace:
     AI independence, report transformation, and the development platform itself.
 
     '
+  organization_size: 11-50
+  links:
+  - title: 'GitHub: Fleet'
+    url: https://github.com/cyberpunk042/openclaw-fleet
+  - title: 'GitHub: AICP'
+    url: https://github.com/cyberpunk042/devops-expert-local-ai
+  - title: 'GitHub: DSPD'
+    url: https://github.com/cyberpunk042/devops-solution-product-development
+  - title: 'GitHub: NNRT'
+    url: https://github.com/cyberpunk042/Narrative-to-Neutral-Report-Transformer
+  - title: Mission Control
+    url: http://localhost:3000
+  - title: Fleet IRC (The Lounge)
+    url: http://localhost:9000
+  - title: LocalAI
+    url: http://localhost:8090
 estimates:
   type: points
   scale:

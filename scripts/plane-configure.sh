@@ -219,3 +219,51 @@ sleep 10
 # Verify
 HTTP=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 10 "$PLANE_URL/" 2>/dev/null || echo "000")
 log "API restarted (HTTP $HTTP)"
+
+# ── Workspace quick links (home page) ────────────────────────────────────
+
+log "Configuring workspace quick links..."
+cat "$SCRIPT_DIR/../config/mission.yaml" | docker exec -i "$API_CONTAINER" python manage.py shell -c "
+import sys, yaml
+from plane.db.models import User, Workspace, WorkspaceUserLink
+
+config = yaml.safe_load(sys.stdin.read())
+ws = Workspace.objects.get(slug=config['workspace']['slug'])
+admin = User.objects.get(email='${PLANE_ADMIN_EMAIL}')
+
+# Update workspace org size
+ws.organization_size = config['workspace'].get('organization_size', '2-10')
+ws.save(update_fields=['organization_size'])
+
+# Create quick links
+created = 0
+for link in config['workspace'].get('links', []):
+    exists = WorkspaceUserLink.objects.filter(workspace=ws, url=link['url']).exists()
+    if not exists:
+        WorkspaceUserLink.objects.create(
+            workspace=ws,
+            title=link['title'],
+            url=link['url'],
+            owner=admin,
+            created_by=admin,
+            updated_by=admin,
+        )
+        created += 1
+print(f'Quick links: {created} created, {WorkspaceUserLink.objects.filter(workspace=ws).count()} total')
+" 2>/dev/null && log "Workspace links configured" || log "WARN: Workspace links failed"
+
+# ── Admin user display name ──────────────────────────────────────────────
+
+log "Setting admin display name..."
+FLEET_USER_NAME="${FLEET_USER_NAME:-Fleet Admin}"
+docker exec "$API_CONTAINER" python manage.py shell -c "
+from plane.db.models import User
+admin = User.objects.get(email='${PLANE_ADMIN_EMAIL}')
+name = '${FLEET_USER_NAME}'
+parts = name.split()
+admin.display_name = name
+admin.first_name = parts[0] if parts else 'Fleet'
+admin.last_name = ' '.join(parts[1:]) if len(parts) > 1 else 'Admin'
+admin.save(update_fields=['display_name', 'first_name', 'last_name'])
+print(f'Admin: {admin.display_name}')
+" 2>/dev/null && log "Admin: ${FLEET_USER_NAME}" || log "WARN: Admin name failed"

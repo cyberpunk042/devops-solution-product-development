@@ -102,10 +102,7 @@ projects:
     reasoning. Target: 80%+ reduction in Claude token usage.
 
     "Its important that the main first mission for the plane/dspd is to make localAI functional and then make it more and
-    more reliable to offload as much as possible the work from claude till one day maybe even try to actually run independently
-    as much as possible."
-
-    '
+    more reliable to offload as much as possible the work from claude till one day may'
   github: cyberpunk042/devops-expert-local-ai
   network: 2
   views:
@@ -278,10 +275,8 @@ projects:
 - identifier: OF
   name: OpenClaw Fleet
   emoji: 🦞
-  description: 'Fleet operations, MCP tools, orchestrator, agents. 10 autonomous AI agents managed through OpenClaw gateway
+  description: Fleet operations, MCP tools, orchestrator, agents. 10 autonomous AI agents managed through OpenClaw gateway
     and Mission Control. Standards, skills, review chains, IRC channels, budget monitoring.
-
-    '
   github: cyberpunk042/openclaw-fleet
   network: 2
   views:
@@ -374,10 +369,8 @@ projects:
 - identifier: DSPD
   name: DevOps Solution Product Development
   emoji: 📋
-  description: 'DevOps Solution Product Development — project management surface for the fleet built on self-hosted Plane.
+  description: DevOps Solution Product Development — project management surface for the fleet built on self-hosted Plane.
     The PM agent bridges Plane (sprints, epics, analytics) ↔ OCMC (agent dispatch).
-
-    '
   github: cyberpunk042/devops-solution-product-development
   network: 2
   views:
@@ -454,10 +447,8 @@ projects:
 - identifier: NNRT
   name: Narrative-to-Neutral Report Transformer
   emoji: 📄
-  description: 'Narrative-to-Neutral Report Transformer. Converts biased narrative reports into neutral, structured format.
+  description: Narrative-to-Neutral Report Transformer. Converts biased narrative reports into neutral, structured format.
     Python NLP pipeline with multiple processing passes.
-
-    '
   github: cyberpunk042/Narrative-to-Neutral-Report-Transformer
   network: 2
   views:

@@ -1,45 +1,48 @@
 {
-  "exported_at": "2026-03-30T00:41:09.958732Z",
+  "exported_at": "2026-03-30T00:46:28.402747Z",
   "projects": {
     "NNRT": {
       "name": "Narrative-to-Neutral Report Transformer",
       "emoji": "\ud83d\udcc4",
       "description": "Narrative-to-Neutral Report Transformer. Converts biased narrative reports into neutral, structured format. Python NLP pipeline with multiple processing passes.",
-      "modules": 5,
-      "module_details": [
+      "modules": [
         {
           "name": "Persistence",
+          "description": "Storage, export formats, API, database\n\nAcceptance Criteria:\n- Processed reports stored with full audit trail\n- JSON export of structured analysis\n- PDF generation of neutral report\n- REST API for ext",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Pressure",
+          "description": "Bias detection, pressure indicators, sentiment neutralization\n\nAcceptance Criteria:\n- Loaded language detection with confidence scores\n- Emotional appeal identification\n- Selective framing detection\n-",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Mapping",
+          "description": "Narrative \u2192 neutral mapping engine, transformation rules\n\nAcceptance Criteria:\n- At least 10 narrative-to-neutral transformation rules defined\n- Rule engine applies transformations preserving factual ",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Structuring",
+          "description": "Report structuring, section detection, hierarchy extraction\n\nAcceptance Criteria:\n- Section hierarchy detected from document structure\n- Claims, evidence, and sources identified\n- Document graph built",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Intake",
+          "description": "Document ingestion, format detection, preprocessing\n\nAcceptance Criteria:\n- Document ingestion works for at least PDF and plain text\n- Encoding normalization handles UTF-8 and common formats\n- Section",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         }
       ],
-      "cycles": 1,
-      "cycle_details": [
+      "cycles": [
         {
           "name": "NNRT Sprint 1: Assessment",
           "status": "",
@@ -47,9 +50,23 @@
           "end_date": "2026-04-12T23:59:00Z"
         }
       ],
-      "issues": 2,
-      "labels": 19,
-      "states": [
+      "issues": [
+        {
+          "title": "Clone and assess NNRT codebase",
+          "priority": "high",
+          "state": "",
+          "assignees": []
+        },
+        {
+          "title": "Welcome to NNRT \u2014 Pipeline Assessment",
+          "priority": "none",
+          "state": "",
+          "assignees": []
+        }
+      ],
+      "issue_count": 2,
+      "label_count": 19,
+      "state_names": [
         "Backlog",
         "Todo",
         "In Progress",
@@ -64,35 +81,37 @@
       "name": "DevOps Solution Product Development",
       "emoji": "\ud83d\udccb",
       "description": "DevOps Solution Product Development \u2014 project management surface for the fleet built on self-hosted Plane. The PM agent bridges Plane (sprints, epics, analytics) \u2194 OCMC (agent dispatch).",
-      "modules": 4,
-      "module_details": [
+      "modules": [
         {
           "name": "Customization",
+          "description": "Webhooks (HMAC verified), Plane MCP server for PM, analytics, velocity tracking, burn-down\n\nNotes:\nWebhooks with HMAC, Plane MCP server for PM, analytics.\ndspd/webhooks.py built. scripts/plane-setup-w",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Sync",
+          "description": "Bidirectional Plane \u2194 OCMC sync. Human creates in Plane \u2192 PM evaluates \u2192 OCMC task created \u2192 agent works \u2192 completes \u2192 chain syncs back to Plane.\n\nSync is fleet-tagged in multi-fleet: each fleet syncs",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Integration",
+          "description": "Fleet CLI (fleet plan create/list/sync/status), plane_client.py (typed async REST client), PM agent as the bridge between Plane and OCMC.\n\nThe PM is the sole writer to Plane. Plane MCP tools (M-SC04) ",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Setup",
+          "description": "Docker (12 services), IaC (setup.sh install), mission seed (plane-seed-mission.sh reads config/mission.yaml), project layout, nginx proxy, env templates.\n\nsetup.sh handles: secrets generation, service",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         }
       ],
-      "cycles": 1,
-      "cycle_details": [
+      "cycles": [
         {
           "name": "DSPD Sprint 3: Complete IaC",
           "status": "",
@@ -100,9 +119,29 @@
           "end_date": "2026-04-12T23:59:00Z"
         }
       ],
-      "issues": 3,
-      "labels": 19,
-      "states": [
+      "issues": [
+        {
+          "title": "Build Plane content rendering skill (M-PM08)",
+          "priority": "medium",
+          "state": "",
+          "assignees": []
+        },
+        {
+          "title": "Build Plane MCP tools for PM agent (M-SC04)",
+          "priority": "high",
+          "state": "",
+          "assignees": []
+        },
+        {
+          "title": "Welcome to DSPD \u2014 Plane Platform Configuration",
+          "priority": "none",
+          "state": "",
+          "assignees": []
+        }
+      ],
+      "issue_count": 3,
+      "label_count": 19,
+      "state_names": [
         "Backlog",
         "Todo",
         "In Progress",
@@ -115,50 +154,80 @@
       "name": "OpenClaw Fleet",
       "emoji": "\ud83e\udd9e",
       "description": "Fleet operations, MCP tools, orchestrator, agents. 10 autonomous AI agents managed through OpenClaw gateway and Mission Control. Standards, skills, review chains, IRC channels, budget monitoring.",
-      "modules": 6,
-      "module_details": [
+      "modules": [
         {
           "name": "Tests",
+          "description": "Unit tests, integration tests, verification scripts",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Autonomy",
+          "description": "Event chains (model built, runner missing M-SC02), routing engine (capability matching), self-healing (gateway restart in monitor daemon), stuck detection, config auto-push, agent command center (PRE\u2192",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Infrastructure",
+          "description": "Gateway, IRC (10 channels), ntfy (3 topics), setup scripts, Docker",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Agents",
+          "description": "Agent roles (primary + secondary), heartbeats (per-agent intervals 30-90m), lifecycle (ACTIVE\u2192IDLE\u2192SLEEPING\u2192OFFLINE), behavioral security, SOUL.md identities.\n\nEach agent has a primary role and second",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "MCP",
+          "description": "13 MCP tools that agents call during sessions. The primary interface between agents and the fleet.\n\nCurrent: fleet_read_context, fleet_task_accept, fleet_task_progress, fleet_commit, fleet_task_comple",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Core",
+          "description": "Orchestrator (the brain \u2014 30s cycle, 6 steps), daemons (sync/monitor/auth/orchestrator), effort profiles (full/conservative/minimal/paused), budget monitoring (real Claude OAuth quota), task scoring (",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         }
       ],
-      "cycles": 0,
-      "cycle_details": [],
-      "issues": 4,
-      "labels": 19,
-      "states": [
+      "cycles": [],
+      "issues": [
+        {
+          "title": "Build chain runner (M-SC02)",
+          "priority": "high",
+          "state": "",
+          "assignees": []
+        },
+        {
+          "title": "Execute one real task through the full review chain",
+          "priority": "urgent",
+          "state": "",
+          "assignees": []
+        },
+        {
+          "title": "Verify fleet_chat tool works between real agents",
+          "priority": "high",
+          "state": "",
+          "assignees": []
+        },
+        {
+          "title": "Welcome to OpenClaw Fleet \u2014 Operational Validation",
+          "priority": "none",
+          "state": "",
+          "assignees": []
+        }
+      ],
+      "issue_count": 4,
+      "label_count": 19,
+      "state_names": [
         "Backlog",
         "Todo",
         "In Progress",
@@ -171,54 +240,59 @@
     "AICP": {
       "name": "AI Control Platform",
       "emoji": "\ud83e\udd16",
-      "description": "AI Control Platform \u2014 personal AI control workspace orchestrating LocalAI and Claude Code through Think/Edit/Act modes.\nPRIMARY MISSION: Progressive LocalAI independence. Route work through LocalAI fo",
-      "modules": 7,
-      "module_details": [
+      "description": "AI Control Platform \u2014 personal AI control workspace orchestrating LocalAI and Claude Code through Think/Edit/Act modes.\nPRIMARY MISSION: Progressive LocalAI independence. Route work through LocalAI for everything that doesn't require Claude's reasoning. Target: 80%+ reduction in Claude token usage.\n\"Its important that the main first mission for the plane/dspd is to make localAI functional and then make it more and more reliable to offload as much as possible the work from claude till one day may",
+      "modules": [
         {
           "name": "Integrations",
+          "description": "Backend integrations connecting AICP to inference providers.\n\nLocalAI: localhost:8090, OpenAI-compatible API, 9 models loaded.\nClaude Code: subprocess invocation, opus for complex, sonnet for standard",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Core Platform",
+          "description": "AICP core primitives: controller, Think/Edit/Act mode enforcement, backend routing.\n\nThe aicp/ package has 46 modules including controller.py, router.py, modes.py, guardrails/. Assessment needed: what",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Stage 5: Near-Independent Operation",
+          "description": "The long-term target. Fleet runs primarily on LocalAI for routine operations. Claude called only for complex code, architecture, security, strategic planning.\n\nTargets:\n- 80%+ of fleet operations run ",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Stage 4: Reliability and Failover",
+          "description": "Build graceful degradation between LocalAI and Claude. Agents should never know which backend they are talking to \u2014 the control plane handles routing transparently.\n\nIf LocalAI fails \u2192 automatic Claud",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Stage 3: Progressive Offload",
+          "description": "Move routine operations to LocalAI one by one, with quality validation for each.\n\nTarget operations:\n- Idle heartbeats \u2192 LocalAI (zero Claude tokens, just HEARTBEAT_OK)\n- Simple task acceptance \u2192 Loca",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Stage 2: Route Simple Operations to LocalAI",
+          "description": "Build the inference router (fleet/core/inference_router.py) \u2014 the critical architecture piece that decides what needs reasoning vs what can be handled locally or as direct HTTP calls.\n\nKey insight: ma",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Stage 1: Make LocalAI Functional",
+          "description": "Assess current state of AICP and LocalAI. Get local inference working on both machines. Verify OpenAI-compatible API with standard client libraries. Benchmark latency, throughput, and quality for all ",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         }
       ],
-      "cycles": 1,
-      "cycle_details": [
+      "cycles": [
         {
           "name": "AICP Sprint 1: Assessment + Foundation",
           "status": "",
@@ -226,9 +300,35 @@
           "end_date": "2026-04-12T23:59:00Z"
         }
       ],
-      "issues": 4,
-      "labels": 19,
-      "states": [
+      "issues": [
+        {
+          "title": "Benchmark all target operations on LocalAI",
+          "priority": "medium",
+          "state": "",
+          "assignees": []
+        },
+        {
+          "title": "Complete LocalAI cluster verification \u2014 Machine 2 setup",
+          "priority": "high",
+          "state": "",
+          "assignees": []
+        },
+        {
+          "title": "Assess AICP codebase \u2014 what is wired, what is scaffolding",
+          "priority": "high",
+          "state": "",
+          "assignees": []
+        },
+        {
+          "title": "Welcome to AI Control Platform \u2014 LocalAI Independence Mission",
+          "priority": "none",
+          "state": "",
+          "assignees": []
+        }
+      ],
+      "issue_count": 4,
+      "label_count": 19,
+      "state_names": [
         "Backlog",
         "Todo",
         "In Progress",

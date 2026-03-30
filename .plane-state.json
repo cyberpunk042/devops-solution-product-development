@@ -1,5 +1,5 @@
 {
-  "exported_at": "2026-03-30T01:24:31.124988Z",
+  "exported_at": "2026-03-30T01:34:03.218225Z",
   "projects": {
     "NNRT": {
       "name": "Narrative-to-Neutral Report Transformer",
@@ -361,6 +361,12 @@
     }
   },
   "stickies": [
+    {
+      "name": null,
+      "description": "",
+      "color": "",
+      "user": "admin@fleet.local"
+    },
     {
       "name": null,
       "description": "",

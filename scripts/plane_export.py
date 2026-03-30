@@ -165,7 +165,8 @@ def main():
             live_desc = live.get("description", "")
             if live_desc and len(live_desc) > 50:
                 current = proj_cfg.get("description", "")
-                if live_desc[:100] != (current or "")[:100]:
+                import hashlib
+                if hashlib.md5(live_desc.encode()).hexdigest() != hashlib.md5((current or "").encode()).hexdigest():
                     proj_cfg["description"] = live_desc
                     config_changes += 1
 
@@ -224,7 +225,10 @@ def main():
             current_html = si.get("description_html", "")
             if live_html and len(live_html) > 50:
                 # Only update if live is different (compare first 200 chars to avoid false positives)
-                if live_html[:200] != (current_html or "")[:200]:
+                import hashlib
+                live_hash = hashlib.md5(live_html.encode()).hexdigest()
+                current_hash = hashlib.md5((current_html or "").encode()).hexdigest()
+                if live_hash != current_hash:
                     si["description_html"] = live_html
                     board_changes += 1
 
@@ -276,7 +280,10 @@ def main():
                     live_page = next((p for p in proj_pages if p["title"] == page_cfg["title"]), None)
                     if live_page and live_page.get("content_html"):
                         current = page_cfg.get("content_html", "")
-                        if live_page["content_html"][:200] != (current or "")[:200]:
+                        import hashlib
+                        live_hash = hashlib.md5(live_page["content_html"].encode()).hexdigest()
+                        current_hash = hashlib.md5((current or "").encode()).hexdigest()
+                        if live_hash != current_hash:
                             page_cfg["content_html"] = live_page["content_html"]
                             page_changes += 1
 

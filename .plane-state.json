@@ -1,5 +1,5 @@
 {
-  "exported_at": "2026-03-30T21:31:13.210842Z",
+  "exported_at": "2026-03-30T21:57:12.752002Z",
   "projects": {
     "NNRT": {
       "name": "Narrative-to-Neutral Report Transformer",
@@ -245,8 +245,8 @@
           "title": "Welcome to OpenClaw Fleet \u2014 Operational Validation",
           "priority": "none",
           "state": "Backlog",
-          "description_html": "<h2>Fleet Status</h2><p>10 agents online. Gateway running with self-healing. Daemons cycling. Communication verified (8/8 checks). 341 tests passing.</p><h2>Known Gaps</h2><ul><li>Chain runner not built (MCP tools bypass chains)</li><li>No Plane MCP tools (PM cannot access Plane from sessions)</li><li>29 autonomy milestones NOT STARTED</li><li>No agent has completed a real task yet</li></ul><h2>Next Steps</h2><ul><li>Validate one real task through the full review chain</li><li>See Modules for Core, MCP, Agents, Infrastructure, Autonomy, Tests</li></ul>",
-          "updated_at": "2026-03-29T23:46:58.989647Z",
+          "description_html": "<div><span class=\"fleet-verbatim\" style=\"display:none\">Execute one real task through dispatch, work, PR, review, done</span>\n<blockquote><strong>Verbatim Requirement (PO)</strong><br>\nExecute one real task through dispatch, work, PR, review, done\n</blockquote>\n<h2>Fleet Status</h2><p>10 agents online. Gateway running with self-healing. Daemons cycling. Communication verified (8/8 checks). 341 tests passing.</p><h2>Known Gaps</h2><ul><li>Chain runner not built (MCP tools bypass chains)</li><li>No Plane MCP tools (PM cannot access Plane from sessions)</li><li>29 autonomy milestones NOT STARTED</li><li>No agent has completed a real task yet</li></ul><h2>Next Steps</h2><ul><li>Validate one real task through the full review chain</li><li>See Modules for Core, MCP, Agents, Infrastructure, Autonomy, Tests</li></ul></div>",
+          "updated_at": "2026-03-30T21:53:27.758533Z",
           "sequence_id": 1
         }
       ],

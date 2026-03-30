@@ -172,74 +172,41 @@ pages:
 
     '
 - title: AICP — Current State Assessment
-  content_html: '
-
-    <h1>AICP Current State (2026-03-29)</h1>
-
-
-    <h2>LocalAI: FUNCTIONAL ✅</h2>
-
-    <ul>
-
-    <li>9 models loaded and responding</li>
-
-    <li>OpenAI-compatible API working on <code>localhost:8090</code></li>
-
-    <li>hermes-3b (3B): <strong>10s cold, 1.2s warm</strong> — target for fleet heartbeats</li>
-
-    <li>Single-active backend: one GPU model at a time (8GB VRAM limit)</li>
-
-    <li>GPU: NVIDIA via WSL2, CUDA 12</li>
-
-    </ul>
-
-
-    <h2>AICP Package: EXISTS ✅</h2>
-
-    <ul>
-
-    <li>46 Python modules in <code>aicp/</code></li>
-
-    <li><code>core/</code> — controller, router, modes, pipeline, session, budget, metrics</li>
-
-    <li><code>backends/</code> — localai.py, claude_code.py</li>
-
-    <li><code>guardrails/</code> — checks, paths, response filtering</li>
-
-    <li>67 test files (988 passing on Python 3.8, 135 need 3.11 for MCP)</li>
-
-    </ul>
-
-
-    <h2>What''s Missing ❌</h2>
-
-    <ul>
-
-    <li>Inference router not built (Stage 2)</li>
-
-    <li>No integration between AICP controller and fleet orchestrator</li>
-
-    <li>Think/Edit/Act modes defined but not enforced end-to-end</li>
-
-    <li>No LocalAI → Claude fallback logic</li>
-
-    <li>Cluster verification pending (Machine 2)</li>
-
-    </ul>
-
-
-    <h2>Links</h2>
-
-    <ul>
-
-    <li><a href="https://github.com/cyberpunk042/devops-expert-local-ai">GitHub Repository</a></li>
-
-    <li><a href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/docs/milestones/active/strategic-vision-localai-independence.md">Strategic
-    Vision</a></li>
-
-    </ul>
-
-    '
+  content_html: '<h1 class="editor-heading-block">AICP Current State (2026-03-29)</h1><h2 class="editor-heading-block">LocalAI:
+    FUNCTIONAL <span data-name="check_mark_button" data-type="emoji">✅</span></h2><ul class="list-disc pl-7 space-y-[--list-spacing-y]"><li
+    class="not-prose space-y-2"><p class="editor-paragraph-block">9 models loaded and responding</p></li><li class="not-prose
+    space-y-2"><p class="editor-paragraph-block">OpenAI-compatible API working on <code class="rounded bg-custom-background-80
+    px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200" spellcheck="false">localhost:8090</code></p></li><li
+    class="not-prose space-y-2"><p class="editor-paragraph-block">hermes-3b (3B): <strong>10s cold, 1.2s warm</strong> — target
+    for fleet heartbeats</p></li><li class="not-prose space-y-2"><p class="editor-paragraph-block">Single-active backend:
+    one GPU model at a time (8GB VRAM limit)</p></li><li class="not-prose space-y-2"><p class="editor-paragraph-block">GPU:
+    NVIDIA via WSL2, CUDA 12</p></li></ul><h2 class="editor-heading-block">AICP Package: EXISTS <span data-name="check_mark_button"
+    data-type="emoji">✅</span></h2><ul class="list-disc pl-7 space-y-[--list-spacing-y]"><li class="not-prose space-y-2"><p
+    class="editor-paragraph-block">46 Python modules in <code class="rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono
+    font-medium text-orange-500 border-[0.5px] border-custom-border-200" spellcheck="false">aicp/</code></p></li><li class="not-prose
+    space-y-2"><p class="editor-paragraph-block"><code class="rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono
+    font-medium text-orange-500 border-[0.5px] border-custom-border-200" spellcheck="false">core/</code> — controller, router,
+    modes, pipeline, session, budget, metrics</p></li><li class="not-prose space-y-2"><p class="editor-paragraph-block"><code
+    class="rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200"
+    spellcheck="false">backends/</code> — localai.py, claude_code.py</p></li><li class="not-prose space-y-2"><p class="editor-paragraph-block"><code
+    class="rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200"
+    spellcheck="false">guardrails/</code> — checks, paths, response filtering</p></li><li class="not-prose space-y-2"><p class="editor-paragraph-block">67
+    test files (988 passing on Python 3.8, 135 need 3.11 for MCP)</p></li></ul><h2 class="editor-heading-block">What''s Missing
+    <span data-name="cross_mark" data-type="emoji">❌</span></h2><ul class="list-disc pl-7 space-y-[--list-spacing-y]"><li
+    class="not-prose space-y-2"><p class="editor-paragraph-block">Inference router not built (Stage 2)</p></li><li class="not-prose
+    space-y-2"><p class="editor-paragraph-block">No integration between AICP controller and fleet orchestrator</p></li><li
+    class="not-prose space-y-2"><p class="editor-paragraph-block">Think/Edit/Act modes defined but not enforced end-to-end</p></li><li
+    class="not-prose space-y-2"><p class="editor-paragraph-block">No LocalAI → Claude fallback logic</p></li><li class="not-prose
+    space-y-2"><p class="editor-paragraph-block">Cluster verification pending (Machine 2)</p></li></ul><p class="editor-paragraph-block"></p><p
+    class="editor-paragraph-block">pipossss</p><p class="editor-paragraph-block">papappa</p><p class="editor-paragraph-block">testv2again</p><p
+    class="editor-paragraph-block">testv3again</p><p class="editor-paragraph-block">testv3</p><p class="editor-paragraph-block">testv3</p><p
+    class="editor-paragraph-block">testv3</p><p class="editor-paragraph-block">testv3</p><h2 class="editor-heading-block">Links</h2><ul
+    class="list-disc pl-7 space-y-[--list-spacing-y]"><li class="not-prose space-y-2"><p class="editor-paragraph-block"><a
+    target="_blank" class="text-custom-primary-300 underline underline-offset-[3px] hover:text-custom-primary-500 transition-colors
+    cursor-pointer" href="https://github.com/cyberpunk042/devops-expert-local-ai" rel="noopener noreferrer">GitHub Repository</a></p></li><li
+    class="not-prose space-y-2"><p class="editor-paragraph-block"><a target="_blank" class="text-custom-primary-300 underline
+    underline-offset-[3px] hover:text-custom-primary-500 transition-colors cursor-pointer" href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/docs/milestones/active/strategic-vision-localai-independence.md"
+    rel="noopener noreferrer">Strategic Vision</a></p></li></ul>'
 epic_details:
   'Stage 1: Make LocalAI Functional':
     priority: high

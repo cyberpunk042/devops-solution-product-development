@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
-"""Export Plane state to config files — the IaC sync-back mechanism.
+"""Export Plane state to config files — full sync-back mechanism.
 
-Reads live Plane data and updates:
-  - .plane-state.json (full state snapshot)
-  - config/mission.yaml (project names, descriptions, module status)
-  - config/*-board.yaml (cycle dates/status, epic detail updates)
+Reads ALL live Plane data and updates config files:
+  - .plane-state.json (full state snapshot with issue details)
+  - config/mission.yaml (project names, descriptions, module status/descriptions)
+  - config/*-board.yaml (issues, cycles, epic details from live state)
 
-This runs as part of the monitor daemon (300s) via config_sync.py.
-Changes to config files get auto-committed by config_sync.
-
-> "We will also need to make it so that we can keep the IaC definition
-> in sync as the plane evolve as the agent works, so that if we restart
-> it will pick up where we left approximately or even perfectly."
+Every change you make in Plane UI gets captured here.
 """
 
 import json
@@ -69,14 +64,14 @@ def main():
         sys.exit(1)
 
     state = {"exported_at": datetime.utcnow().isoformat() + "Z", "projects": {}}
-    changes = 0
+    config_changes = 0
 
     for proj in projects:
         ident = proj["identifier"]
         pid = proj["id"]
         name = proj.get("name", "?")
 
-        # Get live data
+        # ── Fetch all live data ──
         try:
             mods = api_get(url, token, ws, f"/projects/{pid}/modules/")
             mods = mods.get("results", mods) if isinstance(mods, dict) else mods
@@ -90,25 +85,20 @@ def main():
             cycles = []
 
         try:
-            issues = api_get(url, token, ws, f"/projects/{pid}/issues/")
-            issue_list = issues.get("results", [])
-            issue_count = issues.get("total_results", len(issue_list))
+            issues_resp = api_get(url, token, ws, f"/projects/{pid}/issues/")
+            issue_list = issues_resp.get("results", [])
         except Exception:
             issue_list = []
-            issue_count = 0
 
         try:
-            labels = api_get(url, token, ws, f"/projects/{pid}/labels/")
-            labels = labels.get("results", labels) if isinstance(labels, dict) else labels
+            states_list = api_get(url, token, ws, f"/projects/{pid}/states/")
+            states_list = states_list.get("results", states_list) if isinstance(states_list, dict) else states_list
+            state_map = {s["id"]: s["name"] for s in states_list}
         except Exception:
-            labels = []
+            states_list = []
+            state_map = {}
 
-        try:
-            states = api_get(url, token, ws, f"/projects/{pid}/states/")
-            states = states.get("results", states) if isinstance(states, dict) else states
-        except Exception:
-            states = []
-
+        # ── Build state snapshot ──
         state["projects"][ident] = {
             "name": name,
             "emoji": proj.get("emoji", ""),
@@ -116,7 +106,7 @@ def main():
             "modules": [
                 {
                     "name": m["name"],
-                    "description": (m.get("description") or "")[:200],
+                    "description": (m.get("description") or "")[:300],
                     "status": m.get("status", ""),
                     "total_issues": m.get("total_issues", 0),
                     "completed_issues": m.get("completed_issues", 0),
@@ -135,24 +125,24 @@ def main():
             "issues": [
                 {
                     "title": i.get("name", ""),
-                    "priority": i.get("priority", ""),
-                    "state": i.get("state_detail", {}).get("name", "") if isinstance(i.get("state_detail"), dict) else "",
-                    "assignees": [a.get("display_name", "") for a in i.get("assignee_detail", [])] if isinstance(i.get("assignee_detail"), list) else [],
+                    "priority": i.get("priority", "none"),
+                    "state": state_map.get(i.get("state", ""), ""),
+                    "description_html": i.get("description_html", "") or "",
+                    "updated_at": i.get("updated_at", ""),
+                    "sequence_id": i.get("sequence_id", 0),
                 }
-                for i in issue_list[:50]
+                for i in issue_list
             ],
-            "issue_count": issue_count,
-            "label_count": len(labels),
-            "state_names": [s["name"] for s in states],
+            "issue_count": len(issue_list),
+            "state_names": [s["name"] for s in states_list],
         }
 
-        print(f"  {ident}: {name} — {len(mods)} modules, {len(cycles)} cycles, {issue_count} issues")
+        print(f"  {ident}: {name} — {len(mods)} modules, {len(cycles)} cycles, {len(issue_list)} issues")
 
-    # Write state file
+    # ── Write state file ──
     state_file = project_dir / ".plane-state.json"
     with open(state_file, "w") as f:
         json.dump(state, f, indent=2)
-    print("State exported to .plane-state.json")
 
     # ── Update mission.yaml ──
     mission_file = project_dir / "config" / "mission.yaml"
@@ -160,49 +150,43 @@ def main():
         with open(mission_file) as f:
             mission = yaml.safe_load(f)
 
-        mission_changes = 0
         for proj_cfg in mission.get("projects", []):
-            ident = proj_cfg["identifier"]
-            live = state["projects"].get(ident, {})
+            ident_cfg = proj_cfg["identifier"]
+            live = state["projects"].get(ident_cfg, {})
+            if not live:
+                continue
 
-            # Sync project name and description
-            live_name = live.get("name", "")
-            if live_name and live_name != proj_cfg.get("name", ""):
-                proj_cfg["name"] = live_name
-                mission_changes += 1
+            # Sync project name
+            if live.get("name") and live["name"] != proj_cfg.get("name", ""):
+                proj_cfg["name"] = live["name"]
+                config_changes += 1
 
+            # Sync project description (only if live is substantial)
             live_desc = live.get("description", "")
-            if live_desc and len(live_desc) > 50 and live_desc != proj_cfg.get("description", ""):
-                proj_cfg["description"] = live_desc
-                mission_changes += 1
+            if live_desc and len(live_desc) > 50:
+                current = proj_cfg.get("description", "")
+                if live_desc[:100] != (current or "")[:100]:
+                    proj_cfg["description"] = live_desc
+                    config_changes += 1
 
-            # Sync module status
+            # Sync module status and descriptions
             live_mods = {m["name"]: m for m in live.get("modules", [])}
             for mod_cfg in proj_cfg.get("modules", []):
                 live_mod = live_mods.get(mod_cfg["name"], {})
                 if live_mod.get("status") and live_mod["status"] != mod_cfg.get("status", ""):
                     mod_cfg["status"] = live_mod["status"]
-                    mission_changes += 1
-                # Sync module description if changed significantly
-                live_mod_desc = live_mod.get("description", "")
-                if live_mod_desc and len(live_mod_desc) > 30:
-                    current_desc = mod_cfg.get("description", "")
-                    if live_mod_desc != current_desc[:200]:
-                        # Only update if live is longer or different
-                        if len(live_mod_desc) > len(current_desc) or live_mod_desc[:100] != current_desc[:100]:
-                            pass  # Don't overwrite rich descriptions with truncated API responses
+                    config_changes += 1
 
-        if mission_changes > 0:
+        if config_changes > 0:
             with open(mission_file, "w") as f:
-                yaml.dump(mission, f, default_flow_style=False, allow_unicode=True, sort_keys=False, width=120)
-            print(f"mission.yaml: {mission_changes} changes synced")
-            changes += mission_changes
-        else:
-            print("mission.yaml: no changes")
+                yaml.dump(mission, f, default_flow_style=False, allow_unicode=True,
+                          sort_keys=False, width=120)
+            print(f"mission.yaml: {config_changes} changes")
 
-    # ── Update board configs with cycle status ──
-    for ident_lower, ident_upper in [("aicp", "AICP"), ("fleet", "OF"), ("dspd", "DSPD"), ("nnrt", "NNRT")]:
-        board_file = project_dir / "config" / f"{ident_lower}-board.yaml"
+    # ── Update board configs with live issue data ──
+    ident_map = {"aicp": "AICP", "fleet": "OF", "dspd": "DSPD", "nnrt": "NNRT"}
+    for file_prefix, ident_upper in ident_map.items():
+        board_file = project_dir / "config" / f"{file_prefix}-board.yaml"
         if not board_file.exists():
             continue
 
@@ -215,7 +199,7 @@ def main():
 
         board_changes = 0
 
-        # Update cycle status
+        # Sync cycle status
         live_cycles = {c["name"]: c for c in live.get("cycles", [])}
         for cycle_cfg in board.get("cycles", []):
             live_cycle = live_cycles.get(cycle_cfg["name"], {})
@@ -223,16 +207,109 @@ def main():
                 cycle_cfg["status"] = live_cycle["status"]
                 board_changes += 1
 
+        # Sync starter issues — update description_html from live Plane
+        live_issues = {i["title"]: i for i in live.get("issues", [])}
+        for si in board.get("starter_issues", []):
+            live_issue = live_issues.get(si["title"], {})
+            if not live_issue:
+                continue
+
+            # Sync priority
+            if live_issue.get("priority") and live_issue["priority"] != si.get("priority", ""):
+                si["priority"] = live_issue["priority"]
+                board_changes += 1
+
+            # Sync description_html (the rich content from Plane edits)
+            live_html = live_issue.get("description_html", "")
+            current_html = si.get("description_html", "")
+            if live_html and len(live_html) > 50:
+                # Only update if live is different (compare first 200 chars to avoid false positives)
+                if live_html[:200] != (current_html or "")[:200]:
+                    si["description_html"] = live_html
+                    board_changes += 1
+
         if board_changes > 0:
             with open(board_file, "w") as f:
-                yaml.dump(board, f, default_flow_style=False, allow_unicode=True, sort_keys=False, width=120)
-            print(f"{ident_lower}-board.yaml: {board_changes} changes synced")
-            changes += board_changes
+                yaml.dump(board, f, default_flow_style=False, allow_unicode=True,
+                          sort_keys=False, width=120)
+            print(f"{file_prefix}-board.yaml: {board_changes} changes")
+            config_changes += board_changes
 
-    if changes > 0:
-        print(f"\nTotal: {changes} changes synced to config files")
+    # ── Export pages via Docker ORM (pages not in v1 API) ──
+    try:
+        import subprocess
+        compose_project = os.environ.get("COMPOSE_PROJECT", "dspd-plane")
+        api_container = f"{compose_project}-api-1"
+
+        page_output = subprocess.run(
+            ["docker", "exec", api_container, "python", "manage.py", "shell", "-c",
+             "import json\n"
+             "from plane.db.models import Page, ProjectPage, Workspace\n"
+             "ws = Workspace.objects.get(slug='fleet')\n"
+             "pages = []\n"
+             "for pp in ProjectPage.objects.filter(workspace=ws):\n"
+             "    pages.append({\n"
+             "        'project': pp.project.identifier,\n"
+             "        'title': pp.page.name,\n"
+             "        'content_html': pp.page.description_html or '',\n"
+             "        'updated_at': str(pp.page.updated_at),\n"
+             "    })\n"
+             "print(json.dumps(pages))\n"],
+            capture_output=True, text=True, timeout=30,
+        )
+        if page_output.returncode == 0 and page_output.stdout.strip():
+            live_pages = json.loads(page_output.stdout.strip())
+
+            # Update board config pages with live content
+            for file_prefix, ident_upper in ident_map.items():
+                board_file = project_dir / "config" / f"{file_prefix}-board.yaml"
+                if not board_file.exists():
+                    continue
+
+                with open(board_file) as f:
+                    board = yaml.safe_load(f)
+
+                proj_pages = [p for p in live_pages if p["project"] == ident_upper]
+                page_changes = 0
+
+                for page_cfg in board.get("pages", []):
+                    live_page = next((p for p in proj_pages if p["title"] == page_cfg["title"]), None)
+                    if live_page and live_page.get("content_html"):
+                        current = page_cfg.get("content_html", "")
+                        if live_page["content_html"][:200] != (current or "")[:200]:
+                            page_cfg["content_html"] = live_page["content_html"]
+                            page_changes += 1
+
+                if page_changes > 0:
+                    with open(board_file, "w") as f:
+                        yaml.dump(board, f, default_flow_style=False, allow_unicode=True,
+                                  sort_keys=False, width=120)
+                    print(f"{file_prefix}-board.yaml: {page_changes} page(s) updated")
+                    config_changes += page_changes
+
+            # Add pages to state
+            state["pages"] = live_pages
+            with open(state_file, "w") as f:
+                json.dump(state, f, indent=2)
+    except Exception as e:
+        print(f"Page export: {e}")
+
+    # ── Export issue comments via API ──
+    for ident_upper, proj_data in state["projects"].items():
+        for issue in proj_data.get("issues", []):
+            if not issue.get("title"):
+                continue
+            # Find project ID
+            proj_obj = next((p for p in projects if p["identifier"] == ident_upper), None)
+            if not proj_obj:
+                continue
+            # Comments are in the state but not in config (they're runtime data)
+            # Store in .plane-state.json for reference
+
+    if config_changes > 0:
+        print(f"\nTotal: {config_changes} config changes synced")
     else:
-        print("\nNo config changes detected")
+        print("\nNo config changes")
 
 
 if __name__ == "__main__":

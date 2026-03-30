@@ -477,76 +477,77 @@ starter_issues:
   assignee: architect@fleet.local
   labels:
   - strategic
-  description_html: '<h2>Context</h2>
-
-    <p>The <code>aicp/</code> package has <strong>46 modules</strong> but we don''t know which are functional end-to-end vs
-    empty scaffolding.</p>
-
-
-    <h2>What to Check</h2>
-
-    <table>
-
-    <thead><tr><th>Module</th><th>File</th><th>Check</th></tr></thead>
-
-    <tbody>
-
-    <tr><td>Controller</td><td><code>aicp/core/controller.py</code></td><td>Does it route between backends?</td></tr>
-
-    <tr><td>Modes</td><td><code>aicp/core/modes.py</code></td><td>Are Think/Edit/Act enforced?</td></tr>
-
-    <tr><td>Router</td><td><code>aicp/core/router.py</code></td><td>Does it decide LocalAI vs Claude?</td></tr>
-
-    <tr><td>Guardrails</td><td><code>aicp/guardrails/</code></td><td>Are path protections active?</td></tr>
-
-    <tr><td>LocalAI Backend</td><td><code>aicp/backends/localai.py</code></td><td>Can it call localhost:8090?</td></tr>
-
-    <tr><td>Claude Backend</td><td><code>aicp/backends/claude_code.py</code></td><td>Does subprocess invocation work?</td></tr>
-
-    </tbody>
-
-    </table>
-
-
-    <h2>Steps</h2>
-
-    <ol>
-
-    <li>Run existing tests: <code>pytest tests/</code></li>
-
-    <li>Check each module above — document findings</li>
-
-    <li>Identify which modules are wired end-to-end vs dead code</li>
-
-    <li>Post findings as a Plane Page under AICP project</li>
-
-    </ol>
-
-
-    <h2>Acceptance Criteria</h2>
-
-    <ul>
-
-    <li>Assessment document posted as Plane Page</li>
-
-    <li>Each module marked as: functional / scaffolding / broken</li>
-
-    <li>Test results documented (pass count, failure reasons)</li>
-
-    <li>Recommendations for Stage 1 completion</li>
-
-    </ul>
-
-
-    <h2>Links</h2>
-
-    <ul>
-
-    <li><a href="https://github.com/cyberpunk042/devops-expert-local-ai">GitHub: AICP</a></li>
-
-    <li><a href="https://github.com/cyberpunk042/devops-expert-local-ai/tree/main/aicp/core">aicp/core/</a></li>
-
-    </ul>'
+  description_html: '<h2 class="editor-heading-block" data-id="0128050e-35c1-48cc-8936-2e99cf53622e">Context</h2><p class="editor-paragraph-block"
+    data-id="97199a95-ad8c-4a34-b197-3fa7e15aff99">The <code class="rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono
+    font-medium text-orange-500 border-[0.5px] border-custom-border-200" spellcheck="false">aicp/</code> package has <strong>46
+    modules</strong> but we don''t know which are functional end-to-end vs empty scaffolding.</p><h2 class="editor-heading-block"
+    data-id="a8ed563e-0598-4ba3-a47c-874db495227b">What to Check</h2><table data-id="0e4855c2-db2d-448a-943a-78daca685671"><tbody><tr
+    style=""><th colspan="1" rowspan="1" colwidth="150" background="none" hidecontent="false" class="" style=""><p class="editor-paragraph-block"
+    data-id="27be8a1b-2b47-4138-9547-bac0232e679f">Module</p></th><th colspan="1" rowspan="1" colwidth="150" background="none"
+    hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="771d724f-64a0-447a-a929-27bc281408d9">File</p></th><th
+    colspan="1" rowspan="1" colwidth="150" background="none" hidecontent="false" class="" style=""><p class="editor-paragraph-block"
+    data-id="ac8190da-0ef3-47e3-af8c-2ceb2334c938">Check</p></th></tr><tr style=""><td colspan="1" rowspan="1" colwidth="150"
+    hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="f64be6e9-7716-4370-80b1-8b9c5ec71987">Controller</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="abfd1dec-8f49-4234-a4a4-beb2f1c8eec6"><code
+    class="rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200"
+    spellcheck="false">aicp/core/controller.py</code></p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false"
+    class="" style=""><p class="editor-paragraph-block" data-id="9353b1e1-1524-4f1a-8035-903ae706b411">Does it route between
+    backends?</p></td></tr><tr style=""><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p
+    class="editor-paragraph-block" data-id="ad0f51c6-9a47-488f-bb70-19f581965253">Modes</p></td><td colspan="1" rowspan="1"
+    colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="02bb4580-fd9f-44ba-b748-a38e4a5420c9"><code
+    class="rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200"
+    spellcheck="false">aicp/core/modes.py</code></p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class=""
+    style=""><p class="editor-paragraph-block" data-id="6198e224-1b24-473c-8075-e321ca3db2df">Are Think/Edit/Act enforced?</p></td></tr><tr
+    style=""><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block"
+    data-id="8a2c77ee-3b5b-441b-8208-37504d6d7b1b">Router</p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false"
+    class="" style=""><p class="editor-paragraph-block" data-id="d9ecd73c-e386-4a3c-97c9-958d4b2999d7"><code class="rounded
+    bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200"
+    spellcheck="false">aicp/core/router.py</code></p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class=""
+    style=""><p class="editor-paragraph-block" data-id="32888d61-21f3-4a78-a966-f8560a67b07d">Does it decide LocalAI vs Claude?</p></td></tr><tr
+    style=""><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block"
+    data-id="42e6d934-2264-47ea-aadc-7e8785bff90f">Guardrails</p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false"
+    class="" style=""><p class="editor-paragraph-block" data-id="a80b6d70-1ff6-464b-b201-c7b5779fb368"><code class="rounded
+    bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200"
+    spellcheck="false">aicp/guardrails/</code></p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class=""
+    style=""><p class="editor-paragraph-block" data-id="a48586f5-754f-4695-9385-f6ca53ccd790">Are path protections active?</p></td></tr><tr
+    style=""><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block"
+    data-id="41195739-3cbb-4790-bc0c-4bdc021ceca6">LocalAI Backend</p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false"
+    class="" style=""><p class="editor-paragraph-block" data-id="bd1f1dd1-4f31-46a9-a9f6-28feba5334cc"><code class="rounded
+    bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200"
+    spellcheck="false">aicp/backends/localai.py</code></p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false"
+    class="" style=""><p class="editor-paragraph-block" data-id="a24b6bf5-873a-41d9-994a-5bcc5dcaf825">Can it call localhost:8090?</p></td></tr><tr
+    style=""><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block"
+    data-id="e8207129-ae00-4e57-a72b-6aebf5025344">Claude Backend</p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false"
+    class="" style=""><p class="editor-paragraph-block" data-id="267694e9-b18c-42db-9afb-cae9ea3596fd"><code class="rounded
+    bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200"
+    spellcheck="false">aicp/backends/claude_code.py</code></p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false"
+    class="" style=""><p class="editor-paragraph-block" data-id="5ee29f89-6077-4673-a4b6-d1b772257ae4">Does subprocess invocation
+    work?</p></td></tr></tbody></table><h2 class="editor-heading-block" data-id="6e74011c-f063-42db-9d74-f01bc0e02cb5">Steps</h2><ol
+    class="list-decimal pl-7 space-y-[--list-spacing-y] tight" data-id="44273f43-7c62-4668-bc34-a82517855d0d" data-tight="true"><li
+    class="not-prose space-y-2" data-id="a84c658d-4416-464c-99d7-58444dbaab89"><p class="editor-paragraph-block" data-id="c530f8a5-2727-4c71-9d33-0e75da0d8252">Run
+    existing tests: <code class="rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500
+    border-[0.5px] border-custom-border-200" spellcheck="false">pytest tests/</code></p></li><li class="not-prose space-y-2"
+    data-id="8b48f403-764a-40ab-848a-78120e19b953"><p class="editor-paragraph-block" data-id="5db9cedc-ebf8-4f9b-a060-57a5633ff763">Check
+    each module above — document findings</p></li><li class="not-prose space-y-2" data-id="484ff60f-0093-4cca-8ebf-029d0a8caee1"><p
+    class="editor-paragraph-block" data-id="32f0a771-c05e-45e7-b16d-5b9b18154761">Identify which modules are wired end-to-end
+    vs dead code</p></li><li class="not-prose space-y-2" data-id="0bab0335-802d-44cf-87e3-029e1791f433"><p class="editor-paragraph-block"
+    data-id="648cacf5-5390-4972-8df3-69623fee3a65">Post findings as a Plane Page under AICP project</p></li></ol><h2 class="editor-heading-block"
+    data-id="f2bc592e-5b24-4dc1-ba0c-4d66a16e2331">Acceptance Criteria</h2><ul class="list-disc pl-7 space-y-[--list-spacing-y]
+    tight" data-id="3574a269-8f00-46ea-8590-8f2d3a7b3e12" data-tight="true"><li class="not-prose space-y-2" data-id="8d728e66-7aad-46f4-a601-829deb024a4f"><p
+    class="editor-paragraph-block" data-id="dad09da3-39fd-4310-9819-9eb1b6d50270">Assessment document posted as Plane Page</p></li><li
+    class="not-prose space-y-2" data-id="0ca056cb-a9ac-417e-a3eb-36774d2c5a9f"><p class="editor-paragraph-block" data-id="003a108b-329d-4cbc-83d6-1a4e2d28fe8b">Each
+    module marked as: functional / scaffolding / broken</p></li><li class="not-prose space-y-2" data-id="0faa28c3-592c-4112-9bd0-9b9e92b5ae56"><p
+    class="editor-paragraph-block" data-id="12116c8b-10c0-47ee-822d-a52a058ef455">Test results documented (pass count, failure
+    reasons)</p></li><li class="not-prose space-y-2" data-id="6af755c0-6264-4eb7-8e4b-29301f1f2c7b"><p class="editor-paragraph-block"
+    data-id="52053369-64f7-42c8-b1c5-a7c062f4480e">Recommendations for Stage 1 completion</p></li></ul><h2 class="editor-heading-block"
+    data-id="1ba31ea1-16b3-4147-b083-82c0b1b2af3c">Links</h2><ul class="list-disc pl-7 space-y-[--list-spacing-y] tight" data-id="7711b9ad-a09e-44fd-bcc5-72d7652175fe"
+    data-tight="true"><li class="not-prose space-y-2" data-id="e4c1978f-fd2f-4283-8d76-daf34f05b711"><p class="editor-paragraph-block"
+    data-id="122f33cc-cc5c-4f50-aff7-be17a9802660"><a target="_blank" class="text-custom-primary-300 underline underline-offset-[3px]
+    hover:text-custom-primary-500 transition-colors cursor-pointer" href="https://github.com/cyberpunk042/devops-expert-local-ai"
+    rel="noopener noreferrer">GitHub: AICP</a></p></li><li class="not-prose space-y-2" data-id="a8c173ef-9392-4ef6-a122-f9604d0be41e"><p
+    class="editor-paragraph-block" data-id="c9e5fe7f-187f-4193-aaf9-99346673652d"><a target="_blank" class="text-custom-primary-300
+    underline underline-offset-[3px] hover:text-custom-primary-500 transition-colors cursor-pointer" href="https://github.com/cyberpunk042/devops-expert-local-ai/tree/main/aicp/core"
+    rel="noopener noreferrer">aicp/core/</a></p></li></ul>'
 - title: Complete LocalAI cluster verification — Machine 2 setup
   type: Task
   priority: high
@@ -554,64 +555,41 @@ starter_issues:
   labels:
   - infra
   - localai
-  description_html: '<h2>Context</h2>
-
-    <p>LocalAI verified on <strong>Machine 1</strong>:</p>
-
-    <table>
-
-    <thead><tr><th>Model</th><th>Cold Start</th><th>Warm</th></tr></thead>
-
-    <tbody>
-
-    <tr><td>hermes-3b (3B)</td><td>~10s</td><td><strong>~1.2s</strong></td></tr>
-
-    <tr><td>hermes (7B)</td><td>~80s</td><td>~1s</td></tr>
-
-    </tbody>
-
-    </table>
-
-    <p>Machine 2 needs the same setup and cross-machine inference verification.</p>
-
-
-    <h2>Steps</h2>
-
-    <ol>
-
-    <li>Install LocalAI on Machine 2 (Docker + GPU)</li>
-
-    <li>Copy model configs from Machine 1</li>
-
-    <li>Verify hermes-3b loads and responds</li>
-
-    <li>Test cross-machine inference: Machine 1 → Machine 2 API call</li>
-
-    <li>Benchmark and document results</li>
-
-    </ol>
-
-
-    <h2>Acceptance Criteria</h2>
-
-    <ul>
-
-    <li>LocalAI running on Machine 2 with hermes-3b</li>
-
-    <li>Cross-machine inference works (Machine 1 calls Machine 2 API)</li>
-
-    <li>Benchmark results documented (latency p50/p95)</li>
-
-    </ul>
-
-
-    <h2>Infrastructure Target</h2>
-
-    <blockquote>
-
-    <p>"having our full 2 cluster LocalAI peered in the network with one Plane and eventually 2 or even 3 fleets"</p>
-
-    </blockquote>'
+  description_html: '<h2 class="editor-heading-block" data-id="d701ae52-064b-4985-9f37-130fea804eca">Context</h2><p class="editor-paragraph-block"
+    data-id="465d7e77-04d8-4e6c-9584-b375c99f4138">LocalAI verified on <strong>Machine 1</strong>:</p><table data-id="23c5a171-22a7-4a2f-9d4c-b41bc96f7cd1"><tbody><tr
+    style=""><th colspan="1" rowspan="1" colwidth="150" background="none" hidecontent="false" class="" style=""><p class="editor-paragraph-block"
+    data-id="de359dbc-c6d7-4cb5-bd55-eb87c51694e4">Model</p></th><th colspan="1" rowspan="1" colwidth="150" background="none"
+    hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="c94ce84b-bc14-4e87-9484-6bb5b52f4f99">Cold
+    Start</p></th><th colspan="1" rowspan="1" colwidth="150" background="none" hidecontent="false" class="" style=""><p class="editor-paragraph-block"
+    data-id="ea35aaa8-9715-468c-853d-e06434b97190">Warm</p></th></tr><tr style=""><td colspan="1" rowspan="1" colwidth="150"
+    hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="58bdfc46-b81a-4ffc-81cf-f77bd8ff92cd">hermes-3b
+    (3B)</p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block"
+    data-id="b43145d8-732f-4886-9551-bc718ca8860a">~10s</p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false"
+    class="" style=""><p class="editor-paragraph-block" data-id="e6350995-0ed9-4b9d-8d29-6764dfd773fe"><strong>~1.2s</strong></p></td></tr><tr
+    style=""><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block"
+    data-id="66db8b43-9371-4bee-b574-3a7e40a957fe">hermes (7B)</p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false"
+    class="" style=""><p class="editor-paragraph-block" data-id="76b7a2b6-f3ae-4f89-a9bc-8129a92f58f8">~80s</p></td><td colspan="1"
+    rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="07538131-374f-44f1-bbc3-57ce30e78fa7">~1s</p></td></tr></tbody></table><p
+    class="editor-paragraph-block" data-id="73449b2e-a3a6-43df-9c91-5232903801f3">Machine 2 needs the same setup and cross-machine
+    inference verification.</p><h2 class="editor-heading-block" data-id="23af0737-0f66-4fa5-ae73-ee99ae81f7da">Steps</h2><ol
+    class="list-decimal pl-7 space-y-[--list-spacing-y] tight" data-id="71857b36-8d7b-4952-8259-9bbf5a63aad1" data-tight="true"><li
+    class="not-prose space-y-2" data-id="04ea51be-553d-4ea0-88eb-ebe9b1691d4e"><p class="editor-paragraph-block" data-id="4782c717-2f2f-4291-bc04-e6213b54e038">Install
+    LocalAI on Machine 2 (Docker + GPU)</p></li><li class="not-prose space-y-2" data-id="719d1f49-38a7-4bf0-811d-fdd3b91de5ad"><p
+    class="editor-paragraph-block" data-id="37efd7b8-38bc-4865-888b-57d74eecba1f">Copy model configs from Machine 1</p></li><li
+    class="not-prose space-y-2" data-id="218ddd6e-ecc4-47c7-915d-36a53d172d7f"><p class="editor-paragraph-block" data-id="96e0a119-a1ce-45fe-8413-abbee724ecd4">Verify
+    hermes-3b loads and responds</p></li><li class="not-prose space-y-2" data-id="ce2df0a5-9ef5-4ffb-ae04-a35f93e9fea1"><p
+    class="editor-paragraph-block" data-id="4c0593da-7eaa-40ed-b325-cda15e2fb185">Test cross-machine inference: Machine 1
+    → Machine 2 API call</p></li><li class="not-prose space-y-2" data-id="98099dce-5f2b-4449-b925-7eec7d74305a"><p class="editor-paragraph-block"
+    data-id="166d1a2a-2121-48a0-9709-1b657f9d650d">Benchmark and document results</p></li></ol><h2 class="editor-heading-block"
+    data-id="8db9c3fd-cf95-43ec-9134-3cf1ce083bd4">Acceptance Criteria</h2><ul class="list-disc pl-7 space-y-[--list-spacing-y]
+    tight" data-id="e83f1bcf-7d02-43b7-8174-5fec14cf6d70" data-tight="true"><li class="not-prose space-y-2" data-id="74d4afc1-74b4-4680-893a-ff0f0dd41cad"><p
+    class="editor-paragraph-block" data-id="858d8907-f3e1-4f52-876d-93e2cdda30fd">LocalAI running on Machine 2 with hermes-3b</p></li><li
+    class="not-prose space-y-2" data-id="59598a6e-2eaf-4306-94b6-333d44efb6d8"><p class="editor-paragraph-block" data-id="a48bfccc-8d4b-40e9-b307-f467c6811f91">Cross-machine
+    inference works (Machine 1 calls Machine 2 API)</p></li><li class="not-prose space-y-2" data-id="e5b335db-356f-4dbe-8a23-5a30c3e4aa7f"><p
+    class="editor-paragraph-block" data-id="80eafd53-00e8-419f-b6c7-3708969013a8">Benchmark results documented (latency p50/p95)</p></li></ul><h2
+    class="editor-heading-block" data-id="ff8960b2-81b5-480b-af5e-7558749e2e01">Infrastructure Target</h2><blockquote data-id="c282aba0-af5b-48ee-8696-c4b00324bd21"><p
+    class="editor-paragraph-block" data-id="3f839b86-82b5-4c39-9b9e-609e597c5f3b">"having our full 2 cluster LocalAI peered
+    in the network with one Plane and eventually 2 or even 3 fleets"</p></blockquote>'
 - title: Benchmark all target operations on LocalAI
   type: Spike
   priority: medium
@@ -619,60 +597,58 @@ starter_issues:
   labels:
   - localai
   - test
-  description_html: '<h2>Context</h2>
-
-    <p>hermes-3b benchmarked for simple completion (1.2s warm). Need full benchmarks across <strong>all operations</strong>
-    the inference router will handle.</p>
-
-
-    <h2>Operations to Benchmark</h2>
-
-    <table>
-
-    <thead><tr><th>Operation</th><th>Model</th><th>Expected Latency</th><th>Quality Gate</th></tr></thead>
-
-    <tbody>
-
-    <tr><td>Simple completion</td><td>hermes-3b</td><td>&lt;2s</td><td>Follows instructions</td></tr>
-
-    <tr><td>Structured JSON output</td><td>hermes-3b</td><td>&lt;3s</td><td>Valid JSON, correct schema</td></tr>
-
-    <tr><td>HEARTBEAT_OK response</td><td>hermes-3b</td><td>&lt;2s</td><td>Correct format, no hallucination</td></tr>
-
-    <tr><td>Code completion</td><td>codellama</td><td>&lt;5s</td><td>Syntactically valid code</td></tr>
-
-    <tr><td>Multi-turn conversation</td><td>hermes</td><td>&lt;10s</td><td>Context retention</td></tr>
-
-    <tr><td>Tool use / function calling</td><td>hermes</td><td>&lt;5s</td><td>Correct tool selection</td></tr>
-
-    </tbody>
-
-    </table>
-
-
-    <h2>Methodology</h2>
-
-    <ol>
-
-    <li>Run each operation 10 times</li>
-
-    <li>Record: latency (p50, p95, p99), quality score (0-100)</li>
-
-    <li>Compare to Claude for same operations</li>
-
-    <li>Document results as Plane Page</li>
-
-    </ol>
-
-
-    <h2>Acceptance Criteria</h2>
-
-    <ul>
-
-    <li>All 6 operations benchmarked with 10+ runs each</li>
-
-    <li>Results documented with latency + quality comparison table</li>
-
-    <li>Recommendation: which operations are safe to offload to LocalAI</li>
-
-    </ul>'
+  description_html: '<h2 class="editor-heading-block" data-id="7cc52428-4e4c-4828-a828-457bdd7a1da1">Context</h2><p class="editor-paragraph-block"
+    data-id="97b9b2c8-97df-41ff-9e62-4a4113855ff8">hermes-3b benchmarked for simple completion (1.2s warm). Need full benchmarks
+    across <strong>all operations</strong> the inference router will handle.</p><h2 class="editor-heading-block" data-id="64959766-a6a0-423d-8952-a0d0b6f50107">Operations
+    to Benchmark</h2><table data-id="6c18c271-de0e-4edc-9c91-13e3847499c4"><tbody><tr style=""><th colspan="1" rowspan="1"
+    colwidth="150" background="none" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="799f3ebd-14c6-45a7-8395-54c45f7b48d4">Operation</p></th><th
+    colspan="1" rowspan="1" colwidth="150" background="none" hidecontent="false" class="" style=""><p class="editor-paragraph-block"
+    data-id="dfd1d405-ad52-4859-a8ba-3e63141642d6">Model</p></th><th colspan="1" rowspan="1" colwidth="150" background="none"
+    hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="f6d0a780-d332-4459-92ce-7d7d9e562120">Expected
+    Latency</p></th><th colspan="1" rowspan="1" colwidth="150" background="none" hidecontent="false" class="" style=""><p
+    class="editor-paragraph-block" data-id="f941911b-e8b6-4292-b990-34e81a2da518">Quality Gate</p></th></tr><tr style=""><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="4ab5ca36-9aea-4e8e-adf7-bbff3232df1d">Simple
+    completion</p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block"
+    data-id="937b0692-a774-4d14-be50-983db0a82579">hermes-3b</p></td><td colspan="1" rowspan="1" colwidth="150" hidecontent="false"
+    class="" style=""><p class="editor-paragraph-block" data-id="a35e8b2c-fcdc-4188-ad6f-bf6afd929c1a">&lt;2s</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="5f22c392-ad73-4f19-9c16-d524a7858a1c">Follows
+    instructions</p></td></tr><tr style=""><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p
+    class="editor-paragraph-block" data-id="270b00df-157d-40a1-ab9c-715b225080e9">Structured JSON output</p></td><td colspan="1"
+    rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="0360b810-5022-4bce-82e5-8edc2a63792d">hermes-3b</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="fe2230eb-c62c-4ca5-97ae-a2d6dca35d64">&lt;3s</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="34bc849c-5fca-4f7d-91d7-05726cc2b925">Valid
+    JSON, correct schema</p></td></tr><tr style=""><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class=""
+    style=""><p class="editor-paragraph-block" data-id="ae5cae13-6764-4aa4-9af7-ec1bd6550abf">HEARTBEAT_OK response</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="f99ebd14-dbd4-4325-9dd4-d37d2e01aee6">hermes-3b</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="4fb1b89b-89a5-4198-a84b-54eddcc535b9">&lt;2s</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="7c178b21-1621-4730-aca2-4dce71aaf258">Correct
+    format, no hallucination</p></td></tr><tr style=""><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class=""
+    style=""><p class="editor-paragraph-block" data-id="42c649cf-e51c-402e-968c-13c0412d8877">Code completion</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="1d1b611d-9060-4c32-b9e4-d9ae35f2375d">codellama</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="6474393d-7147-4bbb-bfd0-38607332293b">&lt;5s</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="eabc596d-f6e6-4db9-9e13-62c51a52b552">Syntactically
+    valid code</p></td></tr><tr style=""><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p
+    class="editor-paragraph-block" data-id="8aa0614f-b505-4447-a277-407cac7eb1f5">Multi-turn conversation</p></td><td colspan="1"
+    rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="e96f5eb6-abdb-40e2-adc8-c670a435f8b0">hermes</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="c07bf176-7d89-4c89-904f-6fabd29579f2">&lt;10s</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="151dcfa5-4b7d-4045-98eb-e5dbc4b46b56">Context
+    retention</p></td></tr><tr style=""><td colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p
+    class="editor-paragraph-block" data-id="7f7518c4-54fc-49f0-b440-3819a2b9efde">Tool use / function calling</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="7d4859bb-0e5e-4f0c-8e83-51ffee7fec78">hermes</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="9d71d9ac-17f5-4a98-abcc-9152520f7be8">&lt;5s</p></td><td
+    colspan="1" rowspan="1" colwidth="150" hidecontent="false" class="" style=""><p class="editor-paragraph-block" data-id="a2e4487c-7836-4acf-baad-ed6db5d20126">Correct
+    tool selection</p></td></tr></tbody></table><h2 class="editor-heading-block" data-id="509ca9e7-1073-4861-bb4c-c43c534fe31d">Methodology</h2><ol
+    class="list-decimal pl-7 space-y-[--list-spacing-y] tight" data-id="201a2798-1b58-4343-affe-bd3faeb7e70e" data-tight="true"><li
+    class="not-prose space-y-2" data-id="428732c2-1a9a-4f9f-b910-47588eb44cdd"><p class="editor-paragraph-block" data-id="482fd510-87ed-4256-84c5-e0f47af3c64c">Run
+    each operation 10 times</p></li><li class="not-prose space-y-2" data-id="2622d397-1542-418d-9acb-2bd99bb6b515"><p class="editor-paragraph-block"
+    data-id="07480a07-0477-429e-8399-e5397376e9de">Record: latency (p50, p95, p99), quality score (0-100)</p></li><li class="not-prose
+    space-y-2" data-id="e8c4c988-a2e0-436b-b184-8cf5bfeb1276"><p class="editor-paragraph-block" data-id="50d10958-1d94-47da-aed4-d12cd6468e76">Compare
+    to Claude for same operations</p></li><li class="not-prose space-y-2" data-id="835d63c9-9cfc-4b62-b4e7-2b5038565454"><p
+    class="editor-paragraph-block" data-id="cd1376a5-b651-4675-b66b-a10f261d08e8">Document results as Plane Page</p></li></ol><h2
+    class="editor-heading-block" data-id="a7418215-3af8-42b6-9f79-50ff3a62da9c">Acceptance Criteria</h2><ul class="list-disc
+    pl-7 space-y-[--list-spacing-y] tight" data-id="b257c6e9-b6d0-42a4-a10a-94aecae92a5f" data-tight="true"><li class="not-prose
+    space-y-2" data-id="fc0183d5-91aa-4432-b22c-23c003bfa93d"><p class="editor-paragraph-block" data-id="38eef63e-4b44-4890-9516-65bdac33df0a">All
+    6 operations benchmarked with 10+ runs each</p></li><li class="not-prose space-y-2" data-id="2f3e3e78-031b-4399-ae9c-1a3a16969ca7"><p
+    class="editor-paragraph-block" data-id="122618fa-47d7-44ba-8715-b5af59f77ef4">Results documented with latency + quality
+    comparison table</p></li><li class="not-prose space-y-2" data-id="2cad43eb-832c-4ffa-baec-35727e38eacf"><p class="editor-paragraph-block"
+    data-id="22700eed-274d-4ec1-aaf3-5fb70eb68e57">Recommendation: which operations are safe to offload to LocalAI</p></li></ul>'

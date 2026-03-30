@@ -1,5 +1,5 @@
 {
-  "exported_at": "2026-03-30T00:54:07.997453Z",
+  "exported_at": "2026-03-30T01:00:44.994772Z",
   "projects": {
     "NNRT": {
       "name": "Narrative-to-Neutral Report Transformer",
@@ -8,35 +8,35 @@
       "modules": [
         {
           "name": "Persistence",
-          "description": "Storage, export formats, API, database\n\nAcceptance Criteria:\n- Processed reports stored with full audit trail\n- JSON export of structured analysis\n- PDF generation of neutral report\n- REST API for ext",
+          "description": "Storage, export formats, API, database\n\nAcceptance Criteria:\n- Processed reports stored with full audit trail\n- JSON export of structured analysis\n- PDF generation of neutral report\n- REST API for external integration\n\nNotes:\nOutput layer. Needed for integration with other systems.\nAPI design should",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Pressure",
-          "description": "Bias detection, pressure indicators, sentiment neutralization\n\nAcceptance Criteria:\n- Loaded language detection with confidence scores\n- Emotional appeal identification\n- Selective framing detection\n-",
+          "description": "Bias detection, pressure indicators, sentiment neutralization\n\nAcceptance Criteria:\n- Loaded language detection with confidence scores\n- Emotional appeal identification\n- Selective framing detection\n- Neutral rewrite suggestions for flagged passages\n\nNotes:\nAdvanced NLP. May benefit from LLM assista",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Mapping",
-          "description": "Narrative \u2192 neutral mapping engine, transformation rules\n\nAcceptance Criteria:\n- At least 10 narrative-to-neutral transformation rules defined\n- Rule engine applies transformations preserving factual ",
+          "description": "Narrative \u2192 neutral mapping engine, transformation rules\n\nAcceptance Criteria:\n- At least 10 narrative-to-neutral transformation rules defined\n- Rule engine applies transformations preserving factual content\n- Before/after comparison available for validation\n\nNotes:\nHeart of the NNRT. The transforma",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Structuring",
-          "description": "Report structuring, section detection, hierarchy extraction\n\nAcceptance Criteria:\n- Section hierarchy detected from document structure\n- Claims, evidence, and sources identified\n- Document graph built",
+          "description": "Report structuring, section detection, hierarchy extraction\n\nAcceptance Criteria:\n- Section hierarchy detected from document structure\n- Claims, evidence, and sources identified\n- Document graph built with entity relationships\n\nNotes:\nCore NLP work. May need spaCy or similar for entity extraction.\nT",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Intake",
-          "description": "Document ingestion, format detection, preprocessing\n\nAcceptance Criteria:\n- Document ingestion works for at least PDF and plain text\n- Encoding normalization handles UTF-8 and common formats\n- Section",
+          "description": "Document ingestion, format detection, preprocessing\n\nAcceptance Criteria:\n- Document ingestion works for at least PDF and plain text\n- Encoding normalization handles UTF-8 and common formats\n- Section splitting produces structured output\n- Metadata extraction captures dates, authors, sources\n\nNotes:",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
@@ -54,18 +54,21 @@
         {
           "title": "Clone and assess NNRT codebase",
           "priority": "high",
-          "state": "",
-          "assignees": []
+          "state": "Backlog",
+          "description_html": "<div><h2>Context</h2>\n<p>The NNRT Python project exists on GitHub but <strong>no one has assessed its current state</strong>.</p>\n\n<h2>Questions to Answer</h2>\n<table>\n<thead><tr><th>#</th><th>Question</th><th>Why It Matters</th></tr></thead>\n<tbody>\n<tr><td>1</td><td>What modules exist?</td><td>Know what's built vs scaffolding</td></tr>\n<tr><td>2</td><td>Which pipeline passes work?</td><td>Intake \u2192 Structuring \u2192 Mapping \u2192 Pressure \u2192 Persistence</td></tr>\n<tr><td>3</td><td>Do tests pass?</td><td>Quality baseline</td></tr>\n<tr><td>4</td><td>What NLP models/libraries?</td><td>Dependency mapping</td></tr>\n<tr><td>5</td><td>End-to-end pipeline works?</td><td>Can we demo it?</td></tr>\n<tr><td>6</td><td>What input formats?</td><td>PDF, DOCX, plain text?</td></tr>\n<tr><td>7</td><td>Dependencies outdated?</td><td>Security + compatibility</td></tr>\n</tbody>\n</table>\n\n<h2>Steps</h2>\n<ol>\n<li>Clone: <code>git clone https://github.com/cyberpunk042/Narrative-to-Neutral-Report-Transformer</code></li>\n<li>Run tests: <code>pytest</code></li>\n<li>Read source code \u2014 document each module</li>\n<li>Try end-to-end with a sample document</li>\n<li>Post assessment as Plane Page</li>\n</ol>\n\n<h2>Acceptance Criteria</h2>\n<ul>\n<li>Assessment posted as NNRT Page with findings table</li>\n<li>Gap analysis: what's built vs what's needed</li>\n<li>Sprint 2 plan drafted with task breakdown</li>\n</ul>\n\n<h2>Links</h2>\n<ul>\n<li><a href=\"https://github.com/cyberpunk042/Narrative-to-Neutral-Report-Transformer\" rel=\"noopener noreferrer\">GitHub: NNRT</a></li>\n</ul></div>",
+          "updated_at": "2026-03-30T00:02:41.712313Z",
+          "sequence_id": 2
         },
         {
           "title": "Welcome to NNRT \u2014 Pipeline Assessment",
           "priority": "none",
-          "state": "",
-          "assignees": []
+          "state": "Backlog",
+          "description_html": "<h2>Project</h2><p>Narrative-to-Neutral Report Transformer. Python NLP pipeline. The project exists as a GitHub repo \u2014 assessment needed first.</p><h2>Pipeline</h2><p>Intake \u2192 Structuring \u2192 Mapping \u2192 Pressure Detection \u2192 Persistence</p><h2>Next Steps</h2><ul><li>Clone and assess current codebase</li><li>Run existing tests</li><li>Document what works, what is scaffolding</li><li>Create Sprint 2 plan with task breakdown</li></ul>",
+          "updated_at": "2026-03-29T23:46:59.034064Z",
+          "sequence_id": 1
         }
       ],
       "issue_count": 2,
-      "label_count": 19,
       "state_names": [
         "Backlog",
         "Todo",
@@ -84,28 +87,28 @@
       "modules": [
         {
           "name": "Customization",
-          "description": "Webhooks (HMAC verified), Plane MCP server for PM, analytics, velocity tracking, burn-down\n\nNotes:\nWebhooks with HMAC, Plane MCP server for PM, analytics.\ndspd/webhooks.py built. scripts/plane-setup-w",
+          "description": "Webhooks (HMAC verified), Plane MCP server for PM, analytics, velocity tracking, burn-down\n\nNotes:\nWebhooks with HMAC, Plane MCP server for PM, analytics.\ndspd/webhooks.py built. scripts/plane-setup-webhooks.sh built.",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Sync",
-          "description": "Bidirectional Plane \u2194 OCMC sync. Human creates in Plane \u2192 PM evaluates \u2192 OCMC task created \u2192 agent works \u2192 completes \u2192 chain syncs back to Plane.\n\nSync is fleet-tagged in multi-fleet: each fleet syncs",
+          "description": "Bidirectional Plane \u2194 OCMC sync. Human creates in Plane \u2192 PM evaluates \u2192 OCMC task created \u2192 agent works \u2192 completes \u2192 chain syncs back to Plane.\n\nSync is fleet-tagged in multi-fleet: each fleet syncs its own tasks.\nPlane\u2194OCMC sync will be integrated into orchestrator cycle (M-SC07).\n\nGraceful degra",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Integration",
-          "description": "Fleet CLI (fleet plan create/list/sync/status), plane_client.py (typed async REST client), PM agent as the bridge between Plane and OCMC.\n\nThe PM is the sole writer to Plane. Plane MCP tools (M-SC04) ",
+          "description": "Fleet CLI (fleet plan create/list/sync/status), plane_client.py (typed async REST client), PM agent as the bridge between Plane and OCMC.\n\nThe PM is the sole writer to Plane. Plane MCP tools (M-SC04) will give PM native access from heartbeat sessions. Plane skill (M-SC05) will teach PM sprint manage",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Setup",
-          "description": "Docker (12 services), IaC (setup.sh install), mission seed (plane-seed-mission.sh reads config/mission.yaml), project layout, nginx proxy, env templates.\n\nsetup.sh handles: secrets generation, service",
+          "description": "Docker (12 services), IaC (setup.sh install), mission seed (plane-seed-mission.sh reads config/mission.yaml), project layout, nginx proxy, env templates.\n\nsetup.sh handles: secrets generation, service startup, admin user creation, workspace/project configuration, mission seeding, API validation, sta",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
@@ -123,24 +126,29 @@
         {
           "title": "Build Plane content rendering skill (M-PM08)",
           "priority": "medium",
-          "state": "",
-          "assignees": []
+          "state": "Backlog",
+          "description_html": "<div><h2>Context</h2>\n<p>When agents create content in Plane, it must be <strong>properly formatted HTML</strong> \u2014 not plain text. Need a skill and/or utility for generating rich Plane content.</p>\n\n<h2>Templates Needed</h2>\n<table>\n<thead><tr><th>Template</th><th>Used For</th><th>Elements</th></tr></thead>\n<tbody>\n<tr><td>Issue description</td><td>Creating work items</td><td>Context, steps, acceptance criteria, links</td></tr>\n<tr><td>Sprint report</td><td>Cycle completion</td><td>Velocity, burn-down, highlights, blockers</td></tr>\n<tr><td>Page content</td><td>Architecture, requirements</td><td>Tables, diagrams, cross-references</td></tr>\n<tr><td>Comment</td><td>Progress, review, decision</td><td>Status, summary, next steps</td></tr>\n</tbody>\n</table>\n\n<h2>References</h2>\n<ul>\n<li>Existing display module: <code>fleet/core/event_display.py</code></li>\n<li>Fleet-plane skill: <code>.claude/skills/fleet-plane/SKILL.md</code></li>\n</ul></div>",
+          "updated_at": "2026-03-30T00:02:40.664763Z",
+          "sequence_id": 3
         },
         {
           "title": "Build Plane MCP tools for PM agent (M-SC04)",
           "priority": "high",
-          "state": "",
-          "assignees": []
+          "state": "Backlog",
+          "description_html": "<div><h2>Status: \u2705 ALREADY BUILT</h2>\n<p>7 Plane MCP tools built during this session. This issue tracks verification.</p>\n\n<h2>Tools Built</h2>\n<table>\n<thead><tr><th>Tool</th><th>Purpose</th></tr></thead>\n<tbody>\n<tr><td><code>fleet_plane_status</code></td><td>Project overview with sprint</td></tr>\n<tr><td><code>fleet_plane_sprint</code></td><td>Current cycle details</td></tr>\n<tr><td><code>fleet_plane_sync</code></td><td>Bidirectional Plane \u2194 OCMC sync</td></tr>\n<tr><td><code>fleet_plane_create_issue</code></td><td>Create issue with labels, module</td></tr>\n<tr><td><code>fleet_plane_comment</code></td><td>Post comment with @mentions</td></tr>\n<tr><td><code>fleet_plane_update_issue</code></td><td>Change state, priority</td></tr>\n<tr><td><code>fleet_plane_list_modules</code></td><td>List epics with status</td></tr>\n</tbody>\n</table>\n\n<h2>Verification Needed</h2>\n<ol>\n<li>PM agent calls fleet_plane_status(\"AICP\") from heartbeat</li>\n<li>PM creates issue via fleet_plane_create_issue</li>\n<li>PM posts comment with @mention via fleet_plane_comment</li>\n<li>fleet_plane_sync creates OCMC task from Plane issue</li>\n</ol></div>",
+          "updated_at": "2026-03-30T00:02:40.561333Z",
+          "sequence_id": 2
         },
         {
           "title": "Welcome to DSPD \u2014 Plane Platform Configuration",
           "priority": "none",
-          "state": "",
-          "assignees": []
+          "state": "Backlog",
+          "description_html": "<h2>Status</h2><p>Plane deployed (12 containers). 4 projects seeded with modules, labels, states, sprints. Mission content from config/mission.yaml.</p><h2>Remaining</h2><ul><li>Plane MCP tools for PM agent</li><li>Chain runner integration with Plane surface</li><li>Live sync test (Plane \u2194 OCMC)</li><li>Webhook registration</li></ul><h2>Milestones</h2><ul><li>M-SC01-08: Skills and chains</li><li>M-PF01-09: Full Plane configuration</li><li>M-P01-10: IaC evolution</li></ul>",
+          "updated_at": "2026-03-29T23:46:59.011833Z",
+          "sequence_id": 1
         }
       ],
       "issue_count": 3,
-      "label_count": 19,
       "state_names": [
         "Backlog",
         "Todo",
@@ -164,7 +172,7 @@
         },
         {
           "name": "Autonomy",
-          "description": "Event chains (model built, runner missing M-SC02), routing engine (capability matching), self-healing (gateway restart in monitor daemon), stuck detection, config auto-push, agent command center (PRE\u2192",
+          "description": "Event chains (model built, runner missing M-SC02), routing engine (capability matching), self-healing (gateway restart in monitor daemon), stuck detection, config auto-push, agent command center (PRE\u2192PROGRESS\u2192POST lifecycle \u2014 not built).\n\n29 NOT STARTED milestones in fleet-autonomy-milestones.md. Lo",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
@@ -178,21 +186,21 @@
         },
         {
           "name": "Agents",
-          "description": "Agent roles (primary + secondary), heartbeats (per-agent intervals 30-90m), lifecycle (ACTIVE\u2192IDLE\u2192SLEEPING\u2192OFFLINE), behavioral security, SOUL.md identities.\n\nEach agent has a primary role and second",
+          "description": "Agent roles (primary + secondary), heartbeats (per-agent intervals 30-90m), lifecycle (ACTIVE\u2192IDLE\u2192SLEEPING\u2192OFFLINE), behavioral security, SOUL.md identities.\n\nEach agent has a primary role and secondary responsibilities when idle. fleet-ops drives OCMC, PM drives Plane. Others contribute to backlog",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "MCP",
-          "description": "13 MCP tools that agents call during sessions. The primary interface between agents and the fleet.\n\nCurrent: fleet_read_context, fleet_task_accept, fleet_task_progress, fleet_commit, fleet_task_comple",
+          "description": "13 MCP tools that agents call during sessions. The primary interface between agents and the fleet.\n\nCurrent: fleet_read_context, fleet_task_accept, fleet_task_progress, fleet_commit, fleet_task_complete, fleet_alert, fleet_pause, fleet_escalate, fleet_notify_human, fleet_chat, fleet_task_create, fle",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Core",
-          "description": "Orchestrator (the brain \u2014 30s cycle, 6 steps), daemons (sync/monitor/auth/orchestrator), effort profiles (full/conservative/minimal/paused), budget monitoring (real Claude OAuth quota), task scoring (",
+          "description": "Orchestrator (the brain \u2014 30s cycle, 6 steps), daemons (sync/monitor/auth/orchestrator), effort profiles (full/conservative/minimal/paused), budget monitoring (real Claude OAuth quota), task scoring (priority-based dispatch ordering).\n\nThe orchestrator is the fleet control plane \u2014 no LLM, pure Pytho",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
@@ -203,30 +211,37 @@
         {
           "title": "Build chain runner (M-SC02)",
           "priority": "high",
-          "state": "",
-          "assignees": []
+          "state": "Backlog",
+          "description_html": "<div><h2>Status: \u2705 ALREADY BUILT</h2>\n<p>The chain runner was built during this session. This issue tracks verification.</p>\n\n<h2>What Was Built</h2>\n<table>\n<thead><tr><th>Component</th><th>File</th><th>Tests</th></tr></thead>\n<tbody>\n<tr><td>Chain Runner</td><td><code>fleet/core/chain_runner.py</code></td><td>9 tests</td></tr>\n<tr><td>PLANE Surface</td><td><code>fleet/core/event_chain.py</code></td><td>\u2014</td></tr>\n<tr><td>Event Store</td><td><code>fleet/core/events.py</code></td><td>15 tests</td></tr>\n<tr><td>Event Router</td><td><code>fleet/core/event_router.py</code></td><td>16 tests</td></tr>\n<tr><td>Adaptive Display</td><td><code>fleet/core/event_display.py</code></td><td>\u2014</td></tr>\n<tr><td>Cross-References</td><td><code>fleet/core/cross_refs.py</code></td><td>\u2014</td></tr>\n</tbody>\n</table>\n\n<h2>Verification Needed</h2>\n<ol>\n<li>fleet_task_complete uses ChainRunner (wired)</li>\n<li>Chain fires IRC + board memory + Plane events</li>\n<li>Cross-references auto-generated</li>\n<li>Event store records chain execution</li>\n</ol>\n\n<h2>Links</h2>\n<ul>\n<li><a href=\"https://github.com/cyberpunk042/openclaw-fleet/blob/main/fleet/core/chain_runner.py\" rel=\"noopener noreferrer\">chain_runner.py</a></li>\n<li><a href=\"https://github.com/cyberpunk042/openclaw-fleet/blob/main/fleet/core/event_chain.py\" rel=\"noopener noreferrer\">event_chain.py</a></li>\n</ul></div>",
+          "updated_at": "2026-03-30T00:02:41.290708Z",
+          "sequence_id": 4
         },
         {
           "title": "Execute one real task through the full review chain",
           "priority": "urgent",
-          "state": "",
-          "assignees": []
+          "state": "Backlog",
+          "description_html": "<div><h2>Context</h2>\n<p><strong>No agent has completed a real task yet.</strong> The entire review chain is untested live:</p>\n<pre><code>dispatch \u2192 accept \u2192 work \u2192 commit \u2192 complete \u2192 PR \u2192 review \u2192 approve \u2192 done</code></pre>\n\n<h2>Steps</h2>\n<ol>\n<li>Create a simple task (e.g., \"add a comment to a config file\")</li>\n<li>Assign to software-engineer</li>\n<li>Dispatch via orchestrator (or manual <code>fleet_task_create</code>)</li>\n<li>software-engineer accepts (fleet_task_accept), works, commits (fleet_commit), completes (fleet_task_complete)</li>\n<li>ChainRunner fires: MC update, PR creation, IRC notification, board memory</li>\n<li>fleet-ops reviews with reasoning (fleet_approve)</li>\n<li>Task moves to done</li>\n</ol>\n\n<h2>What to Verify</h2>\n<table>\n<thead><tr><th>Step</th><th>Surface</th><th>Expected</th></tr></thead>\n<tbody>\n<tr><td>Complete</td><td>MC</td><td>Task status \u2192 review, approval created</td></tr>\n<tr><td>Complete</td><td>GitHub</td><td>Branch pushed, PR created</td></tr>\n<tr><td>Complete</td><td>IRC</td><td>#fleet + #reviews notifications</td></tr>\n<tr><td>Complete</td><td>Events</td><td>fleet.task.completed in event store</td></tr>\n<tr><td>Approve</td><td>MC</td><td>Approval status \u2192 approved</td></tr>\n<tr><td>Approve</td><td>Events</td><td>fleet.task.approved in event store</td></tr>\n</tbody>\n</table>\n\n<h2>Links</h2>\n<ul>\n<li><a href=\"https://github.com/cyberpunk042/openclaw-fleet/blob/main/docs/milestones/STATUS-TRACKER.md\" rel=\"noopener noreferrer\">STATUS-TRACKER</a></li>\n</ul></div>",
+          "updated_at": "2026-03-30T00:02:41.190987Z",
+          "sequence_id": 3
         },
         {
           "title": "Verify fleet_chat tool works between real agents",
           "priority": "high",
-          "state": "",
-          "assignees": []
+          "state": "Backlog",
+          "description_html": "<div><h2>Context</h2>\n<p><code>fleet_chat</code> MCP tool is built but <strong>never tested with real agents</strong>. An agent needs to post to #fleet via fleet_chat and verify the message appears in IRC.</p>\n\n<h2>Steps</h2>\n<ol>\n<li>Agent calls <code>fleet_chat(\"Test message from fleet-ops\", channel=\"#fleet\")</code></li>\n<li>Verify message appears in The Lounge IRC client (<a href=\"http://localhost:9000\" rel=\"noopener noreferrer\">localhost:9000</a>)</li>\n<li>Test @mention routing: <code>fleet_chat(\"@architect please review\", channel=\"#fleet\")</code></li>\n<li>Verify architect's event feed shows the mention on next heartbeat</li>\n</ol>\n\n<h2>Acceptance Criteria</h2>\n<ul>\n<li>Message appears in IRC within 5 seconds</li>\n<li>@mention creates fleet.chat.mention event in event store</li>\n<li>Mentioned agent sees event in fleet_read_context feed</li>\n</ul>\n\n<h2>Links</h2>\n<ul>\n<li>IRC: <a href=\"http://localhost:9000\" rel=\"noopener noreferrer\">The Lounge</a> (fleet/fleet)</li>\n<li>Event store: <code>.fleet-events.jsonl</code></li>\n</ul></div>",
+          "updated_at": "2026-03-30T00:02:41.093711Z",
+          "sequence_id": 2
         },
         {
           "title": "Welcome to OpenClaw Fleet \u2014 Operational Validation",
           "priority": "none",
-          "state": "",
-          "assignees": []
+          "state": "Backlog",
+          "description_html": "<h2>Fleet Status</h2><p>10 agents online. Gateway running with self-healing. Daemons cycling. Communication verified (8/8 checks). 341 tests passing.</p><h2>Known Gaps</h2><ul><li>Chain runner not built (MCP tools bypass chains)</li><li>No Plane MCP tools (PM cannot access Plane from sessions)</li><li>29 autonomy milestones NOT STARTED</li><li>No agent has completed a real task yet</li></ul><h2>Next Steps</h2><ul><li>Validate one real task through the full review chain</li><li>See Modules for Core, MCP, Agents, Infrastructure, Autonomy, Tests</li></ul>",
+          "updated_at": "2026-03-29T23:46:58.989647Z",
+          "sequence_id": 1
         }
       ],
       "issue_count": 4,
-      "label_count": 19,
       "state_names": [
         "Backlog",
         "Todo",
@@ -244,49 +259,49 @@
       "modules": [
         {
           "name": "Integrations",
-          "description": "Backend integrations connecting AICP to inference providers.\n\nLocalAI: localhost:8090, OpenAI-compatible API, 9 models loaded.\nClaude Code: subprocess invocation, opus for complex, sonnet for standard",
+          "description": "Backend integrations connecting AICP to inference providers.\n\nLocalAI: localhost:8090, OpenAI-compatible API, 9 models loaded.\nClaude Code: subprocess invocation, opus for complex, sonnet for standard.\n\nKey challenge: single-active GPU backend (8GB VRAM). Strategy: keep hermes-3b warm for heartbeats",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Core Platform",
-          "description": "AICP core primitives: controller, Think/Edit/Act mode enforcement, backend routing.\n\nThe aicp/ package has 46 modules including controller.py, router.py, modes.py, guardrails/. Assessment needed: what",
+          "description": "AICP core primitives: controller, Think/Edit/Act mode enforcement, backend routing.\n\nThe aicp/ package has 46 modules including controller.py, router.py, modes.py, guardrails/. Assessment needed: what is wired up end-to-end, what is scaffolding.\n\nGuardrails: Think mode blocks writes, Edit mode contr",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Stage 5: Near-Independent Operation",
-          "description": "The long-term target. Fleet runs primarily on LocalAI for routine operations. Claude called only for complex code, architecture, security, strategic planning.\n\nTargets:\n- 80%+ of fleet operations run ",
+          "description": "The long-term target. Fleet runs primarily on LocalAI for routine operations. Claude called only for complex code, architecture, security, strategic planning.\n\nTargets:\n- 80%+ of fleet operations run on LocalAI (measured over 1 week)\n- Fleet survives Claude outages (degraded but functional)\n- Token ",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Stage 4: Reliability and Failover",
-          "description": "Build graceful degradation between LocalAI and Claude. Agents should never know which backend they are talking to \u2014 the control plane handles routing transparently.\n\nIf LocalAI fails \u2192 automatic Claud",
+          "description": "Build graceful degradation between LocalAI and Claude. Agents should never know which backend they are talking to \u2014 the control plane handles routing transparently.\n\nIf LocalAI fails \u2192 automatic Claude fallback\nIf Claude is rate-limited \u2192 queue work for LocalAI where possible\nCluster peering: Machin",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Stage 3: Progressive Offload",
-          "description": "Move routine operations to LocalAI one by one, with quality validation for each.\n\nTarget operations:\n- Idle heartbeats \u2192 LocalAI (zero Claude tokens, just HEARTBEAT_OK)\n- Simple task acceptance \u2192 Loca",
+          "description": "Move routine operations to LocalAI one by one, with quality validation for each.\n\nTarget operations:\n- Idle heartbeats \u2192 LocalAI (zero Claude tokens, just HEARTBEAT_OK)\n- Simple task acceptance \u2192 LocalAI (structured plan output)\n- Simple reviews (test pass/fail) \u2192 LocalAI (pattern matching)\n- Chat r",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Stage 2: Route Simple Operations to LocalAI",
-          "description": "Build the inference router (fleet/core/inference_router.py) \u2014 the critical architecture piece that decides what needs reasoning vs what can be handled locally or as direct HTTP calls.\n\nKey insight: ma",
+          "description": "Build the inference router (fleet/core/inference_router.py) \u2014 the critical architecture piece that decides what needs reasoning vs what can be handled locally or as direct HTTP calls.\n\nKey insight: many MCP tool calls are just HTTP requests to the MC API. They do not need an LLM \u2014 fleet_read_context",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
         },
         {
           "name": "Stage 1: Make LocalAI Functional",
-          "description": "Assess current state of AICP and LocalAI. Get local inference working on both machines. Verify OpenAI-compatible API with standard client libraries. Benchmark latency, throughput, and quality for all ",
+          "description": "Assess current state of AICP and LocalAI. Get local inference working on both machines. Verify OpenAI-compatible API with standard client libraries. Benchmark latency, throughput, and quality for all target operations. Validate 2-cluster network setup with cross-machine inference.\n\nASSESSMENT DONE (",
           "status": "planned",
           "total_issues": 0,
           "completed_issues": 0
@@ -304,30 +319,37 @@
         {
           "title": "Benchmark all target operations on LocalAI",
           "priority": "medium",
-          "state": "",
-          "assignees": []
+          "state": "Backlog",
+          "description_html": "<h2 class=\"editor-heading-block\" data-id=\"7cc52428-4e4c-4828-a828-457bdd7a1da1\">Context</h2><p class=\"editor-paragraph-block\" data-id=\"97b9b2c8-97df-41ff-9e62-4a4113855ff8\">hermes-3b benchmarked for simple completion (1.2s warm). Need full benchmarks across <strong>all operations</strong> the inference router will handle.</p><h2 class=\"editor-heading-block\" data-id=\"64959766-a6a0-423d-8952-a0d0b6f50107\">Operations to Benchmark</h2><table data-id=\"6c18c271-de0e-4edc-9c91-13e3847499c4\"><tbody><tr style=\"\"><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"799f3ebd-14c6-45a7-8395-54c45f7b48d4\">Operation</p></th><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"dfd1d405-ad52-4859-a8ba-3e63141642d6\">Model</p></th><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"f6d0a780-d332-4459-92ce-7d7d9e562120\">Expected Latency</p></th><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"f941911b-e8b6-4292-b990-34e81a2da518\">Quality Gate</p></th></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"4ab5ca36-9aea-4e8e-adf7-bbff3232df1d\">Simple completion</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"937b0692-a774-4d14-be50-983db0a82579\">hermes-3b</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"a35e8b2c-fcdc-4188-ad6f-bf6afd929c1a\">&lt;2s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"5f22c392-ad73-4f19-9c16-d524a7858a1c\">Follows instructions</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"270b00df-157d-40a1-ab9c-715b225080e9\">Structured JSON output</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"0360b810-5022-4bce-82e5-8edc2a63792d\">hermes-3b</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"fe2230eb-c62c-4ca5-97ae-a2d6dca35d64\">&lt;3s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"34bc849c-5fca-4f7d-91d7-05726cc2b925\">Valid JSON, correct schema</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"ae5cae13-6764-4aa4-9af7-ec1bd6550abf\">HEARTBEAT_OK response</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"f99ebd14-dbd4-4325-9dd4-d37d2e01aee6\">hermes-3b</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"4fb1b89b-89a5-4198-a84b-54eddcc535b9\">&lt;2s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"7c178b21-1621-4730-aca2-4dce71aaf258\">Correct format, no hallucination</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"42c649cf-e51c-402e-968c-13c0412d8877\">Code completion</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"1d1b611d-9060-4c32-b9e4-d9ae35f2375d\">codellama</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"6474393d-7147-4bbb-bfd0-38607332293b\">&lt;5s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"eabc596d-f6e6-4db9-9e13-62c51a52b552\">Syntactically valid code</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"8aa0614f-b505-4447-a277-407cac7eb1f5\">Multi-turn conversation</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"e96f5eb6-abdb-40e2-adc8-c670a435f8b0\">hermes</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"c07bf176-7d89-4c89-904f-6fabd29579f2\">&lt;10s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"151dcfa5-4b7d-4045-98eb-e5dbc4b46b56\">Context retention</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"7f7518c4-54fc-49f0-b440-3819a2b9efde\">Tool use / function calling</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"7d4859bb-0e5e-4f0c-8e83-51ffee7fec78\">hermes</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"9d71d9ac-17f5-4a98-abcc-9152520f7be8\">&lt;5s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"a2e4487c-7836-4acf-baad-ed6db5d20126\">Correct tool selection</p></td></tr></tbody></table><h2 class=\"editor-heading-block\" data-id=\"509ca9e7-1073-4861-bb4c-c43c534fe31d\">Methodology</h2><ol class=\"list-decimal pl-7 space-y-[--list-spacing-y] tight\" data-id=\"201a2798-1b58-4343-affe-bd3faeb7e70e\" data-tight=\"true\"><li class=\"not-prose space-y-2\" data-id=\"428732c2-1a9a-4f9f-b910-47588eb44cdd\"><p class=\"editor-paragraph-block\" data-id=\"482fd510-87ed-4256-84c5-e0f47af3c64c\">Run each operation 10 times</p></li><li class=\"not-prose space-y-2\" data-id=\"2622d397-1542-418d-9acb-2bd99bb6b515\"><p class=\"editor-paragraph-block\" data-id=\"07480a07-0477-429e-8399-e5397376e9de\">Record: latency (p50, p95, p99), quality score (0-100)</p></li><li class=\"not-prose space-y-2\" data-id=\"e8c4c988-a2e0-436b-b184-8cf5bfeb1276\"><p class=\"editor-paragraph-block\" data-id=\"50d10958-1d94-47da-aed4-d12cd6468e76\">Compare to Claude for same operations</p></li><li class=\"not-prose space-y-2\" data-id=\"835d63c9-9cfc-4b62-b4e7-2b5038565454\"><p class=\"editor-paragraph-block\" data-id=\"cd1376a5-b651-4675-b66b-a10f261d08e8\">Document results as Plane Page</p></li></ol><h2 class=\"editor-heading-block\" data-id=\"a7418215-3af8-42b6-9f79-50ff3a62da9c\">Acceptance Criteria</h2><ul class=\"list-disc pl-7 space-y-[--list-spacing-y] tight\" data-id=\"b257c6e9-b6d0-42a4-a10a-94aecae92a5f\" data-tight=\"true\"><li class=\"not-prose space-y-2\" data-id=\"fc0183d5-91aa-4432-b22c-23c003bfa93d\"><p class=\"editor-paragraph-block\" data-id=\"38eef63e-4b44-4890-9516-65bdac33df0a\">All 6 operations benchmarked with 10+ runs each</p></li><li class=\"not-prose space-y-2\" data-id=\"2f3e3e78-031b-4399-ae9c-1a3a16969ca7\"><p class=\"editor-paragraph-block\" data-id=\"122618fa-47d7-44ba-8715-b5af59f77ef4\">Results documented with latency + quality comparison table</p></li><li class=\"not-prose space-y-2\" data-id=\"2cad43eb-832c-4ffa-baec-35727e38eacf\"><p class=\"editor-paragraph-block\" data-id=\"22700eed-274d-4ec1-aaf3-5fb70eb68e57\">Recommendation: which operations are safe to offload to LocalAI</p></li></ul>",
+          "updated_at": "2026-03-30T00:03:32.466611Z",
+          "sequence_id": 4
         },
         {
           "title": "Complete LocalAI cluster verification \u2014 Machine 2 setup",
           "priority": "high",
-          "state": "",
-          "assignees": []
+          "state": "Backlog",
+          "description_html": "<h2 class=\"editor-heading-block\" data-id=\"d701ae52-064b-4985-9f37-130fea804eca\">Context</h2><p class=\"editor-paragraph-block\" data-id=\"465d7e77-04d8-4e6c-9584-b375c99f4138\">LocalAI verified on <strong>Machine 1</strong>:</p><table data-id=\"23c5a171-22a7-4a2f-9d4c-b41bc96f7cd1\"><tbody><tr style=\"\"><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"de359dbc-c6d7-4cb5-bd55-eb87c51694e4\">Model</p></th><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"c94ce84b-bc14-4e87-9484-6bb5b52f4f99\">Cold Start</p></th><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"ea35aaa8-9715-468c-853d-e06434b97190\">Warm</p></th></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"58bdfc46-b81a-4ffc-81cf-f77bd8ff92cd\">hermes-3b (3B)</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"b43145d8-732f-4886-9551-bc718ca8860a\">~10s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"e6350995-0ed9-4b9d-8d29-6764dfd773fe\"><strong>~1.2s</strong></p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"66db8b43-9371-4bee-b574-3a7e40a957fe\">hermes (7B)</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"76b7a2b6-f3ae-4f89-a9bc-8129a92f58f8\">~80s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"07538131-374f-44f1-bbc3-57ce30e78fa7\">~1s</p></td></tr></tbody></table><p class=\"editor-paragraph-block\" data-id=\"73449b2e-a3a6-43df-9c91-5232903801f3\">Machine 2 needs the same setup and cross-machine inference verification.</p><h2 class=\"editor-heading-block\" data-id=\"23af0737-0f66-4fa5-ae73-ee99ae81f7da\">Steps</h2><ol class=\"list-decimal pl-7 space-y-[--list-spacing-y] tight\" data-id=\"71857b36-8d7b-4952-8259-9bbf5a63aad1\" data-tight=\"true\"><li class=\"not-prose space-y-2\" data-id=\"04ea51be-553d-4ea0-88eb-ebe9b1691d4e\"><p class=\"editor-paragraph-block\" data-id=\"4782c717-2f2f-4291-bc04-e6213b54e038\">Install LocalAI on Machine 2 (Docker + GPU)</p></li><li class=\"not-prose space-y-2\" data-id=\"719d1f49-38a7-4bf0-811d-fdd3b91de5ad\"><p class=\"editor-paragraph-block\" data-id=\"37efd7b8-38bc-4865-888b-57d74eecba1f\">Copy model configs from Machine 1</p></li><li class=\"not-prose space-y-2\" data-id=\"218ddd6e-ecc4-47c7-915d-36a53d172d7f\"><p class=\"editor-paragraph-block\" data-id=\"96e0a119-a1ce-45fe-8413-abbee724ecd4\">Verify hermes-3b loads and responds</p></li><li class=\"not-prose space-y-2\" data-id=\"ce2df0a5-9ef5-4ffb-ae04-a35f93e9fea1\"><p class=\"editor-paragraph-block\" data-id=\"4c0593da-7eaa-40ed-b325-cda15e2fb185\">Test cross-machine inference: Machine 1 \u2192 Machine 2 API call</p></li><li class=\"not-prose space-y-2\" data-id=\"98099dce-5f2b-4449-b925-7eec7d74305a\"><p class=\"editor-paragraph-block\" data-id=\"166d1a2a-2121-48a0-9709-1b657f9d650d\">Benchmark and document results</p></li></ol><h2 class=\"editor-heading-block\" data-id=\"8db9c3fd-cf95-43ec-9134-3cf1ce083bd4\">Acceptance Criteria</h2><ul class=\"list-disc pl-7 space-y-[--list-spacing-y] tight\" data-id=\"e83f1bcf-7d02-43b7-8174-5fec14cf6d70\" data-tight=\"true\"><li class=\"not-prose space-y-2\" data-id=\"74d4afc1-74b4-4680-893a-ff0f0dd41cad\"><p class=\"editor-paragraph-block\" data-id=\"858d8907-f3e1-4f52-876d-93e2cdda30fd\">LocalAI running on Machine 2 with hermes-3b</p></li><li class=\"not-prose space-y-2\" data-id=\"59598a6e-2eaf-4306-94b6-333d44efb6d8\"><p class=\"editor-paragraph-block\" data-id=\"a48bfccc-8d4b-40e9-b307-f467c6811f91\">Cross-machine inference works (Machine 1 calls Machine 2 API)</p></li><li class=\"not-prose space-y-2\" data-id=\"e5b335db-356f-4dbe-8a23-5a30c3e4aa7f\"><p class=\"editor-paragraph-block\" data-id=\"80eafd53-00e8-419f-b6c7-3708969013a8\">Benchmark results documented (latency p50/p95)</p></li></ul><h2 class=\"editor-heading-block\" data-id=\"ff8960b2-81b5-480b-af5e-7558749e2e01\">Infrastructure Target</h2><blockquote data-id=\"c282aba0-af5b-48ee-8696-c4b00324bd21\"><p class=\"editor-paragraph-block\" data-id=\"3f839b86-82b5-4c39-9b9e-609e597c5f3b\">\"having our full 2 cluster LocalAI peered in the network with one Plane and eventually 2 or even 3 fleets\"</p></blockquote>",
+          "updated_at": "2026-03-30T00:03:45.723275Z",
+          "sequence_id": 3
         },
         {
           "title": "Assess AICP codebase \u2014 what is wired, what is scaffolding",
           "priority": "high",
-          "state": "",
-          "assignees": []
+          "state": "Backlog",
+          "description_html": "<h2 class=\"editor-heading-block\" data-id=\"0128050e-35c1-48cc-8936-2e99cf53622e\">Context</h2><p class=\"editor-paragraph-block\" data-id=\"97199a95-ad8c-4a34-b197-3fa7e15aff99\">The <code class=\"rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200\" spellcheck=\"false\">aicp/</code> package has <strong>46 modules</strong> but we don't know which are functional end-to-end vs empty scaffolding.</p><h2 class=\"editor-heading-block\" data-id=\"a8ed563e-0598-4ba3-a47c-874db495227b\">What to Check</h2><table data-id=\"0e4855c2-db2d-448a-943a-78daca685671\"><tbody><tr style=\"\"><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"27be8a1b-2b47-4138-9547-bac0232e679f\">Module</p></th><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"771d724f-64a0-447a-a929-27bc281408d9\">File</p></th><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"ac8190da-0ef3-47e3-af8c-2ceb2334c938\">Check</p></th></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"f64be6e9-7716-4370-80b1-8b9c5ec71987\">Controller</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"abfd1dec-8f49-4234-a4a4-beb2f1c8eec6\"><code class=\"rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200\" spellcheck=\"false\">aicp/core/controller.py</code></p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"9353b1e1-1524-4f1a-8035-903ae706b411\">Does it route between backends?</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"ad0f51c6-9a47-488f-bb70-19f581965253\">Modes</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"02bb4580-fd9f-44ba-b748-a38e4a5420c9\"><code class=\"rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200\" spellcheck=\"false\">aicp/core/modes.py</code></p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"6198e224-1b24-473c-8075-e321ca3db2df\">Are Think/Edit/Act enforced?</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"8a2c77ee-3b5b-441b-8208-37504d6d7b1b\">Router</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"d9ecd73c-e386-4a3c-97c9-958d4b2999d7\"><code class=\"rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200\" spellcheck=\"false\">aicp/core/router.py</code></p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"32888d61-21f3-4a78-a966-f8560a67b07d\">Does it decide LocalAI vs Claude?</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"42e6d934-2264-47ea-aadc-7e8785bff90f\">Guardrails</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"a80b6d70-1ff6-464b-b201-c7b5779fb368\"><code class=\"rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200\" spellcheck=\"false\">aicp/guardrails/</code></p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"a48586f5-754f-4695-9385-f6ca53ccd790\">Are path protections active?</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"41195739-3cbb-4790-bc0c-4bdc021ceca6\">LocalAI Backend</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"bd1f1dd1-4f31-46a9-a9f6-28feba5334cc\"><code class=\"rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200\" spellcheck=\"false\">aicp/backends/localai.py</code></p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"a24b6bf5-873a-41d9-994a-5bcc5dcaf825\">Can it call localhost:8090?</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"e8207129-ae00-4e57-a72b-6aebf5025344\">Claude Backend</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"267694e9-b18c-42db-9afb-cae9ea3596fd\"><code class=\"rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200\" spellcheck=\"false\">aicp/backends/claude_code.py</code></p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"5ee29f89-6077-4673-a4b6-d1b772257ae4\">Does subprocess invocation work?</p></td></tr></tbody></table><h2 class=\"editor-heading-block\" data-id=\"6e74011c-f063-42db-9d74-f01bc0e02cb5\">Steps</h2><ol class=\"list-decimal pl-7 space-y-[--list-spacing-y] tight\" data-id=\"44273f43-7c62-4668-bc34-a82517855d0d\" data-tight=\"true\"><li class=\"not-prose space-y-2\" data-id=\"a84c658d-4416-464c-99d7-58444dbaab89\"><p class=\"editor-paragraph-block\" data-id=\"c530f8a5-2727-4c71-9d33-0e75da0d8252\">Run existing tests: <code class=\"rounded bg-custom-background-80 px-[6px] py-[1.5px] font-mono font-medium text-orange-500 border-[0.5px] border-custom-border-200\" spellcheck=\"false\">pytest tests/</code></p></li><li class=\"not-prose space-y-2\" data-id=\"8b48f403-764a-40ab-848a-78120e19b953\"><p class=\"editor-paragraph-block\" data-id=\"5db9cedc-ebf8-4f9b-a060-57a5633ff763\">Check each module above \u2014 document findings</p></li><li class=\"not-prose space-y-2\" data-id=\"484ff60f-0093-4cca-8ebf-029d0a8caee1\"><p class=\"editor-paragraph-block\" data-id=\"32f0a771-c05e-45e7-b16d-5b9b18154761\">Identify which modules are wired end-to-end vs dead code</p></li><li class=\"not-prose space-y-2\" data-id=\"0bab0335-802d-44cf-87e3-029e1791f433\"><p class=\"editor-paragraph-block\" data-id=\"648cacf5-5390-4972-8df3-69623fee3a65\">Post findings as a Plane Page under AICP project</p></li></ol><h2 class=\"editor-heading-block\" data-id=\"f2bc592e-5b24-4dc1-ba0c-4d66a16e2331\">Acceptance Criteria</h2><ul class=\"list-disc pl-7 space-y-[--list-spacing-y] tight\" data-id=\"3574a269-8f00-46ea-8590-8f2d3a7b3e12\" data-tight=\"true\"><li class=\"not-prose space-y-2\" data-id=\"8d728e66-7aad-46f4-a601-829deb024a4f\"><p class=\"editor-paragraph-block\" data-id=\"dad09da3-39fd-4310-9819-9eb1b6d50270\">Assessment document posted as Plane Page</p></li><li class=\"not-prose space-y-2\" data-id=\"0ca056cb-a9ac-417e-a3eb-36774d2c5a9f\"><p class=\"editor-paragraph-block\" data-id=\"003a108b-329d-4cbc-83d6-1a4e2d28fe8b\">Each module marked as: functional / scaffolding / broken</p></li><li class=\"not-prose space-y-2\" data-id=\"0faa28c3-592c-4112-9bd0-9b9e92b5ae56\"><p class=\"editor-paragraph-block\" data-id=\"12116c8b-10c0-47ee-822d-a52a058ef455\">Test results documented (pass count, failure reasons)</p></li><li class=\"not-prose space-y-2\" data-id=\"6af755c0-6264-4eb7-8e4b-29301f1f2c7b\"><p class=\"editor-paragraph-block\" data-id=\"52053369-64f7-42c8-b1c5-a7c062f4480e\">Recommendations for Stage 1 completion</p></li></ul><h2 class=\"editor-heading-block\" data-id=\"1ba31ea1-16b3-4147-b083-82c0b1b2af3c\">Links</h2><ul class=\"list-disc pl-7 space-y-[--list-spacing-y] tight\" data-id=\"7711b9ad-a09e-44fd-bcc5-72d7652175fe\" data-tight=\"true\"><li class=\"not-prose space-y-2\" data-id=\"e4c1978f-fd2f-4283-8d76-daf34f05b711\"><p class=\"editor-paragraph-block\" data-id=\"122f33cc-cc5c-4f50-aff7-be17a9802660\"><a target=\"_blank\" class=\"text-custom-primary-300 underline underline-offset-[3px] hover:text-custom-primary-500 transition-colors cursor-pointer\" href=\"https://github.com/cyberpunk042/devops-expert-local-ai\" rel=\"noopener noreferrer\">GitHub: AICP</a></p></li><li class=\"not-prose space-y-2\" data-id=\"a8c173ef-9392-4ef6-a122-f9604d0be41e\"><p class=\"editor-paragraph-block\" data-id=\"c9e5fe7f-187f-4193-aaf9-99346673652d\"><a target=\"_blank\" class=\"text-custom-primary-300 underline underline-offset-[3px] hover:text-custom-primary-500 transition-colors cursor-pointer\" href=\"https://github.com/cyberpunk042/devops-expert-local-ai/tree/main/aicp/core\" rel=\"noopener noreferrer\">aicp/core/</a></p></li></ul>",
+          "updated_at": "2026-03-30T00:03:51.401864Z",
+          "sequence_id": 2
         },
         {
           "title": "Welcome to AI Control Platform \u2014 LocalAI Independence Mission",
           "priority": "none",
-          "state": "",
-          "assignees": []
+          "state": "Backlog",
+          "description_html": "<h2>Mission</h2><p>Progressive LocalAI independence. Route work through LocalAI for everything that does not require Claude reasoning. Target: 80%+ Claude token reduction.</p><h2>Current State (2026-03-29)</h2><ul><li>LocalAI running: 9 models, hermes-3b benchmarked (1.2s warm)</li><li>OpenAI-compatible API verified</li><li>AICP package: 46 modules, 67 tests</li></ul><h2>Next Steps</h2><ul><li>Complete Stage 1: cluster verification + full benchmarks</li><li>See Modules tab for the 5 stages + Core Platform + Integrations</li><li>See Pages for architecture and strategic vision docs</li></ul>",
+          "updated_at": "2026-03-29T23:46:58.955833Z",
+          "sequence_id": 1
         }
       ],
       "issue_count": 4,
-      "label_count": 19,
       "state_names": [
         "Backlog",
         "Todo",

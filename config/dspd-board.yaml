@@ -247,7 +247,7 @@ starter_issues:
   labels:
   - mcp
   - iac
-  description_html: '<h2>Status: ✅ ALREADY BUILT</h2>
+  description_html: '<div><h2>Status: ✅ ALREADY BUILT</h2>
 
     <p>7 Plane MCP tools built during this session. This issue tracks verification.</p>
 
@@ -291,14 +291,14 @@ starter_issues:
 
     <li>fleet_plane_sync creates OCMC task from Plane issue</li>
 
-    </ol>'
+    </ol></div>'
 - title: Build Plane content rendering skill (M-PM08)
   type: Story
   priority: medium
   assignee: technical-writer@fleet.local
   labels:
   - docs
-  description_html: '<h2>Context</h2>
+  description_html: '<div><h2>Context</h2>
 
     <p>When agents create content in Plane, it must be <strong>properly formatted HTML</strong> — not plain text. Need a skill
     and/or utility for generating rich Plane content.</p>
@@ -333,4 +333,4 @@ starter_issues:
 
     <li>Fleet-plane skill: <code>.claude/skills/fleet-plane/SKILL.md</code></li>
 
-    </ul>'
+    </ul></div>'

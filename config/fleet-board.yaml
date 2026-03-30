@@ -346,7 +346,7 @@ starter_issues:
   assignee: fleet-ops@fleet.local
   labels:
   - mcp
-  description_html: '<h2>Context</h2>
+  description_html: '<div><h2>Context</h2>
 
     <p><code>fleet_chat</code> MCP tool is built but <strong>never tested with real agents</strong>. An agent needs to post
     to #fleet via fleet_chat and verify the message appears in IRC.</p>
@@ -358,7 +358,7 @@ starter_issues:
 
     <li>Agent calls <code>fleet_chat("Test message from fleet-ops", channel="#fleet")</code></li>
 
-    <li>Verify message appears in The Lounge IRC client (<a href="http://localhost:9000">localhost:9000</a>)</li>
+    <li>Verify message appears in The Lounge IRC client (<a href="http://localhost:9000" rel="noopener noreferrer">localhost:9000</a>)</li>
 
     <li>Test @mention routing: <code>fleet_chat("@architect please review", channel="#fleet")</code></li>
 
@@ -384,18 +384,18 @@ starter_issues:
 
     <ul>
 
-    <li>IRC: <a href="http://localhost:9000">The Lounge</a> (fleet/fleet)</li>
+    <li>IRC: <a href="http://localhost:9000" rel="noopener noreferrer">The Lounge</a> (fleet/fleet)</li>
 
     <li>Event store: <code>.fleet-events.jsonl</code></li>
 
-    </ul>'
+    </ul></div>'
 - title: Execute one real task through the full review chain
   type: Task
   priority: urgent
   assignee: fleet-ops@fleet.local
   labels:
   - infra
-  description_html: '<h2>Context</h2>
+  description_html: '<div><h2>Context</h2>
 
     <p><strong>No agent has completed a real task yet.</strong> The entire review chain is untested live:</p>
 
@@ -452,9 +452,10 @@ starter_issues:
 
     <ul>
 
-    <li><a href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/docs/milestones/STATUS-TRACKER.md">STATUS-TRACKER</a></li>
+    <li><a href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/docs/milestones/STATUS-TRACKER.md" rel="noopener
+    noreferrer">STATUS-TRACKER</a></li>
 
-    </ul>'
+    </ul></div>'
 - title: Build chain runner (M-SC02)
   type: Story
   priority: high
@@ -462,7 +463,7 @@ starter_issues:
   labels:
   - mcp
   - infra
-  description_html: '<h2>Status: ✅ ALREADY BUILT</h2>
+  description_html: '<div><h2>Status: ✅ ALREADY BUILT</h2>
 
     <p>The chain runner was built during this session. This issue tracks verification.</p>
 
@@ -511,8 +512,8 @@ starter_issues:
 
     <ul>
 
-    <li><a href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/fleet/core/chain_runner.py">chain_runner.py</a></li>
+    <li><a href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/fleet/core/chain_runner.py" rel="noopener noreferrer">chain_runner.py</a></li>
 
-    <li><a href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/fleet/core/event_chain.py">event_chain.py</a></li>
+    <li><a href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/fleet/core/event_chain.py" rel="noopener noreferrer">event_chain.py</a></li>
 
-    </ul>'
+    </ul></div>'

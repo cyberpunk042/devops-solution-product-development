@@ -258,7 +258,7 @@ starter_issues:
   assignee: accountability-generator@fleet.local
   labels:
   - docs
-  description_html: '<h2>Context</h2>
+  description_html: '<div><h2>Context</h2>
 
     <p>The NNRT Python project exists on GitHub but <strong>no one has assessed its current state</strong>.</p>
 
@@ -324,6 +324,7 @@ starter_issues:
 
     <ul>
 
-    <li><a href="https://github.com/cyberpunk042/Narrative-to-Neutral-Report-Transformer">GitHub: NNRT</a></li>
+    <li><a href="https://github.com/cyberpunk042/Narrative-to-Neutral-Report-Transformer" rel="noopener noreferrer">GitHub:
+    NNRT</a></li>
 
-    </ul>'
+    </ul></div>'

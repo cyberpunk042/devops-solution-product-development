@@ -321,6 +321,7 @@ projects:
 
 
       Missing: chain runner (M-SC02) to execute event chains from MCP tools.'
+    status: planned
   - name: MCP
     description: '13 MCP tools that agents call during sessions. The primary interface between agents and the fleet.
 
@@ -334,6 +335,7 @@ projects:
 
 
       Tools currently do individual API calls. Target: emit event chains (M-SC03) so one tool call publishes to all surfaces.'
+    status: planned
   - name: Agents
     description: 'Agent roles (primary + secondary), heartbeats (per-agent intervals 30-90m), lifecycle (ACTIVE→IDLE→SLEEPING→OFFLINE),
       behavioral security, SOUL.md identities.
@@ -344,8 +346,10 @@ projects:
 
 
       Agent identities are fleet-namespaced for multi-fleet: {prefix}-{role}.'
+    status: planned
   - name: Infrastructure
     description: Gateway, IRC (10 channels), ntfy (3 topics), setup scripts, Docker
+    status: planned
   - name: Autonomy
     description: 'Event chains (model built, runner missing M-SC02), routing engine (capability matching), self-healing (gateway
       restart in monitor daemon), stuck detection, config auto-push, agent command center (PRE→PROGRESS→POST lifecycle — not
@@ -357,8 +361,10 @@ projects:
 
       The chain system is the critical missing piece — chain builders exist for task_complete, alert, sprint_complete but
       nothing executes them. MCP tools bypass chains entirely.'
+    status: planned
   - name: Tests
     description: Unit tests, integration tests, verification scripts
+    status: planned
   cover_image: https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200
   logo_props:
     icon:
@@ -410,6 +416,7 @@ projects:
 
 
       Plane is OPTIONAL. When present, the IaC configures it fully. When absent, fleet works on OCMC alone.'
+    status: planned
   - name: Integration
     description: 'Fleet CLI (fleet plan create/list/sync/status), plane_client.py (typed async REST client), PM agent as the
       bridge between Plane and OCMC.
@@ -420,6 +427,7 @@ projects:
 
 
       Other agents interact with Plane only through task comments directed at PM.'
+    status: planned
   - name: Sync
     description: 'Bidirectional Plane ↔ OCMC sync. Human creates in Plane → PM evaluates → OCMC task created → agent works
       → completes → chain syncs back to Plane.
@@ -431,10 +439,12 @@ projects:
 
 
       Graceful degradation: if Plane is down, chains mark PLANE events as failed, fleet continues on OCMC.'
+    status: planned
   - name: Customization
     description: 'Webhooks (HMAC verified), Plane MCP server for PM, analytics, velocity tracking, burn-down
 
       '
+    status: planned
   cover_image: https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200
   logo_props:
     icon:
@@ -481,14 +491,19 @@ projects:
   modules:
   - name: Intake
     description: Document ingestion, format detection, preprocessing
+    status: planned
   - name: Structuring
     description: Report structuring, section detection, hierarchy extraction
+    status: planned
   - name: Mapping
     description: Narrative → neutral mapping engine, transformation rules
+    status: planned
   - name: Pressure
     description: Bias detection, pressure indicators, sentiment neutralization
+    status: planned
   - name: Persistence
     description: Storage, export formats, API, database
+    status: planned
   cover_image: https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=1200
   logo_props:
     icon:

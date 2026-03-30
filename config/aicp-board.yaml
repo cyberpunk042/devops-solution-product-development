@@ -477,8 +477,76 @@ starter_issues:
   assignee: architect@fleet.local
   labels:
   - strategic
-  description: The aicp/ package has 46 modules. Check which are functional end-to-end vs empty scaffolding. Run tests, check
-    controller, modes, guardrails.
+  description_html: '<h2>Context</h2>
+
+    <p>The <code>aicp/</code> package has <strong>46 modules</strong> but we don''t know which are functional end-to-end vs
+    empty scaffolding.</p>
+
+
+    <h2>What to Check</h2>
+
+    <table>
+
+    <thead><tr><th>Module</th><th>File</th><th>Check</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>Controller</td><td><code>aicp/core/controller.py</code></td><td>Does it route between backends?</td></tr>
+
+    <tr><td>Modes</td><td><code>aicp/core/modes.py</code></td><td>Are Think/Edit/Act enforced?</td></tr>
+
+    <tr><td>Router</td><td><code>aicp/core/router.py</code></td><td>Does it decide LocalAI vs Claude?</td></tr>
+
+    <tr><td>Guardrails</td><td><code>aicp/guardrails/</code></td><td>Are path protections active?</td></tr>
+
+    <tr><td>LocalAI Backend</td><td><code>aicp/backends/localai.py</code></td><td>Can it call localhost:8090?</td></tr>
+
+    <tr><td>Claude Backend</td><td><code>aicp/backends/claude_code.py</code></td><td>Does subprocess invocation work?</td></tr>
+
+    </tbody>
+
+    </table>
+
+
+    <h2>Steps</h2>
+
+    <ol>
+
+    <li>Run existing tests: <code>pytest tests/</code></li>
+
+    <li>Check each module above — document findings</li>
+
+    <li>Identify which modules are wired end-to-end vs dead code</li>
+
+    <li>Post findings as a Plane Page under AICP project</li>
+
+    </ol>
+
+
+    <h2>Acceptance Criteria</h2>
+
+    <ul>
+
+    <li>Assessment document posted as Plane Page</li>
+
+    <li>Each module marked as: functional / scaffolding / broken</li>
+
+    <li>Test results documented (pass count, failure reasons)</li>
+
+    <li>Recommendations for Stage 1 completion</li>
+
+    </ul>
+
+
+    <h2>Links</h2>
+
+    <ul>
+
+    <li><a href="https://github.com/cyberpunk042/devops-expert-local-ai">GitHub: AICP</a></li>
+
+    <li><a href="https://github.com/cyberpunk042/devops-expert-local-ai/tree/main/aicp/core">aicp/core/</a></li>
+
+    </ul>'
 - title: Complete LocalAI cluster verification — Machine 2 setup
   type: Task
   priority: high
@@ -486,7 +554,64 @@ starter_issues:
   labels:
   - infra
   - localai
-  description: LocalAI verified on Machine 1. Machine 2 needs setup + cross-machine inference test.
+  description_html: '<h2>Context</h2>
+
+    <p>LocalAI verified on <strong>Machine 1</strong>:</p>
+
+    <table>
+
+    <thead><tr><th>Model</th><th>Cold Start</th><th>Warm</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>hermes-3b (3B)</td><td>~10s</td><td><strong>~1.2s</strong></td></tr>
+
+    <tr><td>hermes (7B)</td><td>~80s</td><td>~1s</td></tr>
+
+    </tbody>
+
+    </table>
+
+    <p>Machine 2 needs the same setup and cross-machine inference verification.</p>
+
+
+    <h2>Steps</h2>
+
+    <ol>
+
+    <li>Install LocalAI on Machine 2 (Docker + GPU)</li>
+
+    <li>Copy model configs from Machine 1</li>
+
+    <li>Verify hermes-3b loads and responds</li>
+
+    <li>Test cross-machine inference: Machine 1 → Machine 2 API call</li>
+
+    <li>Benchmark and document results</li>
+
+    </ol>
+
+
+    <h2>Acceptance Criteria</h2>
+
+    <ul>
+
+    <li>LocalAI running on Machine 2 with hermes-3b</li>
+
+    <li>Cross-machine inference works (Machine 1 calls Machine 2 API)</li>
+
+    <li>Benchmark results documented (latency p50/p95)</li>
+
+    </ul>
+
+
+    <h2>Infrastructure Target</h2>
+
+    <blockquote>
+
+    <p>"having our full 2 cluster LocalAI peered in the network with one Plane and eventually 2 or even 3 fleets"</p>
+
+    </blockquote>'
 - title: Benchmark all target operations on LocalAI
   type: Spike
   priority: medium
@@ -494,4 +619,60 @@ starter_issues:
   labels:
   - localai
   - test
-  description: 'Full benchmarks: simple completion, structured JSON, code completion, multi-turn.'
+  description_html: '<h2>Context</h2>
+
+    <p>hermes-3b benchmarked for simple completion (1.2s warm). Need full benchmarks across <strong>all operations</strong>
+    the inference router will handle.</p>
+
+
+    <h2>Operations to Benchmark</h2>
+
+    <table>
+
+    <thead><tr><th>Operation</th><th>Model</th><th>Expected Latency</th><th>Quality Gate</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>Simple completion</td><td>hermes-3b</td><td>&lt;2s</td><td>Follows instructions</td></tr>
+
+    <tr><td>Structured JSON output</td><td>hermes-3b</td><td>&lt;3s</td><td>Valid JSON, correct schema</td></tr>
+
+    <tr><td>HEARTBEAT_OK response</td><td>hermes-3b</td><td>&lt;2s</td><td>Correct format, no hallucination</td></tr>
+
+    <tr><td>Code completion</td><td>codellama</td><td>&lt;5s</td><td>Syntactically valid code</td></tr>
+
+    <tr><td>Multi-turn conversation</td><td>hermes</td><td>&lt;10s</td><td>Context retention</td></tr>
+
+    <tr><td>Tool use / function calling</td><td>hermes</td><td>&lt;5s</td><td>Correct tool selection</td></tr>
+
+    </tbody>
+
+    </table>
+
+
+    <h2>Methodology</h2>
+
+    <ol>
+
+    <li>Run each operation 10 times</li>
+
+    <li>Record: latency (p50, p95, p99), quality score (0-100)</li>
+
+    <li>Compare to Claude for same operations</li>
+
+    <li>Document results as Plane Page</li>
+
+    </ol>
+
+
+    <h2>Acceptance Criteria</h2>
+
+    <ul>
+
+    <li>All 6 operations benchmarked with 10+ runs each</li>
+
+    <li>Results documented with latency + quality comparison table</li>
+
+    <li>Recommendation: which operations are safe to offload to LocalAI</li>
+
+    </ul>'

@@ -247,11 +247,90 @@ starter_issues:
   labels:
   - mcp
   - iac
-  description: PM cannot interact with Plane from sessions. Need fleet_plane_list_sprint, fleet_plane_sync, etc.
+  description_html: '<h2>Status: ✅ ALREADY BUILT</h2>
+
+    <p>7 Plane MCP tools built during this session. This issue tracks verification.</p>
+
+
+    <h2>Tools Built</h2>
+
+    <table>
+
+    <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
+
+    <tbody>
+
+    <tr><td><code>fleet_plane_status</code></td><td>Project overview with sprint</td></tr>
+
+    <tr><td><code>fleet_plane_sprint</code></td><td>Current cycle details</td></tr>
+
+    <tr><td><code>fleet_plane_sync</code></td><td>Bidirectional Plane ↔ OCMC sync</td></tr>
+
+    <tr><td><code>fleet_plane_create_issue</code></td><td>Create issue with labels, module</td></tr>
+
+    <tr><td><code>fleet_plane_comment</code></td><td>Post comment with @mentions</td></tr>
+
+    <tr><td><code>fleet_plane_update_issue</code></td><td>Change state, priority</td></tr>
+
+    <tr><td><code>fleet_plane_list_modules</code></td><td>List epics with status</td></tr>
+
+    </tbody>
+
+    </table>
+
+
+    <h2>Verification Needed</h2>
+
+    <ol>
+
+    <li>PM agent calls fleet_plane_status("AICP") from heartbeat</li>
+
+    <li>PM creates issue via fleet_plane_create_issue</li>
+
+    <li>PM posts comment with @mention via fleet_plane_comment</li>
+
+    <li>fleet_plane_sync creates OCMC task from Plane issue</li>
+
+    </ol>'
 - title: Build Plane content rendering skill (M-PM08)
   type: Story
   priority: medium
   assignee: technical-writer@fleet.local
   labels:
   - docs
-  description: Skill/utility for generating rich HTML content in Plane. Templates for issues, sprints, pages, comments.
+  description_html: '<h2>Context</h2>
+
+    <p>When agents create content in Plane, it must be <strong>properly formatted HTML</strong> — not plain text. Need a skill
+    and/or utility for generating rich Plane content.</p>
+
+
+    <h2>Templates Needed</h2>
+
+    <table>
+
+    <thead><tr><th>Template</th><th>Used For</th><th>Elements</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>Issue description</td><td>Creating work items</td><td>Context, steps, acceptance criteria, links</td></tr>
+
+    <tr><td>Sprint report</td><td>Cycle completion</td><td>Velocity, burn-down, highlights, blockers</td></tr>
+
+    <tr><td>Page content</td><td>Architecture, requirements</td><td>Tables, diagrams, cross-references</td></tr>
+
+    <tr><td>Comment</td><td>Progress, review, decision</td><td>Status, summary, next steps</td></tr>
+
+    </tbody>
+
+    </table>
+
+
+    <h2>References</h2>
+
+    <ul>
+
+    <li>Existing display module: <code>fleet/core/event_display.py</code></li>
+
+    <li>Fleet-plane skill: <code>.claude/skills/fleet-plane/SKILL.md</code></li>
+
+    </ul>'

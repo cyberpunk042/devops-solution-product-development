@@ -258,4 +258,72 @@ starter_issues:
   assignee: accountability-generator@fleet.local
   labels:
   - docs
-  description: 'Assess current state: modules, tests, pipeline passes, NLP libraries. Post findings as Plane Page.'
+  description_html: '<h2>Context</h2>
+
+    <p>The NNRT Python project exists on GitHub but <strong>no one has assessed its current state</strong>.</p>
+
+
+    <h2>Questions to Answer</h2>
+
+    <table>
+
+    <thead><tr><th>#</th><th>Question</th><th>Why It Matters</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>1</td><td>What modules exist?</td><td>Know what''s built vs scaffolding</td></tr>
+
+    <tr><td>2</td><td>Which pipeline passes work?</td><td>Intake → Structuring → Mapping → Pressure → Persistence</td></tr>
+
+    <tr><td>3</td><td>Do tests pass?</td><td>Quality baseline</td></tr>
+
+    <tr><td>4</td><td>What NLP models/libraries?</td><td>Dependency mapping</td></tr>
+
+    <tr><td>5</td><td>End-to-end pipeline works?</td><td>Can we demo it?</td></tr>
+
+    <tr><td>6</td><td>What input formats?</td><td>PDF, DOCX, plain text?</td></tr>
+
+    <tr><td>7</td><td>Dependencies outdated?</td><td>Security + compatibility</td></tr>
+
+    </tbody>
+
+    </table>
+
+
+    <h2>Steps</h2>
+
+    <ol>
+
+    <li>Clone: <code>git clone https://github.com/cyberpunk042/Narrative-to-Neutral-Report-Transformer</code></li>
+
+    <li>Run tests: <code>pytest</code></li>
+
+    <li>Read source code — document each module</li>
+
+    <li>Try end-to-end with a sample document</li>
+
+    <li>Post assessment as Plane Page</li>
+
+    </ol>
+
+
+    <h2>Acceptance Criteria</h2>
+
+    <ul>
+
+    <li>Assessment posted as NNRT Page with findings table</li>
+
+    <li>Gap analysis: what''s built vs what''s needed</li>
+
+    <li>Sprint 2 plan drafted with task breakdown</li>
+
+    </ul>
+
+
+    <h2>Links</h2>
+
+    <ul>
+
+    <li><a href="https://github.com/cyberpunk042/Narrative-to-Neutral-Report-Transformer">GitHub: NNRT</a></li>
+
+    </ul>'

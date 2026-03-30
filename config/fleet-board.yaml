@@ -346,14 +346,115 @@ starter_issues:
   assignee: fleet-ops@fleet.local
   labels:
   - mcp
-  description: 'fleet_chat built but never tested live. Agent posts to #fleet, verify in IRC.'
+  description_html: '<h2>Context</h2>
+
+    <p><code>fleet_chat</code> MCP tool is built but <strong>never tested with real agents</strong>. An agent needs to post
+    to #fleet via fleet_chat and verify the message appears in IRC.</p>
+
+
+    <h2>Steps</h2>
+
+    <ol>
+
+    <li>Agent calls <code>fleet_chat("Test message from fleet-ops", channel="#fleet")</code></li>
+
+    <li>Verify message appears in The Lounge IRC client (<a href="http://localhost:9000">localhost:9000</a>)</li>
+
+    <li>Test @mention routing: <code>fleet_chat("@architect please review", channel="#fleet")</code></li>
+
+    <li>Verify architect''s event feed shows the mention on next heartbeat</li>
+
+    </ol>
+
+
+    <h2>Acceptance Criteria</h2>
+
+    <ul>
+
+    <li>Message appears in IRC within 5 seconds</li>
+
+    <li>@mention creates fleet.chat.mention event in event store</li>
+
+    <li>Mentioned agent sees event in fleet_read_context feed</li>
+
+    </ul>
+
+
+    <h2>Links</h2>
+
+    <ul>
+
+    <li>IRC: <a href="http://localhost:9000">The Lounge</a> (fleet/fleet)</li>
+
+    <li>Event store: <code>.fleet-events.jsonl</code></li>
+
+    </ul>'
 - title: Execute one real task through the full review chain
   type: Task
   priority: urgent
   assignee: fleet-ops@fleet.local
   labels:
   - infra
-  description: 'No agent has completed a real task. Test full chain: dispatch → work → PR → review → done.'
+  description_html: '<h2>Context</h2>
+
+    <p><strong>No agent has completed a real task yet.</strong> The entire review chain is untested live:</p>
+
+    <pre><code>dispatch → accept → work → commit → complete → PR → review → approve → done</code></pre>
+
+
+    <h2>Steps</h2>
+
+    <ol>
+
+    <li>Create a simple task (e.g., "add a comment to a config file")</li>
+
+    <li>Assign to software-engineer</li>
+
+    <li>Dispatch via orchestrator (or manual <code>fleet_task_create</code>)</li>
+
+    <li>software-engineer accepts (fleet_task_accept), works, commits (fleet_commit), completes (fleet_task_complete)</li>
+
+    <li>ChainRunner fires: MC update, PR creation, IRC notification, board memory</li>
+
+    <li>fleet-ops reviews with reasoning (fleet_approve)</li>
+
+    <li>Task moves to done</li>
+
+    </ol>
+
+
+    <h2>What to Verify</h2>
+
+    <table>
+
+    <thead><tr><th>Step</th><th>Surface</th><th>Expected</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>Complete</td><td>MC</td><td>Task status → review, approval created</td></tr>
+
+    <tr><td>Complete</td><td>GitHub</td><td>Branch pushed, PR created</td></tr>
+
+    <tr><td>Complete</td><td>IRC</td><td>#fleet + #reviews notifications</td></tr>
+
+    <tr><td>Complete</td><td>Events</td><td>fleet.task.completed in event store</td></tr>
+
+    <tr><td>Approve</td><td>MC</td><td>Approval status → approved</td></tr>
+
+    <tr><td>Approve</td><td>Events</td><td>fleet.task.approved in event store</td></tr>
+
+    </tbody>
+
+    </table>
+
+
+    <h2>Links</h2>
+
+    <ul>
+
+    <li><a href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/docs/milestones/STATUS-TRACKER.md">STATUS-TRACKER</a></li>
+
+    </ul>'
 - title: Build chain runner (M-SC02)
   type: Story
   priority: high
@@ -361,4 +462,57 @@ starter_issues:
   labels:
   - mcp
   - infra
-  description: Event chain builders exist but nothing executes them. Build fleet/core/chain_runner.py.
+  description_html: '<h2>Status: ✅ ALREADY BUILT</h2>
+
+    <p>The chain runner was built during this session. This issue tracks verification.</p>
+
+
+    <h2>What Was Built</h2>
+
+    <table>
+
+    <thead><tr><th>Component</th><th>File</th><th>Tests</th></tr></thead>
+
+    <tbody>
+
+    <tr><td>Chain Runner</td><td><code>fleet/core/chain_runner.py</code></td><td>9 tests</td></tr>
+
+    <tr><td>PLANE Surface</td><td><code>fleet/core/event_chain.py</code></td><td>—</td></tr>
+
+    <tr><td>Event Store</td><td><code>fleet/core/events.py</code></td><td>15 tests</td></tr>
+
+    <tr><td>Event Router</td><td><code>fleet/core/event_router.py</code></td><td>16 tests</td></tr>
+
+    <tr><td>Adaptive Display</td><td><code>fleet/core/event_display.py</code></td><td>—</td></tr>
+
+    <tr><td>Cross-References</td><td><code>fleet/core/cross_refs.py</code></td><td>—</td></tr>
+
+    </tbody>
+
+    </table>
+
+
+    <h2>Verification Needed</h2>
+
+    <ol>
+
+    <li>fleet_task_complete uses ChainRunner (wired)</li>
+
+    <li>Chain fires IRC + board memory + Plane events</li>
+
+    <li>Cross-references auto-generated</li>
+
+    <li>Event store records chain execution</li>
+
+    </ol>
+
+
+    <h2>Links</h2>
+
+    <ul>
+
+    <li><a href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/fleet/core/chain_runner.py">chain_runner.py</a></li>
+
+    <li><a href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/fleet/core/event_chain.py">event_chain.py</a></li>
+
+    </ul>'

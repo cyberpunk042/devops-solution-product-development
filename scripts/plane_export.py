@@ -253,7 +253,7 @@ def main():
              "ws = Workspace.objects.get(slug='fleet')\n"
              "data = {}\n"
              "# Stickies\n"
-             "data['stickies'] = [{'name': s.name, 'description': s.description or '', 'color': s.color or '', 'user': s.created_by.email if s.created_by else ''} for s in Sticky.objects.filter(workspace=ws)]\n"
+             "data['stickies'] = [{'name': s.name or '', 'description_html': s.description_html or '', 'description_stripped': s.description_stripped or '', 'background_color': s.background_color or '', 'sort_order': s.sort_order, 'owner': s.owner.email if s.owner else ''} for s in Sticky.objects.filter(workspace=ws)]\n"
              "# Workspace links\n"
              "data['workspace_links'] = [{'title': l.title, 'url': l.url} for l in WorkspaceUserLink.objects.filter(workspace=ws)]\n"
              "# Home preferences\n"

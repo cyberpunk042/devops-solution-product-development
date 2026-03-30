@@ -1,5 +1,5 @@
 {
-  "exported_at": "2026-03-30T01:34:03.218225Z",
+  "exported_at": "2026-03-30T01:35:45.080610Z",
   "projects": {
     "NNRT": {
       "name": "Narrative-to-Neutral Report Transformer",
@@ -362,16 +362,20 @@
   },
   "stickies": [
     {
-      "name": null,
-      "description": "",
-      "color": "",
-      "user": "admin@fleet.local"
+      "name": "",
+      "description_html": "<p class=\"editor-paragraph-block\" data-id=\"ec948bca-c82e-4966-9fd5-97a8dcb580ee\">new sticky</p>",
+      "description_stripped": "new sticky",
+      "background_color": "dark-blue",
+      "sort_order": 75535.0,
+      "owner": "admin@fleet.local"
     },
     {
-      "name": null,
-      "description": "",
-      "color": "",
-      "user": "admin@fleet.local"
+      "name": "",
+      "description_html": "<p class=\"editor-paragraph-block\" data-id=\"e53ba11f-d074-489e-9dc1-3de682a23aa5\">Testo5</p>",
+      "description_stripped": "Testo5",
+      "background_color": "orange",
+      "sort_order": 65535.0,
+      "owner": "admin@fleet.local"
     }
   ],
   "workspace_links": [

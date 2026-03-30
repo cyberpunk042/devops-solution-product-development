@@ -1,0 +1,146 @@
+{
+  "exported_at": "2026-03-30T00:09:43.734579Z",
+  "projects": {
+    "NNRT": {
+      "name": "Narrative-to-Neutral Report Transformer",
+      "emoji": "\ud83d\udcc4",
+      "description": "Narrative-to-Neutral Report Transformer. Converts biased narrative reports into neutral, structured format. Python NLP pipeline with multiple processing passes.",
+      "modules": 5,
+      "module_names": [
+        "Persistence",
+        "Pressure",
+        "Mapping",
+        "Structuring",
+        "Intake"
+      ],
+      "module_status": {
+        "Persistence": "planned",
+        "Pressure": "planned",
+        "Mapping": "planned",
+        "Structuring": "planned",
+        "Intake": "planned"
+      },
+      "cycles": 1,
+      "cycle_names": [
+        "NNRT Sprint 1: Assessment"
+      ],
+      "issues": 2,
+      "labels": 19,
+      "states": [
+        "Backlog",
+        "Todo",
+        "In Progress",
+        "Done",
+        "Cancelled",
+        "Spec Required",
+        "Spec Ready",
+        "Review"
+      ]
+    },
+    "DSPD": {
+      "name": "DevOps Solution Product Development",
+      "emoji": "\ud83d\udccb",
+      "description": "DevOps Solution Product Development \u2014 project management surface for the fleet built on self-hosted Plane. The PM agent bridges Plane (sprints, epics, analytics) \u2194 OCMC (agent dispatch).",
+      "modules": 4,
+      "module_names": [
+        "Customization",
+        "Sync",
+        "Integration",
+        "Setup"
+      ],
+      "module_status": {
+        "Customization": "planned",
+        "Sync": "planned",
+        "Integration": "planned",
+        "Setup": "planned"
+      },
+      "cycles": 1,
+      "cycle_names": [
+        "DSPD Sprint 3: Complete IaC"
+      ],
+      "issues": 3,
+      "labels": 19,
+      "states": [
+        "Backlog",
+        "Todo",
+        "In Progress",
+        "Done",
+        "Cancelled",
+        "In Review"
+      ]
+    },
+    "OF": {
+      "name": "OpenClaw Fleet",
+      "emoji": "\ud83e\udd9e",
+      "description": "Fleet operations, MCP tools, orchestrator, agents. 10 autonomous AI agents managed through OpenClaw gateway and Mission Control. Standards, skills, review chains, IRC channels, budget monitoring.",
+      "modules": 6,
+      "module_names": [
+        "Tests",
+        "Autonomy",
+        "Infrastructure",
+        "Agents",
+        "MCP",
+        "Core"
+      ],
+      "module_status": {
+        "Tests": "planned",
+        "Autonomy": "planned",
+        "Infrastructure": "planned",
+        "Agents": "planned",
+        "MCP": "planned",
+        "Core": "planned"
+      },
+      "cycles": 0,
+      "cycle_names": [],
+      "issues": 4,
+      "labels": 19,
+      "states": [
+        "Backlog",
+        "Todo",
+        "In Progress",
+        "Done",
+        "Cancelled",
+        "Dispatched",
+        "In Review"
+      ]
+    },
+    "AICP": {
+      "name": "AI Control Platform",
+      "emoji": "\ud83e\udd16",
+      "description": "AI Control Platform \u2014 personal AI control workspace orchestrating LocalAI and Claude Code through Think/Edit/Act modes.\nPRIMARY MISSION: Progressive LocalAI independence. Route work through LocalAI fo",
+      "modules": 7,
+      "module_names": [
+        "Integrations",
+        "Core Platform",
+        "Stage 5: Near-Independent Operation",
+        "Stage 4: Reliability and Failover",
+        "Stage 3: Progressive Offload",
+        "Stage 2: Route Simple Operations to LocalAI",
+        "Stage 1: Make LocalAI Functional"
+      ],
+      "module_status": {
+        "Integrations": "planned",
+        "Core Platform": "planned",
+        "Stage 5: Near-Independent Operation": "planned",
+        "Stage 4: Reliability and Failover": "planned",
+        "Stage 3: Progressive Offload": "planned",
+        "Stage 2: Route Simple Operations to LocalAI": "planned",
+        "Stage 1: Make LocalAI Functional": "planned"
+      },
+      "cycles": 1,
+      "cycle_names": [
+        "AICP Sprint 1: Assessment + Foundation"
+      ],
+      "issues": 4,
+      "labels": 19,
+      "states": [
+        "Backlog",
+        "Todo",
+        "In Progress",
+        "Done",
+        "Cancelled",
+        "In Review"
+      ]
+    }
+  }
+}

@@ -395,11 +395,12 @@ starter_issues:
   assignee: fleet-ops@fleet.local
   labels:
   - infra
-  description_html: '<div><span class="fleet-data" data-type="artifact" style="display:none">{"type":"analysis","title":"test"}</span>
-
-    <h2>Visible Content</h2>
-
-    <p>This is the visible part.</p></div>'
+  description_html: <p class="editor-paragraph-block" data-id="b92b4200-c679-4977-9838-8118f7f4c914"><span>Execute one real
+    task end-to-end through dispatch, work, PR, review, and done</span></p><blockquote data-id="30a1a08e-7a20-41ee-962a-02631920292e"><p
+    class="editor-paragraph-block" data-id="d25c7fea-85ec-4d25-8765-5040730b4886"><strong>Verbatim Requirement (PO)</strong><br>Execute
+    one real task end-to-end through dispatch, work, PR, review, and done </p></blockquote><h2 class="editor-heading-block"
+    data-id="1b20d970-0b4f-4470-818a-f07a25918532">Context</h2><p class="editor-paragraph-block" data-id="3330dd2d-89b0-4476-a61d-720243a7345b">Test
+    description</p>
 - title: Build chain runner (M-SC02)
   type: Story
   priority: high

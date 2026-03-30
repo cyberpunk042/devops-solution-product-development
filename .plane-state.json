@@ -1,5 +1,5 @@
 {
-  "exported_at": "2026-03-30T21:57:12.752002Z",
+  "exported_at": "2026-03-30T22:02:25.481114Z",
   "projects": {
     "NNRT": {
       "name": "Narrative-to-Neutral Report Transformer",
@@ -222,7 +222,7 @@
           "priority": "high",
           "state": "Backlog",
           "description_html": "<div><h2>Status: \u2705 ALREADY BUILT</h2>\n<p>The chain runner was built during this session. This issue tracks verification.</p>\n\n<h2>What Was Built</h2>\n<table>\n<thead><tr><th>Component</th><th>File</th><th>Tests</th></tr></thead>\n<tbody>\n<tr><td>Chain Runner</td><td><code>fleet/core/chain_runner.py</code></td><td>9 tests</td></tr>\n<tr><td>PLANE Surface</td><td><code>fleet/core/event_chain.py</code></td><td>\u2014</td></tr>\n<tr><td>Event Store</td><td><code>fleet/core/events.py</code></td><td>15 tests</td></tr>\n<tr><td>Event Router</td><td><code>fleet/core/event_router.py</code></td><td>16 tests</td></tr>\n<tr><td>Adaptive Display</td><td><code>fleet/core/event_display.py</code></td><td>\u2014</td></tr>\n<tr><td>Cross-References</td><td><code>fleet/core/cross_refs.py</code></td><td>\u2014</td></tr>\n</tbody>\n</table>\n\n<h2>Verification Needed</h2>\n<ol>\n<li>fleet_task_complete uses ChainRunner (wired)</li>\n<li>Chain fires IRC + board memory + Plane events</li>\n<li>Cross-references auto-generated</li>\n<li>Event store records chain execution</li>\n</ol>\n\n<h2>Links</h2>\n<ul>\n<li><a href=\"https://github.com/cyberpunk042/openclaw-fleet/blob/main/fleet/core/chain_runner.py\" rel=\"noopener noreferrer\">chain_runner.py</a></li>\n<li><a href=\"https://github.com/cyberpunk042/openclaw-fleet/blob/main/fleet/core/event_chain.py\" rel=\"noopener noreferrer\">event_chain.py</a></li>\n</ul></div>",
-          "updated_at": "2026-03-30T00:02:41.290708Z",
+          "updated_at": "2026-03-30T21:59:35.130866Z",
           "sequence_id": 4
         },
         {
@@ -246,7 +246,7 @@
           "priority": "none",
           "state": "Backlog",
           "description_html": "<div><span class=\"fleet-verbatim\" style=\"display:none\">Execute one real task through dispatch, work, PR, review, done</span>\n<blockquote><strong>Verbatim Requirement (PO)</strong><br>\nExecute one real task through dispatch, work, PR, review, done\n</blockquote>\n<h2>Fleet Status</h2><p>10 agents online. Gateway running with self-healing. Daemons cycling. Communication verified (8/8 checks). 341 tests passing.</p><h2>Known Gaps</h2><ul><li>Chain runner not built (MCP tools bypass chains)</li><li>No Plane MCP tools (PM cannot access Plane from sessions)</li><li>29 autonomy milestones NOT STARTED</li><li>No agent has completed a real task yet</li></ul><h2>Next Steps</h2><ul><li>Validate one real task through the full review chain</li><li>See Modules for Core, MCP, Agents, Infrastructure, Autonomy, Tests</li></ul></div>",
-          "updated_at": "2026-03-30T21:53:27.758533Z",
+          "updated_at": "2026-03-30T21:57:40.663176Z",
           "sequence_id": 1
         }
       ],

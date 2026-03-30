@@ -133,11 +133,29 @@ def main():
                 }
                 for i in issue_list
             ],
+            "issue_comments": [],
             "issue_count": len(issue_list),
             "state_names": [s["name"] for s in states_list],
         }
 
-        print(f"  {ident}: {name} — {len(mods)} modules, {len(cycles)} cycles, {len(issue_list)} issues")
+        # Fetch comments for each issue (limited to avoid rate limits)
+        all_comments = []
+        for issue in issue_list[:10]:  # Max 10 issues per project
+            try:
+                comments = api_get(url, token, ws, f"/projects/{pid}/issues/{issue['id']}/comments/")
+                comment_list = comments.get("results", comments) if isinstance(comments, dict) else comments
+                for c in comment_list:
+                    all_comments.append({
+                        "issue_title": issue.get("name", "")[:50],
+                        "comment_html": c.get("comment_html", ""),
+                        "created_at": c.get("created_at", ""),
+                        "actor": c.get("actor_detail", {}).get("display_name", "") if isinstance(c.get("actor_detail"), dict) else "",
+                    })
+            except Exception:
+                pass
+        state["projects"][ident]["issue_comments"] = all_comments
+
+        print(f"  {ident}: {name} — {len(mods)} modules, {len(cycles)} cycles, {len(issue_list)} issues, {len(all_comments)} comments")
 
     # ── Write state file ──
     state_file = project_dir / ".plane-state.json"

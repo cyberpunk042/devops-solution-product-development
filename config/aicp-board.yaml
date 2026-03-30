@@ -198,14 +198,12 @@ pages:
     class="not-prose space-y-2"><p class="editor-paragraph-block">Think/Edit/Act modes defined but not enforced end-to-end</p></li><li
     class="not-prose space-y-2"><p class="editor-paragraph-block">No LocalAI → Claude fallback logic</p></li><li class="not-prose
     space-y-2"><p class="editor-paragraph-block">Cluster verification pending (Machine 2)</p></li></ul><p class="editor-paragraph-block"></p><p
-    class="editor-paragraph-block">pipossss</p><p class="editor-paragraph-block">papappa</p><p class="editor-paragraph-block">testv2again</p><p
-    class="editor-paragraph-block">testv3again</p><p class="editor-paragraph-block">testv3</p><p class="editor-paragraph-block">testv3</p><p
-    class="editor-paragraph-block">testv3</p><p class="editor-paragraph-block">testv3</p><h2 class="editor-heading-block">Links</h2><ul
-    class="list-disc pl-7 space-y-[--list-spacing-y]"><li class="not-prose space-y-2"><p class="editor-paragraph-block"><a
-    target="_blank" class="text-custom-primary-300 underline underline-offset-[3px] hover:text-custom-primary-500 transition-colors
-    cursor-pointer" href="https://github.com/cyberpunk042/devops-expert-local-ai" rel="noopener noreferrer">GitHub Repository</a></p></li><li
+    class="editor-paragraph-block">test4</p><h2 class="editor-heading-block">Links</h2><ul class="list-disc pl-7 space-y-[--list-spacing-y]"><li
     class="not-prose space-y-2"><p class="editor-paragraph-block"><a target="_blank" class="text-custom-primary-300 underline
-    underline-offset-[3px] hover:text-custom-primary-500 transition-colors cursor-pointer" href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/docs/milestones/active/strategic-vision-localai-independence.md"
+    underline-offset-[3px] hover:text-custom-primary-500 transition-colors cursor-pointer" href="https://github.com/cyberpunk042/devops-expert-local-ai"
+    rel="noopener noreferrer">GitHub Repository</a></p></li><li class="not-prose space-y-2"><p class="editor-paragraph-block"><a
+    target="_blank" class="text-custom-primary-300 underline underline-offset-[3px] hover:text-custom-primary-500 transition-colors
+    cursor-pointer" href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/docs/milestones/active/strategic-vision-localai-independence.md"
     rel="noopener noreferrer">Strategic Vision</a></p></li></ul>'
 epic_details:
   'Stage 1: Make LocalAI Functional':

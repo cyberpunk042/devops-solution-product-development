@@ -1,5 +1,5 @@
 {
-  "exported_at": "2026-03-30T01:16:05.086753Z",
+  "exported_at": "2026-03-30T01:24:31.124988Z",
   "projects": {
     "NNRT": {
       "name": "Narrative-to-Neutral Report Transformer",
@@ -360,6 +360,61 @@
       ]
     }
   },
+  "stickies": [
+    {
+      "name": null,
+      "description": "",
+      "color": "",
+      "user": "admin@fleet.local"
+    }
+  ],
+  "workspace_links": [
+    {
+      "title": "LocalAI",
+      "url": "http://localhost:8090"
+    },
+    {
+      "title": "Fleet IRC (The Lounge)",
+      "url": "http://localhost:9000"
+    },
+    {
+      "title": "Mission Control",
+      "url": "http://localhost:3000"
+    },
+    {
+      "title": "GitHub: NNRT",
+      "url": "https://github.com/cyberpunk042/Narrative-to-Neutral-Report-Transformer"
+    },
+    {
+      "title": "GitHub: DSPD",
+      "url": "https://github.com/cyberpunk042/devops-solution-product-development"
+    },
+    {
+      "title": "GitHub: AICP",
+      "url": "https://github.com/cyberpunk042/devops-expert-local-ai"
+    },
+    {
+      "title": "GitHub: Fleet",
+      "url": "https://github.com/cyberpunk042/openclaw-fleet"
+    }
+  ],
+  "home_preferences": [
+    {
+      "key": "my_stickies",
+      "is_enabled": true,
+      "config": {}
+    },
+    {
+      "key": "recents",
+      "is_enabled": true,
+      "config": {}
+    },
+    {
+      "key": "quick_links",
+      "is_enabled": true,
+      "config": {}
+    }
+  ],
   "pages": [
     {
       "project": "NNRT",

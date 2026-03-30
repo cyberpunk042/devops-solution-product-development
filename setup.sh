@@ -263,6 +263,8 @@ case "$CMD" in
     validate)  cmd_validate ;;
     upgrade)   cmd_upgrade ;;
     export)    cmd_export ;;
+    backup)    bold "Backup"; bash "${SCRIPT_DIR}/scripts/plane-backup.sh" ;;
+    restore)   bold "Restore"; bash "${SCRIPT_DIR}/scripts/plane-restore.sh" "${2:-}" ;;
     uninstall) cmd_uninstall ;;
     help|--help|-h) cmd_help ;;
     *) die "Unknown command: $CMD — run ./setup.sh help" ;;

@@ -239,6 +239,46 @@ def main():
             print(f"{file_prefix}-board.yaml: {board_changes} changes")
             config_changes += board_changes
 
+    # ── Export stickies, preferences, and comments via Docker ORM ──
+    try:
+        import subprocess
+        compose_project = os.environ.get("COMPOSE_PROJECT", "dspd-plane")
+        api_container = f"{compose_project}-api-1"
+
+        extra_output = subprocess.run(
+            ["docker", "exec", api_container, "python", "manage.py", "shell", "-c",
+             "import json\n"
+             "from plane.db.models import Workspace, WorkspaceUserLink, WorkspaceHomePreference\n"
+             "from plane.db.models import Sticky, User\n"
+             "ws = Workspace.objects.get(slug='fleet')\n"
+             "data = {}\n"
+             "# Stickies\n"
+             "data['stickies'] = [{'name': s.name, 'description': s.description or '', 'color': s.color or '', 'user': s.created_by.email if s.created_by else ''} for s in Sticky.objects.filter(workspace=ws)]\n"
+             "# Workspace links\n"
+             "data['workspace_links'] = [{'title': l.title, 'url': l.url} for l in WorkspaceUserLink.objects.filter(workspace=ws)]\n"
+             "# Home preferences\n"
+             "data['home_preferences'] = [{'key': p.key, 'is_enabled': p.is_enabled, 'config': p.config} for p in WorkspaceHomePreference.objects.filter(workspace=ws)]\n"
+             "print(json.dumps(data))\n"],
+            capture_output=True, text=True, timeout=30,
+        )
+        if extra_output.returncode == 0 and extra_output.stdout.strip():
+            extra_data = json.loads(extra_output.stdout.strip())
+            state["stickies"] = extra_data.get("stickies", [])
+            state["workspace_links"] = extra_data.get("workspace_links", [])
+            state["home_preferences"] = extra_data.get("home_preferences", [])
+            
+            stickies_count = len(state.get("stickies", []))
+            if stickies_count > 0:
+                print(f"  Stickies: {stickies_count}")
+            links_count = len(state.get("workspace_links", []))
+            print(f"  Workspace links: {links_count}")
+
+            # Write updated state
+            with open(state_file, "w") as f:
+                json.dump(state, f, indent=2)
+    except Exception as e:
+        print(f"Extra export: {e}")
+
     # ── Export pages via Docker ORM (pages not in v1 API) ──
     try:
         import subprocess

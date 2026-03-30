@@ -1,5 +1,5 @@
 {
-  "exported_at": "2026-03-30T01:35:45.080610Z",
+  "exported_at": "2026-03-30T01:39:13.328999Z",
   "projects": {
     "NNRT": {
       "name": "Narrative-to-Neutral Report Transformer",
@@ -68,6 +68,7 @@
           "sequence_id": 1
         }
       ],
+      "issue_comments": [],
       "issue_count": 2,
       "state_names": [
         "Backlog",
@@ -148,6 +149,7 @@
           "sequence_id": 1
         }
       ],
+      "issue_comments": [],
       "issue_count": 3,
       "state_names": [
         "Backlog",
@@ -241,6 +243,7 @@
           "sequence_id": 1
         }
       ],
+      "issue_comments": [],
       "issue_count": 4,
       "state_names": [
         "Backlog",
@@ -321,7 +324,7 @@
           "priority": "medium",
           "state": "Backlog",
           "description_html": "<h2 class=\"editor-heading-block\" data-id=\"7cc52428-4e4c-4828-a828-457bdd7a1da1\">Context</h2><p class=\"editor-paragraph-block\" data-id=\"97b9b2c8-97df-41ff-9e62-4a4113855ff8\">hermes-3b benchmarked for simple completion (1.2s warm). Need full benchmarks across <strong>all operations</strong> the inference router will handle.</p><h2 class=\"editor-heading-block\" data-id=\"64959766-a6a0-423d-8952-a0d0b6f50107\">Operations to Benchmark</h2><table data-id=\"6c18c271-de0e-4edc-9c91-13e3847499c4\"><tbody><tr style=\"\"><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"799f3ebd-14c6-45a7-8395-54c45f7b48d4\">Operation</p></th><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"dfd1d405-ad52-4859-a8ba-3e63141642d6\">Model</p></th><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"f6d0a780-d332-4459-92ce-7d7d9e562120\">Expected Latency</p></th><th colspan=\"1\" rowspan=\"1\" colwidth=\"150\" background=\"none\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"f941911b-e8b6-4292-b990-34e81a2da518\">Quality Gate</p></th></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"4ab5ca36-9aea-4e8e-adf7-bbff3232df1d\">Simple completion</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"937b0692-a774-4d14-be50-983db0a82579\">hermes-3b</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"a35e8b2c-fcdc-4188-ad6f-bf6afd929c1a\">&lt;2s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"5f22c392-ad73-4f19-9c16-d524a7858a1c\">Follows instructions</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"270b00df-157d-40a1-ab9c-715b225080e9\">Structured JSON output</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"0360b810-5022-4bce-82e5-8edc2a63792d\">hermes-3b</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"fe2230eb-c62c-4ca5-97ae-a2d6dca35d64\">&lt;3s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"34bc849c-5fca-4f7d-91d7-05726cc2b925\">Valid JSON, correct schema</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"ae5cae13-6764-4aa4-9af7-ec1bd6550abf\">HEARTBEAT_OK response</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"f99ebd14-dbd4-4325-9dd4-d37d2e01aee6\">hermes-3b</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"4fb1b89b-89a5-4198-a84b-54eddcc535b9\">&lt;2s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"7c178b21-1621-4730-aca2-4dce71aaf258\">Correct format, no hallucination</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"42c649cf-e51c-402e-968c-13c0412d8877\">Code completion</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"1d1b611d-9060-4c32-b9e4-d9ae35f2375d\">codellama</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"6474393d-7147-4bbb-bfd0-38607332293b\">&lt;5s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"eabc596d-f6e6-4db9-9e13-62c51a52b552\">Syntactically valid code</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"8aa0614f-b505-4447-a277-407cac7eb1f5\">Multi-turn conversation</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"e96f5eb6-abdb-40e2-adc8-c670a435f8b0\">hermes</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"c07bf176-7d89-4c89-904f-6fabd29579f2\">&lt;10s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"151dcfa5-4b7d-4045-98eb-e5dbc4b46b56\">Context retention</p></td></tr><tr style=\"\"><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"7f7518c4-54fc-49f0-b440-3819a2b9efde\">Tool use / function calling</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"7d4859bb-0e5e-4f0c-8e83-51ffee7fec78\">hermes</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"9d71d9ac-17f5-4a98-abcc-9152520f7be8\">&lt;5s</p></td><td colspan=\"1\" rowspan=\"1\" colwidth=\"150\" hidecontent=\"false\" class=\"\" style=\"\"><p class=\"editor-paragraph-block\" data-id=\"a2e4487c-7836-4acf-baad-ed6db5d20126\">Correct tool selection</p></td></tr></tbody></table><h2 class=\"editor-heading-block\" data-id=\"509ca9e7-1073-4861-bb4c-c43c534fe31d\">Methodology</h2><ol class=\"list-decimal pl-7 space-y-[--list-spacing-y] tight\" data-id=\"201a2798-1b58-4343-affe-bd3faeb7e70e\" data-tight=\"true\"><li class=\"not-prose space-y-2\" data-id=\"428732c2-1a9a-4f9f-b910-47588eb44cdd\"><p class=\"editor-paragraph-block\" data-id=\"482fd510-87ed-4256-84c5-e0f47af3c64c\">Run each operation 10 times</p></li><li class=\"not-prose space-y-2\" data-id=\"2622d397-1542-418d-9acb-2bd99bb6b515\"><p class=\"editor-paragraph-block\" data-id=\"07480a07-0477-429e-8399-e5397376e9de\">Record: latency (p50, p95, p99), quality score (0-100)</p></li><li class=\"not-prose space-y-2\" data-id=\"e8c4c988-a2e0-436b-b184-8cf5bfeb1276\"><p class=\"editor-paragraph-block\" data-id=\"50d10958-1d94-47da-aed4-d12cd6468e76\">Compare to Claude for same operations</p></li><li class=\"not-prose space-y-2\" data-id=\"835d63c9-9cfc-4b62-b4e7-2b5038565454\"><p class=\"editor-paragraph-block\" data-id=\"cd1376a5-b651-4675-b66b-a10f261d08e8\">Document results as Plane Page</p></li></ol><h2 class=\"editor-heading-block\" data-id=\"a7418215-3af8-42b6-9f79-50ff3a62da9c\">Acceptance Criteria</h2><ul class=\"list-disc pl-7 space-y-[--list-spacing-y] tight\" data-id=\"b257c6e9-b6d0-42a4-a10a-94aecae92a5f\" data-tight=\"true\"><li class=\"not-prose space-y-2\" data-id=\"fc0183d5-91aa-4432-b22c-23c003bfa93d\"><p class=\"editor-paragraph-block\" data-id=\"38eef63e-4b44-4890-9516-65bdac33df0a\">All 6 operations benchmarked with 10+ runs each</p></li><li class=\"not-prose space-y-2\" data-id=\"2f3e3e78-031b-4399-ae9c-1a3a16969ca7\"><p class=\"editor-paragraph-block\" data-id=\"122618fa-47d7-44ba-8715-b5af59f77ef4\">Results documented with latency + quality comparison table</p></li><li class=\"not-prose space-y-2\" data-id=\"2cad43eb-832c-4ffa-baec-35727e38eacf\"><p class=\"editor-paragraph-block\" data-id=\"22700eed-274d-4ec1-aaf3-5fb70eb68e57\">Recommendation: which operations are safe to offload to LocalAI</p></li></ul>",
-          "updated_at": "2026-03-30T00:03:32.466611Z",
+          "updated_at": "2026-03-30T01:38:11.965126Z",
           "sequence_id": 4
         },
         {
@@ -347,6 +350,14 @@
           "description_html": "<h2>Mission</h2><p>Progressive LocalAI independence. Route work through LocalAI for everything that does not require Claude reasoning. Target: 80%+ Claude token reduction.</p><h2>Current State (2026-03-29)</h2><ul><li>LocalAI running: 9 models, hermes-3b benchmarked (1.2s warm)</li><li>OpenAI-compatible API verified</li><li>AICP package: 46 modules, 67 tests</li></ul><h2>Next Steps</h2><ul><li>Complete Stage 1: cluster verification + full benchmarks</li><li>See Modules tab for the 5 stages + Core Platform + Integrations</li><li>See Pages for architecture and strategic vision docs</li></ul>",
           "updated_at": "2026-03-29T23:46:58.955833Z",
           "sequence_id": 1
+        }
+      ],
+      "issue_comments": [
+        {
+          "issue_title": "Benchmark all target operations on LocalAI",
+          "comment_html": "<p class=\"editor-paragraph-block\" data-id=\"fd5644fc-9af4-451a-b51f-df2996483b3f\">test comment</p>",
+          "created_at": "2026-03-30T01:38:11.694834Z",
+          "actor": ""
         }
       ],
       "issue_count": 4,

@@ -395,67 +395,11 @@ starter_issues:
   assignee: fleet-ops@fleet.local
   labels:
   - infra
-  description_html: '<div><h2>Context</h2>
+  description_html: '<div><span class="fleet-data" data-type="artifact" style="display:none">{"type":"analysis","title":"test"}</span>
 
-    <p><strong>No agent has completed a real task yet.</strong> The entire review chain is untested live:</p>
+    <h2>Visible Content</h2>
 
-    <pre><code>dispatch → accept → work → commit → complete → PR → review → approve → done</code></pre>
-
-
-    <h2>Steps</h2>
-
-    <ol>
-
-    <li>Create a simple task (e.g., "add a comment to a config file")</li>
-
-    <li>Assign to software-engineer</li>
-
-    <li>Dispatch via orchestrator (or manual <code>fleet_task_create</code>)</li>
-
-    <li>software-engineer accepts (fleet_task_accept), works, commits (fleet_commit), completes (fleet_task_complete)</li>
-
-    <li>ChainRunner fires: MC update, PR creation, IRC notification, board memory</li>
-
-    <li>fleet-ops reviews with reasoning (fleet_approve)</li>
-
-    <li>Task moves to done</li>
-
-    </ol>
-
-
-    <h2>What to Verify</h2>
-
-    <table>
-
-    <thead><tr><th>Step</th><th>Surface</th><th>Expected</th></tr></thead>
-
-    <tbody>
-
-    <tr><td>Complete</td><td>MC</td><td>Task status → review, approval created</td></tr>
-
-    <tr><td>Complete</td><td>GitHub</td><td>Branch pushed, PR created</td></tr>
-
-    <tr><td>Complete</td><td>IRC</td><td>#fleet + #reviews notifications</td></tr>
-
-    <tr><td>Complete</td><td>Events</td><td>fleet.task.completed in event store</td></tr>
-
-    <tr><td>Approve</td><td>MC</td><td>Approval status → approved</td></tr>
-
-    <tr><td>Approve</td><td>Events</td><td>fleet.task.approved in event store</td></tr>
-
-    </tbody>
-
-    </table>
-
-
-    <h2>Links</h2>
-
-    <ul>
-
-    <li><a href="https://github.com/cyberpunk042/openclaw-fleet/blob/main/docs/milestones/STATUS-TRACKER.md" rel="noopener
-    noreferrer">STATUS-TRACKER</a></li>
-
-    </ul></div>'
+    <p>This is the visible part.</p></div>'
 - title: Build chain runner (M-SC02)
   type: Story
   priority: high

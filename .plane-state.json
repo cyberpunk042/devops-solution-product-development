@@ -1,5 +1,5 @@
 {
-  "exported_at": "2026-03-30T22:18:09.735023Z",
+  "exported_at": "2026-03-31T00:34:45.720877Z",
   "projects": {
     "NNRT": {
       "name": "Narrative-to-Neutral Report Transformer",
@@ -229,8 +229,8 @@
           "title": "Execute one real task through the full review chain",
           "priority": "urgent",
           "state": "Backlog",
-          "description_html": "<p class=\"editor-paragraph-block\" data-id=\"b92b4200-c679-4977-9838-8118f7f4c914\"><span>Execute one real task end-to-end through dispatch, work, PR, review, and done</span></p><blockquote data-id=\"30a1a08e-7a20-41ee-962a-02631920292e\"><p class=\"editor-paragraph-block\" data-id=\"d25c7fea-85ec-4d25-8765-5040730b4886\"><strong>Verbatim Requirement (PO)</strong><br>Execute one real task end-to-end through dispatch, work, PR, review, and done </p></blockquote><h2 class=\"editor-heading-block\" data-id=\"1b20d970-0b4f-4470-818a-f07a25918532\">Context</h2><p class=\"editor-paragraph-block\" data-id=\"3330dd2d-89b0-4476-a61d-720243a7345b\">Test description</p>",
-          "updated_at": "2026-03-30T21:30:45.886259Z",
+          "description_html": "<div><span class=\"fleet-artifact-start\" data-type=\"plan\" style=\"display:none\">artifact:start</span>\n<span class=\"fleet-data\" data-type=\"plan\" style=\"display:none\">{\"title\":\"DSPD Sprint 1 Roadmap \\u2014 Real Task End-to-End Validation\"}</span>\n<h2>Plan: DSPD Sprint 1 Roadmap \u2014 Real Task End-to-End Validation</h2>\n<p><em>Reasoning stage \u2014 2026-03-30 20:31</em></p>\n<span class=\"fleet-artifact-end\" style=\"display:none\">artifact:end</span></div>",
+          "updated_at": "2026-03-31T00:31:39.810460Z",
           "sequence_id": 3
         },
         {

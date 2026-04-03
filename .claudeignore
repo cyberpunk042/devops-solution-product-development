@@ -1,0 +1,13 @@
+# Python artifacts
+__pycache__/
+*.pyc
+.venv/
+
+# Build/temp
+.pytest_cache/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/

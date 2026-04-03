@@ -26,7 +26,7 @@ CONFIG_FILE="${PROJECT_DIR}/.plane-config"
 TOKEN="${PLANE_API_TOKEN:-}"
 WS="${PLANE_WORKSPACE_SLUG:-fleet}"
 
-docker exec "$API_CONTAINER" python manage.py shell -c "
+timeout 120 docker exec "$API_CONTAINER" python manage.py shell -c "
 import json
 from plane.db.models import (
     User, Workspace, Project, Module, ModuleLink, ModuleMember,
@@ -364,9 +364,13 @@ log "Creating pages from board configs..."
 for board_file in "$PROJECT_DIR"/config/*-board.yaml; do
     [ -f "$board_file" ] || continue
 
-    cat "$board_file" | docker exec -i "$API_CONTAINER" python manage.py shell -c "
+    timeout 60 docker exec -i "$API_CONTAINER" python manage.py shell -c "
 import sys, yaml
-from plane.db.models import Page, ProjectPage, Project, Workspace, User
+from plane.db.models import Project, Workspace, User
+try:
+    from plane.db.models import Page, ProjectPage
+except ImportError:
+    from plane.db.models.page import Page, ProjectPage
 
 ws = Workspace.objects.get(slug='fleet')
 admin = User.objects.get(email='${PLANE_ADMIN_EMAIL}')
@@ -402,8 +406,8 @@ for page_cfg in board.get('pages', []):
             page=page, project=proj, workspace=ws,
             created_by=admin, updated_by=admin,
         )
-        print(f'  {board["project"]}: {title}')
-" 2>/dev/null
+        print(f'  {board[\"project\"]}: {title}')
+" < "$board_file" 2>&1 || log "WARN: Pages failed for $(basename "$board_file")"
 done
 
 log "Pages created"
@@ -415,7 +419,7 @@ log "Creating starter issues from board configs..."
 for board_file in "$PROJECT_DIR"/config/*-board.yaml; do
     [ -f "$board_file" ] || continue
     
-    cat "$board_file" | docker exec -i "$API_CONTAINER" python manage.py shell -c "
+    timeout 60 docker exec -i "$API_CONTAINER" python manage.py shell -c "
 import sys, yaml
 from plane.db.models import (
     User, Workspace, Project, Issue, State, Label,
@@ -434,10 +438,10 @@ for issue_cfg in board.get('starter_issues', []):
     title = issue_cfg['title']
     if Issue.objects.filter(project=proj, name=title).exists():
         continue
-    
+
     state = State.objects.filter(project=proj, group='backlog').first()
     issue_type = IssueType.objects.filter(name=issue_cfg.get('type', 'Task'), workspace=ws).first()
-    
+
     kwargs = {
         'name': title,
         'description_html': f'<p>{issue_cfg.get(\"description\", \"\")}</p>',
@@ -450,9 +454,9 @@ for issue_cfg in board.get('starter_issues', []):
     }
     if issue_type:
         kwargs['type'] = issue_type
-    
+
     issue = Issue.objects.create(**kwargs)
-    
+
     assignee_email = issue_cfg.get('assignee', '')
     if assignee_email:
         assignee = User.objects.filter(email=assignee_email).first()
@@ -462,7 +466,7 @@ for issue_cfg in board.get('starter_issues', []):
                 project=proj, workspace=ws,
                 created_by=admin, updated_by=admin,
             )
-    
+
     for label_name in issue_cfg.get('labels', []):
         label = Label.objects.filter(project=proj, name=label_name).first()
         if label:
@@ -471,9 +475,9 @@ for issue_cfg in board.get('starter_issues', []):
                 project=proj, workspace=ws,
                 created_by=admin, updated_by=admin,
             )
-    
+
     print(f'  {board[\"project\"]}: {title[:50]}')
-" 2>/dev/null
+" < "$board_file" 2>&1 || log "WARN: Starter issues failed for $(basename "$board_file")"
 done
 
 log "Starter issues created"

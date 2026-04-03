@@ -75,7 +75,7 @@ check "Workspace members accessible" "1" "$MEMBER_COUNT"
 # ── 4. Projects ────────────────────────────────────────────────────────────────
 log "=== 4. Projects ==="
 RESP=$(curl -sS -H "X-Api-Key: $TOKEN" "$PLANE_URL/api/v1/workspaces/$WS/projects/")
-check "List projects" "openclaw-fleet" "$RESP"
+check "List projects" "OpenClaw Fleet" "$RESP"
 
 # ── 5. Issues CRUD ─────────────────────────────────────────────────────────────
 log "=== 5. Issues CRUD ==="

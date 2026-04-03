@@ -40,8 +40,7 @@ fi
 WS_SLUG="${PLANE_WORKSPACE_SLUG:-fleet}"
 
 docker exec "$API_CONTAINER" python manage.py shell -c "
-from plane.db.models import User, Workspace
-from plane.app.models import Webhook
+from plane.db.models import User, Workspace, Webhook
 
 user = User.objects.get(email='${PLANE_ADMIN_EMAIL}')
 ws = Workspace.objects.get(slug='${WS_SLUG}')
